@@ -1,0 +1,21 @@
+﻿1>------ Operación Compilar iniciada: proyecto: platformer-SFML, configuración: Debug Win32 ------
+1>menu.cpp
+1>pruebaSFML.vcxproj -> C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\bin/Win32/Debug\platformer-SFML.exe
+1>Duplicador de Archivos para el .exe by Franco Vega
+1>Copiando librerias dinamicas
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\lib\SFML-2.5.1\bin\sfml-graphics-d-2.dll
+1>1 archivo(s) copiado(s)
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\lib\SFML-2.5.1\bin\sfml-system-d-2.dll
+1>1 archivo(s) copiado(s)
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\lib\SFML-2.5.1\bin\sfml-window-d-2.dll
+1>1 archivo(s) copiado(s)
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\lib\thor-v2.0-msvc2015\bin\thor-d.dll
+1>1 archivo(s) copiado(s)
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\lib\TGUI-0.8\bin\tgui-d.dll
+1>1 archivo(s) copiado(s)
+1>Copiando Archivos de Assets....
+1>Ya existe el subdirectorio o el archivo C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\bin\Win32\Debug\res/assets.
+1>C:\Users\Frank\Desktop\platformer-SFML\pruebaSFML\res/assets\fonts\sansation.ttf
+1>1 archivo(s) copiado(s)
+1>Copia de Assets terminada!
+========== Compilar: 1 correctos, 0 incorrectos, 0 actualizados, 0 omitidos ==========

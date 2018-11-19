@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c4313ffa-32fa-42b6-b020-9ea97f4bacc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Screens">
+      <UniqueIdentifier>{0ee3fd5d-6142-48ed-8a99-243f292b2b9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Setup">
+      <UniqueIdentifier>{5d6b87e7-9df1-427f-b643-81d0a4993d1a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\game\setup\game.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\credits.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\gameover.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\gameplay.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\menu.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\settings.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\screens\controls.cpp">
+      <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\setup\screens.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\game\setup\game.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\credits.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\gameover.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\gameplay.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\menu.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\settings.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\screens\controls.h">
+      <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\setup\screens.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
