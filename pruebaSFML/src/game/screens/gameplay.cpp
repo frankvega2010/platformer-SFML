@@ -5,7 +5,24 @@
 
 namespace Juego
 {	
-	//(100,100,300,300,sf::Color::Red)
+
+	pugi::xml_document doc;
+
+	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/testlevel.tmx");
+
+	pugi::xml_node object = doc.child("map").child("objectgroup");
+
+	pugi::xml_node_iterator someObjects = object.begin();
+
+	tmx::TileMap map("res/assets/tiles/testlevel.tmx");
+
+	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
+
+	static bool cameraRight = false; // der unbool
+	static bool cameraLeft = false; // izq otrobool
+	static bool cameraDown = false; // abajo unbooly
+	static bool cameraUp = false; // arriba cameraUp
+
 	Player player1;
 
 	sf::CircleShape triangle(100.0f, 3);
@@ -13,6 +30,10 @@ namespace Juego
 
 	sf::Font deltaFont;
 	sf::Text deltaText;
+
+	const int maxColisionsBoxes = 4;
+
+	sf::RectangleShape rectangles[maxColisionsBoxes];
 
 	namespace Gameplay_Section
 	{
@@ -36,6 +57,12 @@ namespace Juego
 		void GameplayScreen::init()
 		{
 			
+			
+			map.ShowObjects();
+
+			view.setCenter(0.0f, 0.f);
+			//view.zoom(2.0f);
+
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
 
 			deltaText.setCharacterSize(30);
@@ -52,6 +79,20 @@ namespace Juego
 			playerRectangle.setFillColor(player1.getColor());
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
 			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
+
+			int i = 0;
+			for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
+			{
+				rectangles[i].setPosition(sf::Vector2f(it->attribute("x").as_int(),
+					it->attribute("y").as_int()));
+
+				rectangles[i].setSize(sf::Vector2f(it->attribute("width").as_int(),
+					it->attribute("height").as_int()));
+
+				rectangles[i].setFillColor(sf::Color::Green);
+				i++;
+			}
+			i = 0;
 
 			setHasScreenFinished(false);
 
@@ -100,17 +141,63 @@ namespace Juego
 
 		void GameplayScreen::update()
 		{
-			//deltaTime.;
+			_window.setView(view);
 			input();
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
-			//playerRectangle.move(static_cast<sf::Vector2f>(player1.getPosition()));
+
+			if (playerRectangle.getPosition().x > view.getCenter().x + 300)
+			{
+				if (!(cameraRight))
+				{
+					cameraRight = true;
+					cameraLeft = false;
+				}
+			}
+			else if (playerRectangle.getPosition().x < view.getCenter().x - 300)
+			{
+				if (!(cameraLeft))
+				{
+					cameraLeft = true;
+					cameraRight = false;
+				}
+			}
+
+			if (playerRectangle.getPosition().y > view.getCenter().y + 300)
+			{
+				if (!(cameraDown))
+				{
+					cameraDown = true;
+					cameraUp = false;
+				}
+			}
+			else if (playerRectangle.getPosition().y < view.getCenter().y - 300)
+			{
+				if (!(cameraUp))
+				{
+					cameraUp = true;
+					cameraDown = false;
+				}
+			}
+
+
+
+			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - 300); //triangle.getPosition().y - 300
+			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + 300); ////triangle.getPosition().y + 300
+
+			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - 300, view.getCenter().y);
+			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + 300, view.getCenter().y);
 		}
 
 		void GameplayScreen::draw()
 		{
+			for (int i = 0; i < maxColisionsBoxes; i++)
+			{
+				_window.draw(rectangles[i]);
+			}
 			_window.draw(deltaText);
 			_window.draw(playerRectangle);
+			_window.draw(map);
 		}
 
 		void GameplayScreen::deInit()

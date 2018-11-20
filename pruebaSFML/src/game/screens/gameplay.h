@@ -4,6 +4,9 @@
 #include "Setup\game.h"
 #include "setup/screens.h"
 #include "setup/player.h"
+#include "STP/TMXLoader.hpp"
+#include "pugixml.hpp"
+#include "pugiconfig.hpp"
 //#include "raylib.h"
 
 namespace Juego

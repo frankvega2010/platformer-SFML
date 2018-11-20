@@ -73,12 +73,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin/$(Platform)/$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj/$(Platform)/$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)src/game/;$(SolutionDir)src/game/screens/;$(SolutionDir)src/game/setup/;$(IncludePath);$(SolutionDir)src/game/setup;$(SolutionDir)src/game/screens;$(SolutionDir)lib\thor-v2.0-msvc2015\bin;$(SolutionDir)lib\thor-v2.0-msvc2015\include;$(SolutionDir)lib\TGUI-0.8\include;$(SolutionDir)lib\TGUI-0.8\bin</IncludePath>
+    <IncludePath>$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)src/game/;$(SolutionDir)src/game/screens/;$(SolutionDir)src/game/setup/;$(IncludePath);$(SolutionDir)src/game/setup;$(SolutionDir)src/game/screens;$(SolutionDir)lib\thor-v2.0-msvc2015\bin;$(SolutionDir)lib\thor-v2.0-msvc2015\include;$(SolutionDir)lib\TGUI-0.8\include;$(SolutionDir)lib\TGUI-0.8\bin;$(SolutionDir)lib\STP\lib;$(SolutionDir)lib\STP\include;$(SolutionDir)src\pugixml\;$(SolutionDir)lib\STP\bin</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin/$(Platform)/$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)obj/$(Platform)/$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\SFML-2.5.1\bin;$(SolutionDir)src/game/setup/;$(SolutionDir)src/game/;$(SolutionDir)src/game/screens/;$(IncludePath);$(SolutionDir)src/game/setup;$(SolutionDir)src/game/screens;$(SolutionDir)lib\thor-v2.0-msvc2015\include;$(SolutionDir)lib\thor-v2.0-msvc2015\bin;$(SolutionDir)lib\TGUI-0.8\include;$(SolutionDir)lib\TGUI-0.8\bin</IncludePath>
+    <IncludePath>$(SolutionDir)lib\SFML-2.5.1\include;$(SolutionDir)lib\SFML-2.5.1\bin;$(SolutionDir)src/game/setup/;$(SolutionDir)src/game/;$(SolutionDir)src/game/screens/;$(IncludePath);$(SolutionDir)src/game/setup;$(SolutionDir)src/game/screens;$(SolutionDir)lib\thor-v2.0-msvc2015\include;$(SolutionDir)lib\thor-v2.0-msvc2015\bin;$(SolutionDir)lib\TGUI-0.8\include;$(SolutionDir)lib\TGUI-0.8\bin;$(SolutionDir)lib\STP\lib;$(SolutionDir)lib\STP\include;$(SolutionDir)src\pugixml;$(SolutionDir)lib\STP\bin</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -87,12 +87,12 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)src/game/;$(SolutionDir)src/game/screens;$(SolutionDir)src/game/setup;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/game/;$(SolutionDir)src/game/screens;$(SolutionDir)src/game/setup;$(SolutionDir)src/pugixml/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;thor-d.lib;tgui-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;$(SolutionDir)lib\STP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;thor-d.lib;tgui-d.lib;STP-d.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)copyfiles.bat "$(TargetDir)" "$(SolutionDir)" "1"</Command>
@@ -114,14 +114,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)src/game/;$(SolutionDir)src/game/screens;$(SolutionDir)src/game/setup;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/game/;$(SolutionDir)src/game/screens;$(SolutionDir)src/game/setup;$(SolutionDir)src/pugixml/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;thor.lib;tgui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;$(SolutionDir)lib\STP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;thor.lib;tgui.lib;STP.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
@@ -153,6 +153,7 @@
     <ClCompile Include="..\src\game\setup\player.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\pugixml\pugixml.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\screens\credits.h" />
@@ -164,6 +165,8 @@
     <ClInclude Include="..\src\game\setup\game.h" />
     <ClInclude Include="..\src\game\setup\player.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
+    <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="..\src\pugixml\pugixml.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

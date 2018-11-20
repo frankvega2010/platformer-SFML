@@ -4,6 +4,7 @@
 !pruebaSFML/lib/SFML-2.5.1/bin/
 !pruebaSFML/lib/TGUI-0.8/bin/
 !pruebaSFML/lib/thor-v2.0-msvc2015/bin/
+!pruebaSFML/lib/STP/bin/
 
 #obj folder
 **/obj
