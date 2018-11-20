@@ -56,8 +56,7 @@ namespace Juego
 
 		void GameplayScreen::init()
 		{
-			
-			
+			//_window.setView(view);
 			map.ShowObjects();
 
 			view.setCenter(0.0f, 0.f);
@@ -69,6 +68,7 @@ namespace Juego
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
 
+			//playerRectangle.getGlobalBounds().
 
 			player1.setPosition(0, 0);
 			player1.setSize(200, 200);
@@ -99,24 +99,29 @@ namespace Juego
 			triangle.setFillColor(sf::Color::Cyan);
 			
 			//_hasScreenFinished = false;
+			
 		}
 
 		void GameplayScreen::input()
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
+				cameraLeft = false;
 				player1.setMove((player1.getSpeed() * deltaTime.asSeconds()), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
+				cameraRight = false;
 				player1.setMove((player1.getSpeed() * deltaTime.asSeconds()*(-1)), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
+				cameraUp = false;
 				player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()));
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
+				cameraDown = false;
 				player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()*(-1)));
 			}
 			else
@@ -180,13 +185,24 @@ namespace Juego
 				}
 			}
 
-
-
 			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - 300); //triangle.getPosition().y - 300
 			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + 300); ////triangle.getPosition().y + 300
 
 			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - 300, view.getCenter().y);
 			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + 300, view.getCenter().y);
+
+			for (int i = 0; i < maxColisionsBoxes; i++)
+			{
+				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
+				{
+					playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
+					map.GetLayer("plataforma").SetColor({ 255,0,0 });
+				}
+				else
+				{
+					map.GetLayer("plataforma").SetColor({ 255,255,255 });
+				}
+			}
 		}
 
 		void GameplayScreen::draw()
