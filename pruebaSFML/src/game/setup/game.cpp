@@ -42,7 +42,9 @@ namespace Juego
 	//sf::View windowView2(sf::FloatRect(0, 0, 800, 600));
 
 	tgui::Gui gui{ _window };
-	
+
+	sf::Clock deltaClock;
+	sf::Time deltaTime;
 
 	Game::Game()
 	{
@@ -137,6 +139,8 @@ namespace Juego
 
 	void Game::init()
 	{
+
+	
 		
 		//std::cout << _window.getView().getSize().x;
 
@@ -328,6 +332,8 @@ namespace Juego
 		}
 		break;
 		}
+
+		
 	}
 
 	void Game::draw()
@@ -352,10 +358,6 @@ namespace Juego
 
 	void Game::execute()
 	{
-		sf::Clock deltaClock;
-		sf::Time deltaTime;
-		
-
 		init();
 		while (_window.isOpen())
 		{
@@ -366,13 +368,6 @@ namespace Juego
 				if (event.type == sf::Event::Closed)
 					_window.close();
 
-				//if (event.type == sf::Event::Resized)
-				//{
-				//	// update the view to the new size of the window
-				//	sf::FloatRect visibleArea(0, 0, event.size.width, event.size.height);
-				//	windowView.setSize(event.size.width, event.size.height);
-				//}
-
 				gui.handleEvent(event); // Pass the event to the widgets
 			}
 
@@ -382,7 +377,5 @@ namespace Juego
 			deltaTime = deltaClock.restart();
 		}
 		deInit();
-
-		//return EXIT_SUCCESS;
 	}
 }

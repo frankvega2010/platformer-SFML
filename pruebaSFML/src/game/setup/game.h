@@ -81,6 +81,7 @@ namespace Juego
 
 	extern int selectOption;
 
+	extern sf::Clock deltaClock;
 	extern sf::Time deltaTime;
 
 	//extern Sound pong_hit_wall;

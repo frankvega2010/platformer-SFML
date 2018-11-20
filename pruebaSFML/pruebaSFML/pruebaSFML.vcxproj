@@ -150,6 +150,7 @@
     <ClCompile Include="..\src\game\screens\menu.cpp" />
     <ClCompile Include="..\src\game\screens\settings.cpp" />
     <ClCompile Include="..\src\game\setup\game.cpp" />
+    <ClCompile Include="..\src\game\setup\player.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="..\src\game\screens\menu.h" />
     <ClInclude Include="..\src\game\screens\settings.h" />
     <ClInclude Include="..\src\game\setup\game.h" />
+    <ClInclude Include="..\src\game\setup\player.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

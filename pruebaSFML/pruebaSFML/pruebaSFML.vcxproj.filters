@@ -49,6 +49,9 @@
     <ClCompile Include="..\src\game\setup\screens.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\setup\player.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\setup\game.h">
@@ -73,6 +76,9 @@
       <Filter>Game\Screens</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\setup\screens.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\setup\player.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,9 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
+//#include <sstream>
 #include "Setup\game.h"
 #include "setup/screens.h"
+#include "setup/player.h"
 //#include "raylib.h"
 
 namespace Juego
