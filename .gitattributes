@@ -1,2 +1,1 @@
-res/raw filter=lfs diff=lfs merge=lfs -text
-pruebaSFML/res/raw/ filter=lfs diff=lfs merge=lfs -text
+raw/ filter=lfs diff=lfs merge=lfs -text
