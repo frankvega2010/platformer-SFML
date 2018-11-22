@@ -10,6 +10,11 @@ namespace Juego
 		_color = sf::Color::White;
 		_alive = true;
 		_speed = 0;
+		_direction = 0;
+		_canMoveUp = true;
+		_canMoveDown = true;
+		_canMoveLeft = true;
+		_canMoveRight = true;
 	}
 
 	Player::Player(int x, int y, int width, int height, sf::Color color)
@@ -20,6 +25,11 @@ namespace Juego
 		_alive = true;
 		_move = { 0,0 };
 		_speed = 0;
+		_direction = 0;
+		_canMoveUp = true;
+		_canMoveDown = true;
+		_canMoveLeft = true;
+		_canMoveRight = true;
 	}
 
 	Player::~Player()
@@ -68,6 +78,16 @@ namespace Juego
 		return _color;
 	}
 
+	int Player::getDirection()
+	{
+		return _direction;
+	}
+
+	void Player::setDirection(int direction)
+	{
+		_direction = direction;
+	}
+
 	float Player::getSpeed()
 	{
 		return _speed;
@@ -86,5 +106,45 @@ namespace Juego
 	void Player::setIsAlive(bool alive)
 	{
 		_alive = alive;
+	}
+
+	bool Player::getCanMoveUp()
+	{
+		return _canMoveUp;
+	}
+
+	void Player::setCanMoveUp(bool canMoveUp)
+	{
+		_canMoveUp = canMoveUp;
+	}
+
+	bool Player::getCanMoveDown()
+	{
+		return _canMoveDown;
+	}
+
+	void Player::setCanMoveDown(bool canMoveDown)
+	{
+		_canMoveDown = canMoveDown;
+	}
+
+	bool Player::getCanMoveLeft()
+	{
+		return _canMoveLeft;
+	}
+
+	void Player::setCanMoveLeft(bool canMoveLeft)
+	{
+		_canMoveLeft = canMoveLeft;
+	}
+
+	bool Player::getCanMoveRight()
+	{
+		return _canMoveRight;
+	}
+
+	void Player::setCanMoveRight(bool canMoveRight)
+	{
+		_canMoveRight = canMoveRight;
 	}
 }

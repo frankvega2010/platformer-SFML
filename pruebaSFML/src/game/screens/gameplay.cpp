@@ -106,27 +106,62 @@ namespace Juego
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				cameraLeft = false;
-				player1.setMove((player1.getSpeed() * deltaTime.asSeconds()), 0);
+				if (player1.getCanMoveRight())
+				{
+					player1.setDirection(Right);
+					cameraLeft = false;
+					player1.setMove((player1.getSpeed() * deltaTime.asSeconds()), 0);
+					player1.setCanMoveUp(true);
+					player1.setCanMoveDown(true);
+					player1.setCanMoveLeft(true);
+					player1.setCanMoveRight(true);
+				}
+				
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				cameraRight = false;
-				player1.setMove((player1.getSpeed() * deltaTime.asSeconds()*(-1)), 0);
+				if (player1.getCanMoveLeft())
+				{
+					player1.setDirection(Left);
+					cameraRight = false;
+					player1.setMove((player1.getSpeed() * deltaTime.asSeconds()*(-1)), 0);
+					player1.setCanMoveUp(true);
+					player1.setCanMoveDown(true);
+					player1.setCanMoveLeft(true);
+					player1.setCanMoveRight(true);
+				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				cameraUp = false;
-				player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()));
+				if (player1.getCanMoveDown())
+				{
+					player1.setDirection(Down);
+					cameraUp = false;
+					player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()));
+					player1.setCanMoveUp(true);
+					player1.setCanMoveDown(true);
+					player1.setCanMoveLeft(true);
+					player1.setCanMoveRight(true);
+				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				cameraDown = false;
-				player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()*(-1)));
+				if (player1.getCanMoveUp())
+				{
+					player1.setDirection(Up);
+					cameraDown = false;
+					player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()*(-1)));
+					player1.setCanMoveUp(true);
+					player1.setCanMoveDown(true);
+					player1.setCanMoveLeft(true);
+					player1.setCanMoveRight(true);
+				}
 			}
 			else
 			{
 				player1.setMove(0, 0);
+				//player1.setDirection(0);
+				
 			}
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -194,8 +229,32 @@ namespace Juego
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
 				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
-				{
-					playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
+				{	
+					if (player1.getDirection() == Right)
+					{
+						player1.setCanMoveRight(false);
+						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
+					}
+
+					if (player1.getDirection() == Left)
+					{
+						player1.setCanMoveLeft(false);
+						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
+					}
+
+					if (player1.getDirection() == Up)
+					{
+						player1.setCanMoveUp(false);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
+					}
+
+					if (player1.getDirection() == Down)
+					{
+						player1.setCanMoveDown(false);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
+					}
+
+
 					map.GetLayer("plataforma").SetColor({ 255,0,0 });
 				}
 				else
