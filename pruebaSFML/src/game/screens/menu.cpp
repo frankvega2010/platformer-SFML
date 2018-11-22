@@ -109,11 +109,11 @@ namespace Juego
 
 				if (i < 3)
 				{
-					buttons[i]->setPosition(120 + maxDistance, Game::getScreenHeight() / 2 + 200); // (Game::getScreenWidth()/2 + 10 - 260)
+					buttons[i]->setPosition(120 + maxDistance, Game::getScreenHeight() / 2); // (Game::getScreenWidth()/2 + 10 - 260)
 				}
 				else
 				{
-					buttons[i]->setPosition(180 + maxDistance2, Game::getScreenHeight() / 2 + 400); // (Game::getScreenWidth()/2 + 10 - 260)
+					buttons[i]->setPosition(180 + maxDistance2, Game::getScreenHeight() / 2 + 200); // (Game::getScreenWidth()/2 + 10 - 260)
 					maxDistance2 = maxDistance2 + 350;
 				}
 				
@@ -134,21 +134,21 @@ namespace Juego
 			}
 
 			menuTitle.setFont(font);
-			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 1.5f));
+			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 2.f));
 			menuTitle.setFillColor(sf::Color::Red);
-			menuTitle.setPosition((Game::getScreenWidth() / 2.f + 10.f), 50.f);
+			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 400.f), 50.f);
 			menuTitle.setString("Patient Zero");
 
 			menuSubTitle1.setFont(font);
 			menuSubTitle1.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() - 20));
 			menuSubTitle1.setFillColor(sf::Color::Red);
 			menuSubTitle1.setPosition(menuTitle.getPosition().x + 300, 140);
-			menuSubTitle1.setString("by frankvega");
+			menuSubTitle1.setString("");
 
 			menuSubTitle2.setFont(font);
 			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() - 20));
 			menuSubTitle2.setFillColor(sf::Color::Red);
-			menuSubTitle2.setPosition(menuTitle.getPosition().x, 140);
+			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 180);
 			menuSubTitle2.setString("Version 0.1");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
