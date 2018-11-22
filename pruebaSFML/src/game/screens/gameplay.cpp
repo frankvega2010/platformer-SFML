@@ -218,7 +218,7 @@ namespace Juego
 
 		void GameplayScreen::deInit()
 		{
-
+			_window.setView(_window.getDefaultView());
 		}
 
 		bool GameplayScreen::finish()

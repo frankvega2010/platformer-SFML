@@ -45,6 +45,8 @@ namespace Juego
 	private:
 		static int _screenWidth;
 		static int _screenHeight;
+		static int _newScreenWidth;
+		static int _newScreenHeight;
 		static int _gameScreen;
 		static float _defaultFontSize;
 		static float _defaultFontSizeGameplayText;
@@ -59,6 +61,10 @@ namespace Juego
 		static int getScreenWidth();
 		static void setScreenHeight(int screenHeight);
 		static int getScreenHeight();
+		static void setNewScreenWidth(int screenWidth);
+		static int getNewScreenWidth();
+		static void setNewScreenHeight(int screenHeight);
+		static int getNewScreenHeight();
 		static int getGameScreen();
 		static void setGameScreen(int gameScreen);
 		static float getDefaultFontSize();

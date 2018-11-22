@@ -32,6 +32,8 @@ namespace Juego
 	int Game::_gameScreen = 0;
 	int Game::_screenHeight = 0;
 	int Game::_screenWidth = 0;
+	int Game::_newScreenHeight = 0;
+	int Game::_newScreenWidth = 0;
 	bool Game::_isKeyPressed = false;
 
 	Screens* gameScreens[MaxGameScreens];
@@ -57,12 +59,12 @@ namespace Juego
 		_defaultFontSizeGameplayText = 0;
 		_defaultFontSizeGameplayScore = 0;
 
-		setScreenWidth(1280);
-		setScreenHeight(800);
-		//sf::RenderWindow* _window = new sf::RenderWindow();
+		setScreenWidth(1920);
+		setScreenHeight(1080);
 		_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "SFML Template");
-		//_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "SFML Template");
-		//_isScreenFinished = false;
+		Game::setNewScreenWidth(1440);
+		Game::setNewScreenHeight(900);
+		_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
 	}
 
 	Game::~Game()
@@ -88,6 +90,26 @@ namespace Juego
 	int Game::getScreenHeight()
 	{
 		return _screenHeight;
+	}
+
+	void Game::setNewScreenWidth(int screenWidth)
+	{
+		_newScreenWidth = screenWidth;
+	}
+
+	int Game::getNewScreenWidth()
+	{
+		return _newScreenWidth;
+	}
+
+	void Game::setNewScreenHeight(int screenHeight)
+	{
+		_newScreenHeight = screenHeight;
+	}
+
+	int Game::getNewScreenHeight()
+	{
+		return _newScreenHeight;
 	}
 
 	void Game::setGameScreen(int gameScreen)
