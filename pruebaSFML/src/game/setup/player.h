@@ -11,6 +11,7 @@ namespace Juego
 		Left,
 		Right,
 		Jump,
+		Gravity,
 		controlsCount
 	};
 
@@ -22,7 +23,7 @@ namespace Juego
 		sf::Color _color;
 		sf::Vector2f _move;
 		int _direction;
-		float _speed;
+		sf::Vector2f _speed;
 		bool _alive;
 		bool _canMoveUp;
 		bool _canMoveDown;
@@ -43,8 +44,8 @@ namespace Juego
 		sf::Color getColor();
 		int getDirection();
 		void setDirection(int direction);
-		float getSpeed();
-		void setSpeed(float speed);
+		sf::Vector2f getSpeed();
+		void setSpeed(float speedX,float speedY);
 		bool getIsAlive();
 		void setIsAlive(bool alive);
 		bool getCanMoveUp();

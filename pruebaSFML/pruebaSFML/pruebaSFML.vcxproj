@@ -154,6 +154,7 @@
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\pugixml\pugixml.cpp" />
+    <ClCompile Include="enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\screens\credits.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="..\src\game\setup\screens.h" />
     <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml\pugixml.hpp" />
+    <ClInclude Include="enemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,7 @@ namespace Juego
 		_move = { 0,0 };
 		_color = sf::Color::White;
 		_alive = true;
-		_speed = 0;
+		_speed = { 0,0 };
 		_direction = 0;
 		_canMoveUp = true;
 		_canMoveDown = true;
@@ -25,7 +25,7 @@ namespace Juego
 		_color = color;
 		_alive = true;
 		_move = { 0,0 };
-		_speed = 0;
+		_speed = { 0,0 };
 		_direction = 0;
 		_canMoveUp = true;
 		_canMoveDown = true;
@@ -90,14 +90,14 @@ namespace Juego
 		_direction = direction;
 	}
 
-	float Player::getSpeed()
+	sf::Vector2f Player::getSpeed()
 	{
 		return _speed;
 	}
 
-	void Player::setSpeed(float speed)
+	void Player::setSpeed(float speedX, float speedY)
 	{
-		_speed = speed;
+		_speed = { speedX, speedY };
 	}
 
 	bool Player::getIsAlive()

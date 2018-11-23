@@ -2,6 +2,8 @@
 
 #include "menu.h"
 
+#include "Thor/Time.hpp"
+
 
 namespace Juego
 {	
@@ -30,6 +32,12 @@ namespace Juego
 	static int gravitySpeed = 0;
 
 	static bool playerInput = false;
+	static bool isJumping = false;
+	static bool isOnGround = false;
+
+	const sf::Time initialTime = sf::seconds(0.5f);
+	thor::CallbackTimer timerJump;
+	
 
 	Player player1;
 
@@ -76,7 +84,7 @@ namespace Juego
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
 
-			gravitySpeed = 500;
+			gravitySpeed = 800;
 
 			//playerRectangle.getGlobalBounds().
 
@@ -84,7 +92,7 @@ namespace Juego
 			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
-			player1.setSpeed(800);
+			player1.setSpeed(500,1400);
 			
 			playerRectangle.setFillColor(player1.getColor());
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
@@ -120,7 +128,7 @@ namespace Juego
 				{
 					player1.setDirection(Right);
 					cameraLeft = false;
-					player1.setMove((player1.getSpeed() * deltaTime.asSeconds()), 0);
+					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
 					player1.setCanMoveUp(true);
 					player1.setCanMoveDown(true);
 					player1.setCanMoveLeft(true);
@@ -134,7 +142,7 @@ namespace Juego
 				{
 					player1.setDirection(Left);
 					cameraRight = false;
-					player1.setMove((player1.getSpeed() * deltaTime.asSeconds()*(-1)), 0);
+					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
 					player1.setCanMoveUp(true);
 					player1.setCanMoveDown(true);
 					player1.setCanMoveLeft(true);
@@ -147,7 +155,7 @@ namespace Juego
 				{
 					player1.setDirection(Down);
 					cameraUp = false;
-					player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()));
+					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
 					player1.setCanMoveUp(true);
 					player1.setCanMoveDown(true);
 					player1.setCanMoveLeft(true);
@@ -160,21 +168,38 @@ namespace Juego
 				{
 					player1.setDirection(Up);
 					cameraDown = false;
-					player1.setMove(0, (player1.getSpeed() * deltaTime.asSeconds()*(-1)));
-					player1.setCanMoveUp(true);
+					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+					/*player1.setCanMoveUp(true);
 					player1.setCanMoveDown(true);
 					player1.setCanMoveLeft(true);
-					player1.setCanMoveRight(true);
+					player1.setCanMoveRight(true);*/
 				}
 			}
 			else
 			{
 				player1.setMove(0, 0);
+				//player1.setDirection(Down);
 				//player1.setDirection(0);
 				
 			}
 
-				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				if (!(isJumping)&&isOnGround)
+				{
+					isOnGround = false;
+					isJumping = true;
+					gravitySpeed = 0;
+					//timerJump.reset(initialTime);
+					timerJump.start();
+				}
+			}
+			else
+			{
+				Game::setIsKeyPressed(false);
+			}
+
+				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 				{
 					if (!(Game::getIsKeyPressed()))
 					{
@@ -186,13 +211,31 @@ namespace Juego
 				else
 				{
 					Game::setIsKeyPressed(false);
-				}
+				}*/
 		}
 
 		void GameplayScreen::update()
 		{
 			_window.setView(view);
 			input();
+
+			//JUMP
+
+			if (isJumping)
+			{
+				player1.setDirection(Up);
+				cameraDown = false;
+				playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y+(player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				if (timerJump.isExpired())
+				{
+					isJumping = false;
+					gravitySpeed = 500;
+				}
+			}
+			else
+			{
+				timerJump.reset(initialTime);
+			}
 
 			// gravity
 
@@ -202,10 +245,10 @@ namespace Juego
 				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
 				player1.setDirection(Down);
 				cameraUp = false;
-				//player1.setCanMoveUp(true);
-				//player1.setCanMoveDown(true);
-				//player1.setCanMoveLeft(true);
-				//player1.setCanMoveRight(true);
+				player1.setCanMoveUp(true);
+				player1.setCanMoveDown(false);
+				player1.setCanMoveLeft(true);
+				player1.setCanMoveRight(true);
 			}
 
 			playerRectangle.move(player1.getMove());
@@ -283,6 +326,7 @@ namespace Juego
 
 					if (player1.getDirection() == Down)
 					{
+						isOnGround = true;
 						gravitySpeed = 0;
 						player1.setGravity(false);
 						player1.setCanMoveDown(false);
@@ -296,7 +340,7 @@ namespace Juego
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
 
-					gravitySpeed = 500;
+					gravitySpeed = 800;
 					player1.setGravity(true);
 				}
 			}
