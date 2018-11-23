@@ -23,7 +23,7 @@ namespace Juego
 	static bool cameraDown = false; // abajo unbooly
 	static bool cameraUp = false; // arriba cameraUp
 	static float cameraLimitUp = 300.f;
-	static float cameraLimitDown = 10.f;
+	static float cameraLimitDown = 350.f;
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
@@ -263,29 +263,30 @@ namespace Juego
 				{	
 					
 
-					if (player1.getDirection() == Right && !(player1.getGravity()))
+					if (player1.getDirection() == Right)
 					{
 						player1.setCanMoveRight(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width) + 0.5f, playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Left && !(player1.getGravity()))
+					if (player1.getDirection() == Left)
 					{
 						player1.setCanMoveLeft(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width) - 0.5f, playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Up && !(player1.getGravity()))
+					if (player1.getDirection() == Up )
 					{
 						player1.setCanMoveUp(false);
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height) - 0.5f);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
 					}
 
-					if (player1.getDirection() == Down && (player1.getGravity()))
+					if (player1.getDirection() == Down)
 					{
 						gravitySpeed = 0;
 						player1.setGravity(false);
 						player1.setCanMoveDown(false);
+						cameraDown = false;
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
 					}
 
@@ -295,9 +296,8 @@ namespace Juego
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
 
-
-					//gravitySpeed = 500;
-					//player1.setGravity(true);
+					gravitySpeed = 500;
+					player1.setGravity(true);
 				}
 			}
 		}
