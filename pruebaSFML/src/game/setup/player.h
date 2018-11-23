@@ -22,13 +22,8 @@ namespace Juego
 		sf::Vector2i _size;
 		sf::Color _color;
 		sf::Vector2f _move;
-		int _direction;
 		sf::Vector2f _speed;
 		bool _alive;
-		bool _canMoveUp;
-		bool _canMoveDown;
-		bool _canMoveLeft;
-		bool _canMoveRight;
 		bool _gravity;
 	public:
 		Player();
@@ -42,20 +37,10 @@ namespace Juego
 		sf::Vector2i getSize();
 		void setColor(sf::Color color);
 		sf::Color getColor();
-		int getDirection();
-		void setDirection(int direction);
 		sf::Vector2f getSpeed();
 		void setSpeed(float speedX,float speedY);
 		bool getIsAlive();
 		void setIsAlive(bool alive);
-		bool getCanMoveUp();
-		void setCanMoveUp(bool canMoveUp);
-		bool getCanMoveDown();
-		void setCanMoveDown(bool canMoveDown);
-		bool getCanMoveLeft();
-		void setCanMoveLeft(bool canMoveLeft);
-		bool getCanMoveRight();
-		void setCanMoveRight(bool canMoveRight);
 		bool getGravity();
 		void setGravity(bool gravity);
 	};

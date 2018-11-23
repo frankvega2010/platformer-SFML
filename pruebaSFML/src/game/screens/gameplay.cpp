@@ -6,7 +6,7 @@
 
 
 namespace Juego
-{	
+{
 
 	pugi::xml_document doc;
 
@@ -20,10 +20,10 @@ namespace Juego
 
 	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
 
-	static bool cameraRight = false; // der unbool
-	static bool cameraLeft = false; // izq otrobool
-	static bool cameraDown = false; // abajo unbooly
-	static bool cameraUp = false; // arriba cameraUp
+	static bool cameraRight = false;
+	static bool cameraLeft = false; 
+	static bool cameraDown = false; 
+	static bool cameraUp = false; 
 	static float cameraLimitUp = 300.f;
 	static float cameraLimitDown = 350.f;
 	static float cameraLimitLeft = 300.f;
@@ -37,7 +37,7 @@ namespace Juego
 
 	const sf::Time initialTime = sf::seconds(0.5f);
 	thor::CallbackTimer timerJump;
-	
+
 
 	Player player1;
 
@@ -52,11 +52,10 @@ namespace Juego
 	const int maxColisionsBoxes = 4;
 
 	sf::RectangleShape rectangles[maxColisionsBoxes];
-	
+
 
 	namespace Gameplay_Section
 	{
-
 		std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
@@ -84,7 +83,6 @@ namespace Juego
 			playerSprite.setPosition(0, 0);
 			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
 
-			//_window.setView(view);
 			map.ShowObjects();
 
 			view.setCenter(0.0f, 0.f);
@@ -98,14 +96,12 @@ namespace Juego
 
 			gravitySpeed = 800;
 
-			//playerRectangle.getGlobalBounds().
-
 			player1.setPosition(0, 0);
 			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
-			player1.setSpeed(500,1400);
-			
+			player1.setSpeed(500, 1400);
+
 			playerRectangle.setFillColor(player1.getColor());
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
 			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
@@ -127,8 +123,6 @@ namespace Juego
 			setHasScreenFinished(false);
 
 			triangle.setFillColor(sf::Color::Cyan);
-			
-			//_hasScreenFinished = false;
 
 		}
 
@@ -137,73 +131,36 @@ namespace Juego
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-				if (player1.getCanMoveRight())
-				{
-					player1.setDirection(Right);
 					cameraLeft = false;
 					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
-					player1.setCanMoveUp(true);
-					player1.setCanMoveDown(true);
-					player1.setCanMoveLeft(true);
-					player1.setCanMoveRight(true);
-				}
-				
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-				if (player1.getCanMoveLeft())
-				{
-					player1.setDirection(Left);
 					cameraRight = false;
 					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
-					player1.setCanMoveUp(true);
-					player1.setCanMoveDown(true);
-					player1.setCanMoveLeft(true);
-					player1.setCanMoveRight(true);
-				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-				if (player1.getCanMoveDown())
-				{
-					player1.setDirection(Down);
 					cameraUp = false;
 					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
-					player1.setCanMoveUp(true);
-					player1.setCanMoveDown(true);
-					player1.setCanMoveLeft(true);
-					player1.setCanMoveRight(true);
-				}
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-				if (player1.getCanMoveUp())
-				{
-					player1.setDirection(Up);
 					cameraDown = false;
 					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
-					/*player1.setCanMoveUp(true);
-					player1.setCanMoveDown(true);
-					player1.setCanMoveLeft(true);
-					player1.setCanMoveRight(true);*/
-				}
 			}
 			else
 			{
 				player1.setMove(0, 0);
-				//player1.setDirection(Down);
-				//player1.setDirection(0);
-				
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				if (!(isJumping)&&isOnGround)
+				if (!(isJumping) && isOnGround)
 				{
 					isOnGround = false;
 					isJumping = true;
 					gravitySpeed = 0;
-					//timerJump.reset(initialTime);
 					timerJump.start();
 				}
 			}
@@ -212,19 +169,19 @@ namespace Juego
 				Game::setIsKeyPressed(false);
 			}
 
-				/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				if (!(Game::getIsKeyPressed()))
 				{
-					if (!(Game::getIsKeyPressed()))
-					{
-						Game::setButtonOption(buttonGameOver);
-						Screens::setHasScreenFinished(true);
-						Game::setIsKeyPressed(true);
-					}
+					Game::setButtonOption(buttonGameOver);
+					Screens::setHasScreenFinished(true);
+					Game::setIsKeyPressed(true);
 				}
-				else
-				{
-					Game::setIsKeyPressed(false);
-				}*/
+			}
+			else
+			{
+				Game::setIsKeyPressed(false);
+			}*/
 		}
 
 		void GameplayScreen::update()
@@ -236,13 +193,12 @@ namespace Juego
 
 			if (isJumping)
 			{
-				player1.setDirection(Up);
 				cameraDown = false;
-				playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y+(player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				if (timerJump.isExpired())
 				{
 					isJumping = false;
-					gravitySpeed = 500;
+					gravitySpeed = 800;
 				}
 			}
 			else
@@ -254,20 +210,12 @@ namespace Juego
 
 			if (player1.getGravity())
 			{
-				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
 				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
-				playerSprite.setPosition(playerRectangle.getPosition());
-				player1.setDirection(Down);
 				cameraUp = false;
-				player1.setCanMoveUp(true);
-				player1.setCanMoveDown(false);
-				player1.setCanMoveLeft(true);
-				player1.setCanMoveRight(true);
 			}
 
 			playerRectangle.move(player1.getMove());
-			//playerSprite.setPosition(playerRectangle.getPosition());
-			playerSprite.move(player1.getMove());
+			playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
@@ -278,7 +226,7 @@ namespace Juego
 					cameraLeft = false;
 				}
 			}
-			else if (playerRectangle.getPosition().x< view.getCenter().x - cameraLimitLeft)
+			else if (playerRectangle.getPosition().x < view.getCenter().x - cameraLimitLeft)
 			{
 				if (!(cameraLeft))
 				{
@@ -295,7 +243,7 @@ namespace Juego
 					cameraUp = false;
 				}
 			}
-			else if (playerRectangle.getPosition().y < view.getCenter().y-cameraLimitUp)
+			else if (playerRectangle.getPosition().y < view.getCenter().y - cameraLimitUp)
 			{
 				if (!(cameraUp))
 				{
@@ -304,61 +252,52 @@ namespace Juego
 				}
 			}
 
-			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown); //triangle.getPosition().y - 300
-			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp); ////triangle.getPosition().y + 300
+			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown);
+			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
 
 			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
 			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
 
+			// Checks for collisions
+
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
-				
-				/*if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < rectangles[i].getPosition().x || playerRectangle.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width)
-				{
-					gravitySpeed = 500;
-				}*/
-
 				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
-				{	
-					
-
-					if (player1.getDirection() == Right)
+				{
+					if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width > rectangles[i].getPosition().x &&
+						playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < rectangles[i].getPosition().x + 10)
 					{
-						player1.setCanMoveRight(false);
+						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Left)
+					if (playerRectangle.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
+						playerRectangle.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10
+						)
 					{
-						player1.setCanMoveLeft(false);
+						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Up )
+					if (playerRectangle.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
+						playerRectangle.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20)
 					{
-						player1.setCanMoveUp(false);
+						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
 					}
 
-					if (player1.getDirection() == Down)
+					if (playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height > rectangles[i].getPosition().y &&
+						playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
 					{
+						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 						isOnGround = true;
-						gravitySpeed = 0;
-						player1.setGravity(false);
-						player1.setCanMoveDown(false);
 						cameraDown = false;
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
 					}
-
-					map.GetLayer("plataforma").SetColor({ 255,0,0 });
-					
 				}
 				else
 				{
-					map.GetLayer("plataforma").SetColor({ 255,255,255 });
-
-					gravitySpeed = 800;
-					player1.setGravity(true);
+					rectangles[i].setFillColor({ 255,255,255 }); // Testing Collision, delete later!
 				}
 			}
 		}
