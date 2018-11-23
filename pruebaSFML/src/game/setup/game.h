@@ -53,6 +53,7 @@ namespace Juego
 		static float _defaultFontSizeGameplayScore;
 		static int _buttonOption;
 		static bool _isKeyPressed;
+		static int _defaultStyle;
 	public:
 		
 		Game();
@@ -74,6 +75,8 @@ namespace Juego
 		static void setButtonOption(int buttonOption);
 		static bool getIsKeyPressed();
 		static void setIsKeyPressed(bool isKeyPressed);
+		static int getDefaultStyle();
+		static void setDefaultStyle(int DefaultStyle);
 		void init();
 		void update();
 		void draw();
