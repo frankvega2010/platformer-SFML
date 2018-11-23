@@ -204,8 +204,8 @@ namespace Juego
 				cameraUp = false;
 				//player1.setCanMoveUp(true);
 				//player1.setCanMoveDown(true);
-				//player1.setCanMoveLeft(true);
-				//player1.setCanMoveRight(true);
+				player1.setCanMoveLeft(true);
+				player1.setCanMoveRight(true);
 			}
 
 			playerRectangle.move(player1.getMove());
@@ -261,43 +261,43 @@ namespace Juego
 
 				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 				{	
-					
-
-					if (player1.getDirection() == Right && !(player1.getGravity()))
+					if (player1.getDirection() == Right && player1.getCanMoveRight())
 					{
 						player1.setCanMoveRight(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width) + 0.5f, playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Left && !(player1.getGravity()))
+					if (player1.getDirection() == Left && player1.getCanMoveRight())
 					{
 						player1.setCanMoveLeft(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width) - 0.5f, playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Up && !(player1.getGravity()))
+					if (player1.getDirection() == Up)
 					{
 						player1.setCanMoveUp(false);
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height) - 0.5f);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
 					}
 
-					if (player1.getDirection() == Down && (player1.getGravity()))
+					if (player1.getDirection() == Down)
 					{
 						gravitySpeed = 0;
 						player1.setGravity(false);
 						player1.setCanMoveDown(false);
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
+						player1.setCanMoveRight(false);
+						player1.setCanMoveLeft(false);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height) + 0.1f);
+						
 					}
-
 					map.GetLayer("plataforma").SetColor({ 255,0,0 });
+					
 				}
 				else
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
 
-
-					//gravitySpeed = 500;
-					//player1.setGravity(true);
+					gravitySpeed = 500;
+					player1.setGravity(true);
 				}
 			}
 		}
