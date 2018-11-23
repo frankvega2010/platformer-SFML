@@ -23,11 +23,13 @@ namespace Juego
 	static bool cameraDown = false; // abajo unbooly
 	static bool cameraUp = false; // arriba cameraUp
 	static float cameraLimitUp = 300.f;
-	static float cameraLimitDown = 100.f;
+	static float cameraLimitDown = 10.f;
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
 	static int gravitySpeed = 0;
+
+	static bool playerInput = false;
 
 	Player player1;
 
@@ -66,7 +68,7 @@ namespace Juego
 			map.ShowObjects();
 
 			view.setCenter(0.0f, 0.f);
-			//view.zoom(2.0f);
+			view.zoom(2.0f);
 
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
 
@@ -79,7 +81,7 @@ namespace Juego
 			//playerRectangle.getGlobalBounds().
 
 			player1.setPosition(0, 0);
-			player1.setSize(200, 200);
+			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
 			player1.setSpeed(800);
@@ -194,17 +196,17 @@ namespace Juego
 
 			// gravity
 
-			//if (player1.getGravity())
-			//{
-			//	//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
-			//	playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
-			//	player1.setDirection(Down);
-			//	cameraUp = false;
-			//	player1.setCanMoveUp(true);
-			//	player1.setCanMoveDown(true);
-			//	player1.setCanMoveLeft(true);
-			//	player1.setCanMoveRight(true);
-			//}
+			if (player1.getGravity())
+			{
+				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
+				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				player1.setDirection(Down);
+				cameraUp = false;
+				//player1.setCanMoveUp(true);
+				//player1.setCanMoveDown(true);
+				//player1.setCanMoveLeft(true);
+				//player1.setCanMoveRight(true);
+			}
 
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
@@ -261,27 +263,28 @@ namespace Juego
 				{	
 					
 
-					if (player1.getDirection() == Right)
+					if (player1.getDirection() == Right && !(player1.getGravity()))
 					{
 						player1.setCanMoveRight(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width) + 0.5f, playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Left)
+					if (player1.getDirection() == Left && !(player1.getGravity()))
 					{
 						player1.setCanMoveLeft(false);
-						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
+						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width) - 0.5f, playerRectangle.getPosition().y);
 					}
 
-					if (player1.getDirection() == Up)
+					if (player1.getDirection() == Up && !(player1.getGravity()))
 					{
 						player1.setCanMoveUp(false);
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height) - 0.5f);
 					}
 
-					if (player1.getDirection() == Down)
+					if (player1.getDirection() == Down && (player1.getGravity()))
 					{
 						gravitySpeed = 0;
+						player1.setGravity(false);
 						player1.setCanMoveDown(false);
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
 					}
@@ -291,7 +294,10 @@ namespace Juego
 				else
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
+
+
 					//gravitySpeed = 500;
+					//player1.setGravity(true);
 				}
 			}
 		}
@@ -310,6 +316,7 @@ namespace Juego
 		void GameplayScreen::deInit()
 		{
 			_window.setView(_window.getDefaultView());
+			view.zoom(0.5f);
 		}
 
 		bool GameplayScreen::finish()
