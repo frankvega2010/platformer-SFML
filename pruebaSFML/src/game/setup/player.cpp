@@ -15,6 +15,7 @@ namespace Juego
 		_canMoveDown = true;
 		_canMoveLeft = true;
 		_canMoveRight = true;
+		_gravity = true;
 	}
 
 	Player::Player(int x, int y, int width, int height, sf::Color color)
@@ -30,6 +31,7 @@ namespace Juego
 		_canMoveDown = true;
 		_canMoveLeft = true;
 		_canMoveRight = true;
+		_gravity = true;
 	}
 
 	Player::~Player()
@@ -146,5 +148,15 @@ namespace Juego
 	void Player::setCanMoveRight(bool canMoveRight)
 	{
 		_canMoveRight = canMoveRight;
+	}
+
+	bool Player::getGravity()
+	{
+		return _gravity;
+	}
+
+	void Player::setGravity(bool gravity)
+	{
+		_gravity = gravity;
 	}
 }

@@ -28,6 +28,7 @@ namespace Juego
 		bool _canMoveDown;
 		bool _canMoveLeft;
 		bool _canMoveRight;
+		bool _gravity;
 	public:
 		Player();
 		Player(int x, int y, int width, int height, sf::Color color);
@@ -54,6 +55,8 @@ namespace Juego
 		void setCanMoveLeft(bool canMoveLeft);
 		bool getCanMoveRight();
 		void setCanMoveRight(bool canMoveRight);
+		bool getGravity();
+		void setGravity(bool gravity);
 	};
 }
 #endif // PLAYER_H

@@ -23,6 +23,8 @@ namespace Juego
 	static bool cameraDown = false; // abajo unbooly
 	static bool cameraUp = false; // arriba cameraUp
 
+	static int gravitySpeed = 0;
+
 	Player player1;
 
 	sf::CircleShape triangle(100.0f, 3);
@@ -67,6 +69,8 @@ namespace Juego
 			deltaText.setCharacterSize(30);
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
+
+			gravitySpeed = 500;
 
 			//playerRectangle.getGlobalBounds().
 
@@ -183,8 +187,22 @@ namespace Juego
 		{
 			_window.setView(view);
 			input();
+
+			// gravity
+			if (player1.getGravity())
+			{
+				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
+				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				player1.setDirection(Down);
+				cameraUp = false;
+			}
+
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
+
+
+			
+			
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + 300)
 			{
@@ -250,6 +268,8 @@ namespace Juego
 
 					if (player1.getDirection() == Down)
 					{
+						gravitySpeed = 0;
+						player1.setGravity(false);
 						player1.setCanMoveDown(false);
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
 					}
@@ -260,6 +280,8 @@ namespace Juego
 				else
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
+					player1.setGravity(true);
+					gravitySpeed = 500;
 				}
 			}
 		}
