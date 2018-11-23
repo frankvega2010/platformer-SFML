@@ -193,13 +193,18 @@ namespace Juego
 			input();
 
 			// gravity
-			if (player1.getGravity())
-			{
-				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
-				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
-				player1.setDirection(Down);
-				cameraUp = false;
-			}
+
+			//if (player1.getGravity())
+			//{
+			//	//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
+			//	playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+			//	player1.setDirection(Down);
+			//	cameraUp = false;
+			//	player1.setCanMoveUp(true);
+			//	player1.setCanMoveDown(true);
+			//	player1.setCanMoveLeft(true);
+			//	player1.setCanMoveRight(true);
+			//}
 
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
@@ -246,8 +251,16 @@ namespace Juego
 
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
+				
+				/*if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < rectangles[i].getPosition().x || playerRectangle.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width)
+				{
+					gravitySpeed = 500;
+				}*/
+
 				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 				{	
+					
+
 					if (player1.getDirection() == Right)
 					{
 						player1.setCanMoveRight(false);
@@ -269,19 +282,16 @@ namespace Juego
 					if (player1.getDirection() == Down)
 					{
 						gravitySpeed = 0;
-						player1.setGravity(false);
 						player1.setCanMoveDown(false);
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
 					}
-
 
 					map.GetLayer("plataforma").SetColor({ 255,0,0 });
 				}
 				else
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
-					player1.setGravity(true);
-					gravitySpeed = 500;
+					//gravitySpeed = 500;
 				}
 			}
 		}
