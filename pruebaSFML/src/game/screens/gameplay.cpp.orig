@@ -204,7 +204,15 @@ namespace Juego
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
 
+<<<<<<< HEAD
+
+			
+			
+
+			if (playerRectangle.getPosition().x > view.getCenter().x + 300)
+=======
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
+>>>>>>> 66d9251a835939fa99db8b48a4b9e7b78e2b1be3
 			{
 				if (!(cameraRight))
 				{
