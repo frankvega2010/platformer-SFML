@@ -22,6 +22,10 @@ namespace Juego
 	static bool cameraLeft = false; // izq otrobool
 	static bool cameraDown = false; // abajo unbooly
 	static bool cameraUp = false; // arriba cameraUp
+	static float cameraLimitUp = 300.f;
+	static float cameraLimitDown = 100.f;
+	static float cameraLimitLeft = 300.f;
+	static float cameraLimitRight = 100.f;
 
 	Player player1;
 
@@ -186,7 +190,7 @@ namespace Juego
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
 
-			if (playerRectangle.getPosition().x > view.getCenter().x + 300)
+			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
 				if (!(cameraRight))
 				{
@@ -194,7 +198,7 @@ namespace Juego
 					cameraLeft = false;
 				}
 			}
-			else if (playerRectangle.getPosition().x < view.getCenter().x - 300)
+			else if (playerRectangle.getPosition().x< view.getCenter().x - cameraLimitLeft)
 			{
 				if (!(cameraLeft))
 				{
@@ -203,7 +207,7 @@ namespace Juego
 				}
 			}
 
-			if (playerRectangle.getPosition().y > view.getCenter().y + 300)
+			if (playerRectangle.getPosition().y > view.getCenter().y + cameraLimitDown)
 			{
 				if (!(cameraDown))
 				{
@@ -211,7 +215,7 @@ namespace Juego
 					cameraUp = false;
 				}
 			}
-			else if (playerRectangle.getPosition().y < view.getCenter().y - 300)
+			else if (playerRectangle.getPosition().y < view.getCenter().y-cameraLimitUp)
 			{
 				if (!(cameraUp))
 				{
@@ -220,11 +224,11 @@ namespace Juego
 				}
 			}
 
-			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - 300); //triangle.getPosition().y - 300
-			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + 300); ////triangle.getPosition().y + 300
+			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown); //triangle.getPosition().y - 300
+			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp); ////triangle.getPosition().y + 300
 
-			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - 300, view.getCenter().y);
-			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + 300, view.getCenter().y);
+			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
+			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
 
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
