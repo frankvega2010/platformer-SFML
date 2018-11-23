@@ -7,6 +7,7 @@
 #include "STP/TMXLoader.hpp"
 #include "pugixml.hpp"
 #include "pugiconfig.hpp"
+#include "Thor/Animations.hpp"
 //#include "raylib.h"
 
 namespace Juego
