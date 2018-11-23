@@ -23,11 +23,13 @@ namespace Juego
 	static bool cameraDown = false; // abajo unbooly
 	static bool cameraUp = false; // arriba cameraUp
 	static float cameraLimitUp = 300.f;
-	static float cameraLimitDown = 100.f;
+	static float cameraLimitDown = 350.f;
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
 	static int gravitySpeed = 0;
+
+	static bool playerInput = false;
 
 	Player player1;
 
@@ -66,7 +68,7 @@ namespace Juego
 			map.ShowObjects();
 
 			view.setCenter(0.0f, 0.f);
-			//view.zoom(2.0f);
+			view.zoom(2.0f);
 
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
 
@@ -79,7 +81,7 @@ namespace Juego
 			//playerRectangle.getGlobalBounds().
 
 			player1.setPosition(0, 0);
-			player1.setSize(200, 200);
+			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
 			player1.setSpeed(800);
@@ -193,26 +195,23 @@ namespace Juego
 			input();
 
 			// gravity
+
 			if (player1.getGravity())
 			{
 				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
 				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
 				player1.setDirection(Down);
 				cameraUp = false;
+				//player1.setCanMoveUp(true);
+				//player1.setCanMoveDown(true);
+				player1.setCanMoveLeft(true);
+				player1.setCanMoveRight(true);
 			}
 
 			playerRectangle.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
 
-<<<<<<< HEAD
-
-			
-			
-
-			if (playerRectangle.getPosition().x > view.getCenter().x + 300)
-=======
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
->>>>>>> 66d9251a835939fa99db8b48a4b9e7b78e2b1be3
 			{
 				if (!(cameraRight))
 				{
@@ -254,21 +253,41 @@ namespace Juego
 
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
+				
+				/*if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < rectangles[i].getPosition().x || playerRectangle.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width)
+				{
+					gravitySpeed = 500;
+				}*/
+
 				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 				{	
+<<<<<<< HEAD
+					if (player1.getDirection() == Right && player1.getCanMoveRight())
+=======
+					
+
 					if (player1.getDirection() == Right)
+>>>>>>> 5082a655d9a26deb110cd53108397c59273231d0
 					{
 						player1.setCanMoveRight(false);
 						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
+<<<<<<< HEAD
+					if (player1.getDirection() == Left && player1.getCanMoveRight())
+=======
 					if (player1.getDirection() == Left)
+>>>>>>> 5082a655d9a26deb110cd53108397c59273231d0
 					{
 						player1.setCanMoveLeft(false);
 						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
 					}
 
+<<<<<<< HEAD
 					if (player1.getDirection() == Up)
+=======
+					if (player1.getDirection() == Up )
+>>>>>>> 5082a655d9a26deb110cd53108397c59273231d0
 					{
 						player1.setCanMoveUp(false);
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
@@ -279,17 +298,25 @@ namespace Juego
 						gravitySpeed = 0;
 						player1.setGravity(false);
 						player1.setCanMoveDown(false);
+<<<<<<< HEAD
+						player1.setCanMoveRight(false);
+						player1.setCanMoveLeft(false);
+						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height) + 0.1f);
+						
+=======
+						cameraDown = false;
 						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
+>>>>>>> 5082a655d9a26deb110cd53108397c59273231d0
 					}
-
-
 					map.GetLayer("plataforma").SetColor({ 255,0,0 });
+					
 				}
 				else
 				{
 					map.GetLayer("plataforma").SetColor({ 255,255,255 });
-					player1.setGravity(true);
+
 					gravitySpeed = 500;
+					player1.setGravity(true);
 				}
 			}
 		}
@@ -308,6 +335,7 @@ namespace Juego
 		void GameplayScreen::deInit()
 		{
 			_window.setView(_window.getDefaultView());
+			view.zoom(0.5f);
 		}
 
 		bool GameplayScreen::finish()

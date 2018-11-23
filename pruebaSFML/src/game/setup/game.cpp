@@ -35,6 +35,7 @@ namespace Juego
 	int Game::_newScreenHeight = 0;
 	int Game::_newScreenWidth = 0;
 	bool Game::_isKeyPressed = false;
+	int Game::_defaultStyle = 0;
 
 	Screens* gameScreens[MaxGameScreens];
 
@@ -50,6 +51,7 @@ namespace Juego
 
 	Game::Game()
 	{
+		_defaultStyle = sf::Style::Default;
 		_screenHeight = 0;
 		_screenWidth = 0;
 
@@ -61,7 +63,8 @@ namespace Juego
 
 		setScreenWidth(1920);
 		setScreenHeight(1080);
-		_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "SFML Template");
+		_window.setPosition(sf::Vector2i(0, 0));
+		_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "SFML Template", _defaultStyle);
 		Game::setNewScreenWidth(1440);
 		Game::setNewScreenHeight(900);
 		_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
@@ -155,6 +158,15 @@ namespace Juego
 	void Game::setIsKeyPressed(bool isKeyPressed)
 	{
 		_isKeyPressed = isKeyPressed;
+	}
+
+	int Game::getDefaultStyle()
+	{
+		return _defaultStyle;
+	}
+	void Game::setDefaultStyle(int DefaultStyle)
+	{
+		_defaultStyle = DefaultStyle;
 	}
 
 	

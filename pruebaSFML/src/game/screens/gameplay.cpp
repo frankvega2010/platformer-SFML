@@ -41,6 +41,8 @@ namespace Juego
 
 	Player player1;
 
+	sf::Texture playerTexture;
+	sf::Sprite playerSprite;
 	sf::CircleShape triangle(100.0f, 3);
 	sf::RectangleShape playerRectangle;
 
@@ -50,9 +52,11 @@ namespace Juego
 	const int maxColisionsBoxes = 4;
 
 	sf::RectangleShape rectangles[maxColisionsBoxes];
+	
 
 	namespace Gameplay_Section
 	{
+
 		std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
@@ -72,6 +76,14 @@ namespace Juego
 
 		void GameplayScreen::init()
 		{
+			playerTexture.loadFromFile("res/assets/textures/playertest.png");
+			playerTexture.setSmooth(true);
+			playerTexture.setRepeated(false);
+
+			playerSprite.setTexture(playerTexture);
+			playerSprite.setPosition(0, 0);
+			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
+
 			//_window.setView(view);
 			map.ShowObjects();
 
@@ -117,11 +129,12 @@ namespace Juego
 			triangle.setFillColor(sf::Color::Cyan);
 			
 			//_hasScreenFinished = false;
-			
+
 		}
 
 		void GameplayScreen::input()
 		{
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
 				if (player1.getCanMoveRight())
@@ -243,6 +256,7 @@ namespace Juego
 			{
 				//playerRectangle.setPosition(playerRectangle.getPosition().x,(gravitySpeed * deltaTime.asSeconds()));
 				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				playerSprite.setPosition(playerRectangle.getPosition());
 				player1.setDirection(Down);
 				cameraUp = false;
 				player1.setCanMoveUp(true);
@@ -252,6 +266,8 @@ namespace Juego
 			}
 
 			playerRectangle.move(player1.getMove());
+			//playerSprite.setPosition(playerRectangle.getPosition());
+			playerSprite.move(player1.getMove());
 			deltaText.setString(toString(deltaTime));
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
@@ -335,6 +351,7 @@ namespace Juego
 					}
 
 					map.GetLayer("plataforma").SetColor({ 255,0,0 });
+					
 				}
 				else
 				{
@@ -355,6 +372,7 @@ namespace Juego
 			_window.draw(deltaText);
 			_window.draw(playerRectangle);
 			_window.draw(map);
+			_window.draw(playerSprite);
 		}
 
 		void GameplayScreen::deInit()

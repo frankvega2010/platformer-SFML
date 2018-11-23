@@ -9,7 +9,7 @@ using namespace Gameplay_Section;
 
 namespace Juego
 {
-	static const int maxButtons = 7;
+	static const int maxButtons = 8;
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
@@ -57,6 +57,10 @@ namespace Juego
 			Game::setNewScreenWidth(1440);
 			Game::setNewScreenHeight(900);
 			_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+			if (Game::getDefaultStyle() == sf::Style::Fullscreen)
+			{
+				_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+			}
 		}
 
 		static void signalChangeTo1600x900()
@@ -64,6 +68,10 @@ namespace Juego
 			Game::setNewScreenWidth(1600);
 			Game::setNewScreenHeight(900);
 			_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+			if (Game::getDefaultStyle() == sf::Style::Fullscreen)
+			{
+				_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+			}
 		}
 
 		static void signalChangeTo1920x1080()
@@ -71,6 +79,21 @@ namespace Juego
 			Game::setNewScreenWidth(1920);
 			Game::setNewScreenHeight(1080);
 			_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+			if (Game::getDefaultStyle() == sf::Style::Fullscreen)
+			{
+				_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+			}
+		}
+
+		static void signalToggleFullscreen()
+		{
+			//_window.
+			//_window.setPosition(sf::Vector2i(0,0));
+			if (Game::getDefaultStyle() == sf::Style::Default) Game::setDefaultStyle(sf::Style::Fullscreen);
+			else if (Game::getDefaultStyle() == sf::Style::Fullscreen)Game::setDefaultStyle(sf::Style::Default);
+			_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+			//_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+			//_window.create();
 		}
 
 		void SettingsScreen::init()
@@ -96,7 +119,8 @@ namespace Juego
 			buttons[3]->setText("1440x900");
 			buttons[4]->setText("1600x900");
 			buttons[5]->setText("1920x1080");
-			buttons[6]->setText("Menu");
+			buttons[6]->setText("Fullscreen");
+			buttons[7]->setText("Menu");
 
 			buttons[0]->connect("Pressed", signalChangeTo800x600);
 			buttons[1]->connect("Pressed", signalChangeTo1024x768);
@@ -104,7 +128,8 @@ namespace Juego
 			buttons[3]->connect("Pressed", signalChangeTo1440x900);
 			buttons[4]->connect("Pressed", signalChangeTo1600x900);
 			buttons[5]->connect("Pressed", signalChangeTo1920x1080);
-			buttons[6]->connect("Pressed", signalGoToMenu);
+			buttons[6]->connect("Pressed", signalToggleFullscreen);
+			buttons[7]->connect("Pressed", signalGoToMenu);
 
 			setHasScreenFinished(false);
 		}
