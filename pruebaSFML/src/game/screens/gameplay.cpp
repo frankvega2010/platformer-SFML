@@ -54,6 +54,7 @@ namespace Game_Namespace
 	sf::CircleShape triangle(100.0f, 3);
 	sf::RectangleShape playerRectangle;
 	sf::RectangleShape enemyRectangle;
+	sf::RectangleShape enemyPlayerDetection;
 
 	sf::Font deltaFont;
 	sf::Text deltaText;
@@ -134,10 +135,15 @@ namespace Game_Namespace
 			enemyTest.setColor(sf::Color::Yellow);
 			enemyTest.setIsAlive(true);
 			enemyTest.setSpeed(500, 1400);
+			
 
 			enemyRectangle.setFillColor(enemyTest.getColor());
 			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
 			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
+
+			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
+			enemyPlayerDetection.setSize(sf::Vector2f(500.0f, 540));
+			enemyPlayerDetection.setFillColor({150,0,0,150});
 
 			playerRectangle.setFillColor(player1.getColor());
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
@@ -312,7 +318,7 @@ namespace Game_Namespace
 				enemyRectangle.setPosition(enemyRectangle.getPosition().x, enemyRectangle.getPosition().y + (enemyTest.getSpeed().y * deltaTime.asSeconds()));
 			}
 
-			
+			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
 			playerRectangle.move(player1.getMove());
 			playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
@@ -373,6 +379,22 @@ namespace Game_Namespace
 					CheckCollisionWithTiles(enemyRectangle, i);
 			}
 
+			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
+			{
+				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				{
+					enemyRectangle.move(300 * deltaTime.asSeconds(), 0);
+				}
+				else if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				{
+					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
+				}
+			}
+			else
+			{
+				enemyRectangle.move(0, 0);
+			}
+
 			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
 				enemyRectangle.setFillColor(sf::Color::Cyan);
@@ -410,6 +432,7 @@ namespace Game_Namespace
 			_window.draw(playerSprite);
 			_window.draw(enemyRectangle);
 			_window.draw(Lives);
+			_window.draw(enemyPlayerDetection);
 		}
 
 		void GameplayScreen::deInit()
