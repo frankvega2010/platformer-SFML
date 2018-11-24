@@ -10,13 +10,13 @@ namespace Juego
 
 	pugi::xml_document doc;
 
-	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/testlevel.tmx");
+	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firingrange.tmx");
 
 	pugi::xml_node object = doc.child("map").child("objectgroup");
 
 	pugi::xml_node_iterator someObjects = object.begin();
 
-	tmx::TileMap map("res/assets/tiles/testlevel.tmx");
+	tmx::TileMap map("res/assets/tiles/firingrange.tmx");
 
 	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
 
@@ -49,7 +49,7 @@ namespace Juego
 	sf::Font deltaFont;
 	sf::Text deltaText;
 
-	const int maxColisionsBoxes = 4;
+	const int maxColisionsBoxes = 30;
 
 	sf::RectangleShape rectangles[maxColisionsBoxes];
 
@@ -80,12 +80,12 @@ namespace Juego
 			playerTexture.setRepeated(false);
 
 			playerSprite.setTexture(playerTexture);
-			playerSprite.setPosition(0, 0);
+			playerSprite.setPosition(200, 1800);
 			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
 
-			map.ShowObjects();
+			//map.ShowObjects();
 
-			view.setCenter(0.0f, 0.f);
+			view.setCenter(200.0f, 1800.f);
 			view.zoom(2.0f);
 
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
@@ -96,7 +96,7 @@ namespace Juego
 
 			gravitySpeed = 800;
 
-			player1.setPosition(0, 0);
+			player1.setPosition(200, 1800);
 			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
