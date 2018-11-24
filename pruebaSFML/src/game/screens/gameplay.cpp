@@ -35,8 +35,15 @@ namespace Game_Namespace
 	static bool isJumping = false;
 	static bool isOnGround = false;
 
+	static int playerLivesTest = 3;
+	static bool currentlyTouchingPlayer = false;
+	//static bool playerInvincibility = false;
+
 	const sf::Time initialTime = sf::seconds(0.5f);
 	thor::CallbackTimer timerJump;
+
+	const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
+	thor::CallbackTimer timerInvincibility;
 
 
 	Player player1;
@@ -50,6 +57,8 @@ namespace Game_Namespace
 
 	sf::Font deltaFont;
 	sf::Text deltaText;
+
+	sf::Text Lives;
 
 	const int maxColisionsBoxes = 30;
 
@@ -66,6 +75,15 @@ namespace Game_Namespace
 			stream.setf(std::ios_base::fixed);
 			stream.precision(10);
 			stream << value.asSeconds();
+			return stream.str();
+		}
+
+		std::string toString(int value)
+		{
+			std::ostringstream stream;
+			stream.setf(std::ios_base::fixed);
+			stream.precision(0);
+			stream << value;
 			return stream.str();
 		}
 
@@ -97,6 +115,11 @@ namespace Game_Namespace
 			deltaText.setCharacterSize(30);
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
+
+			Lives.setCharacterSize(80);
+			Lives.setFont(deltaFont);
+			Lives.setPosition(200, 1400);
+			
 
 			gravitySpeed = 800;
 
@@ -245,11 +268,26 @@ namespace Game_Namespace
 			input();
 
 			//JUMP
+			if (timerInvincibility.isRunning())
+			{
+				playerRectangle.setFillColor(sf::Color::Green);
+			}
+
+			if (timerInvincibility.isExpired())
+			{
+				timerInvincibility.reset(initialInvincibilityTime);
+				playerRectangle.setFillColor(sf::Color::Red);
+				if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+				{
+					currentlyTouchingPlayer = true;
+				}
+			}
 
 			if (isJumping)
 			{
 				cameraDown = false;
 				playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				//Lives.setPosition(Lives.getPosition().x, Lives.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				if (timerJump.isExpired())
 				{
 					isJumping = false;
@@ -278,6 +316,10 @@ namespace Game_Namespace
 			playerRectangle.move(player1.getMove());
 			playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
+			Lives.setString("Player Lives:" + toString(playerLivesTest));
+			
+			Lives.move(player1.getMove());
+			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
@@ -314,7 +356,11 @@ namespace Game_Namespace
 			}
 
 			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown);
-			if (cameraUp) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
+			if (cameraUp)
+			{
+				view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
+				Lives.move(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+			}
 
 			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
 			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
@@ -325,6 +371,27 @@ namespace Game_Namespace
 			{
 					CheckCollisionWithTiles(playerRectangle,i);
 					CheckCollisionWithTiles(enemyRectangle, i);
+			}
+
+			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+			{
+				enemyRectangle.setFillColor(sf::Color::Cyan);
+				if (currentlyTouchingPlayer)
+				{
+					if (!(timerInvincibility.isRunning()))
+					{
+						timerInvincibility.start();
+						playerLivesTest--;
+					}
+					//playerInvincibility = true;
+					
+				}
+				currentlyTouchingPlayer = false;
+			}
+			else
+			{
+				enemyRectangle.setFillColor(sf::Color::Yellow);
+				currentlyTouchingPlayer = true;
 			}
 		}
 
@@ -342,6 +409,7 @@ namespace Game_Namespace
 			_window.draw(playerRectangle);
 			_window.draw(playerSprite);
 			_window.draw(enemyRectangle);
+			_window.draw(Lives);
 		}
 
 		void GameplayScreen::deInit()
