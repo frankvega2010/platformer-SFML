@@ -149,12 +149,12 @@
     <ClCompile Include="..\src\game\screens\controls.cpp" />
     <ClCompile Include="..\src\game\screens\menu.cpp" />
     <ClCompile Include="..\src\game\screens\settings.cpp" />
+    <ClCompile Include="..\src\game\setup\enemy.cpp" />
     <ClCompile Include="..\src\game\setup\game.cpp" />
     <ClCompile Include="..\src\game\setup\player.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\pugixml\pugixml.cpp" />
-    <ClCompile Include="enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\screens\credits.h" />
@@ -163,12 +163,12 @@
     <ClInclude Include="..\src\game\screens\controls.h" />
     <ClInclude Include="..\src\game\screens\menu.h" />
     <ClInclude Include="..\src\game\screens\settings.h" />
+    <ClInclude Include="..\src\game\setup\enemy.h" />
     <ClInclude Include="..\src\game\setup\game.h" />
     <ClInclude Include="..\src\game\setup\player.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
     <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml\pugixml.hpp" />
-    <ClInclude Include="enemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

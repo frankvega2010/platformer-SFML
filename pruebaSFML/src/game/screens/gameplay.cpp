@@ -21,9 +21,9 @@ namespace Game_Namespace
 	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
 
 	static bool cameraRight = false;
-	static bool cameraLeft = false; 
-	static bool cameraDown = false; 
-	static bool cameraUp = false; 
+	static bool cameraLeft = false;
+	static bool cameraDown = false;
+	static bool cameraUp = false;
 	static float cameraLimitUp = 300.f;
 	static float cameraLimitDown = 350.f;
 	static float cameraLimitLeft = 300.f;
@@ -40,11 +40,13 @@ namespace Game_Namespace
 
 
 	Player player1;
+	Enemy enemyTest;
 
 	sf::Texture playerTexture;
 	sf::Sprite playerSprite;
 	sf::CircleShape triangle(100.0f, 3);
 	sf::RectangleShape playerRectangle;
+	sf::RectangleShape enemyRectangle;
 
 	sf::Font deltaFont;
 	sf::Text deltaText;
@@ -56,6 +58,8 @@ namespace Game_Namespace
 
 	namespace Gameplay_Section
 	{
+		
+
 		std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
@@ -102,6 +106,16 @@ namespace Game_Namespace
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 1400);
 
+			enemyTest.setPosition(200, 1000);
+			enemyTest.setSize(100, 180);
+			enemyTest.setColor(sf::Color::Yellow);
+			enemyTest.setIsAlive(true);
+			enemyTest.setSpeed(500, 1400);
+
+			enemyRectangle.setFillColor(enemyTest.getColor());
+			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
+			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
+
 			playerRectangle.setFillColor(player1.getColor());
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
 			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
@@ -131,23 +145,23 @@ namespace Game_Namespace
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			{
-					cameraLeft = false;
-					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
+				cameraLeft = false;
+				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 			{
-					cameraRight = false;
-					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
+				cameraRight = false;
+				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			{
-					cameraUp = false;
-					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
+				cameraUp = false;
+				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 			{
-					cameraDown = false;
-					player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				cameraDown = false;
+				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 			}
 			else
 			{
@@ -184,6 +198,47 @@ namespace Game_Namespace
 			}*/
 		}
 
+		void CheckCollisionWithTiles(sf::RectangleShape& shape, int i)
+		{
+			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
+			{
+				if (shape.getPosition().x + shape.getGlobalBounds().width > rectangles[i].getPosition().x &&
+					shape.getPosition().x + shape.getGlobalBounds().width < rectangles[i].getPosition().x + 10)
+				{
+					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
+					shape.setPosition(rectangles[i].getPosition().x - (shape.getGlobalBounds().width), shape.getPosition().y);
+				}
+
+				if (shape.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
+					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10
+					)
+				{
+					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
+					shape.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), shape.getPosition().y);
+				}
+
+				if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
+					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20)
+				{
+					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
+					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
+				}
+
+				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
+					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
+				{
+					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
+					isOnGround = true;
+					cameraDown = false;
+					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
+				}
+			}
+			else
+			{
+				rectangles[i].setFillColor({ 255,255,255 }); // Testing Collision, delete later!
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 			_window.setView(view);
@@ -214,6 +269,12 @@ namespace Game_Namespace
 				cameraUp = false;
 			}
 
+			if (enemyTest.getGravity())
+			{
+				enemyRectangle.setPosition(enemyRectangle.getPosition().x, enemyRectangle.getPosition().y + (enemyTest.getSpeed().y * deltaTime.asSeconds()));
+			}
+
+			
 			playerRectangle.move(player1.getMove());
 			playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
@@ -262,43 +323,8 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
-				if (playerRectangle.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
-				{
-					if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width > rectangles[i].getPosition().x &&
-						playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < rectangles[i].getPosition().x + 10)
-					{
-						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
-						playerRectangle.setPosition(rectangles[i].getPosition().x - (playerRectangle.getLocalBounds().width), playerRectangle.getPosition().y);
-					}
-
-					if (playerRectangle.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
-						playerRectangle.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10
-						)
-					{
-						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
-						playerRectangle.setPosition(rectangles[i].getPosition().x + (rectangles[i].getLocalBounds().width), playerRectangle.getPosition().y);
-					}
-
-					if (playerRectangle.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-						playerRectangle.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20)
-					{
-						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getLocalBounds().height));
-					}
-
-					if (playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height > rectangles[i].getPosition().y &&
-						playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
-					{
-						rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
-						isOnGround = true;
-						cameraDown = false;
-						playerRectangle.setPosition(playerRectangle.getPosition().x, rectangles[i].getPosition().y - (playerRectangle.getLocalBounds().height));
-					}
-				}
-				else
-				{
-					rectangles[i].setFillColor({ 255,255,255 }); // Testing Collision, delete later!
-				}
+					CheckCollisionWithTiles(playerRectangle,i);
+					CheckCollisionWithTiles(enemyRectangle, i);
 			}
 		}
 
@@ -315,6 +341,7 @@ namespace Game_Namespace
 			_window.draw(deltaText);
 			_window.draw(playerRectangle);
 			_window.draw(playerSprite);
+			_window.draw(enemyRectangle);
 		}
 
 		void GameplayScreen::deInit()

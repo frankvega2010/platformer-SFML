@@ -58,7 +58,7 @@
     <ClCompile Include="..\src\pugixml\pugixml.cpp">
       <Filter>Game\pugixml</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
+    <ClCompile Include="..\src\game\setup\enemy.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,7 +96,7 @@
     <ClInclude Include="..\src\pugixml\pugixml.hpp">
       <Filter>Game\pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
+    <ClInclude Include="..\src\game\setup\enemy.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
   </ItemGroup>
