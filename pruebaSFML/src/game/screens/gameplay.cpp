@@ -304,13 +304,16 @@ namespace Juego
 
 		void GameplayScreen::draw()
 		{
+			// Draw Tilemap with its collision objects
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
 				_window.draw(rectangles[i]);
 			}
+			_window.draw(map);
+
+			// Draw everything else
 			_window.draw(deltaText);
 			_window.draw(playerRectangle);
-			_window.draw(map);
 			_window.draw(playerSprite);
 		}
 
