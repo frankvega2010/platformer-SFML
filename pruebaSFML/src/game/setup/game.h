@@ -20,7 +20,7 @@
 
 //#include "raylib.h"
 
-namespace Juego
+namespace Game_Namespace
 {
 	enum GameScreens
 	{

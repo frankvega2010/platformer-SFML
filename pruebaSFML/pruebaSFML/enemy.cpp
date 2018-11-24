@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-namespace Game
+namespace Game_Namespace
 {
 	Enemy::Enemy()
 	{

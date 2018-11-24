@@ -2,7 +2,7 @@
 #define PLAYER_H
 #include "game.h"
 
-namespace Game
+namespace Game_Namespace
 {
 	enum playerControls
 	{

@@ -10,7 +10,7 @@
 #include "Thor/Animations.hpp"
 //#include "raylib.h"
 
-namespace Juego
+namespace Game_Namespace
 {
 	enum gameplayOptions
 	{

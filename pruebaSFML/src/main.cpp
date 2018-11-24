@@ -1,6 +1,6 @@
 #include "setup/game.h"
 
-using namespace Juego;
+using namespace Game_Namespace;
 
 int main()
 {

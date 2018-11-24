@@ -3,7 +3,7 @@
 #include "game.h"
 #include "setup/screens.h"
 
-namespace Juego
+namespace Game_Namespace
 {
 	enum menuOptions {
 		buttonPlay = 10,

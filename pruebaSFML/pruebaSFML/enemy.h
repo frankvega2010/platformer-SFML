@@ -2,7 +2,7 @@
 #define ENEMY_H
 #include "game.h"
 
-namespace Game
+namespace Game_Namespace
 {
 	class Enemy
 	{

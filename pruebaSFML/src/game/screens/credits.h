@@ -2,7 +2,7 @@
 #define CREDITS_H
 #include "Setup/game.h"
 #include "setup/screens.h"
-namespace Juego
+namespace Game_Namespace
 {
 	namespace Credits_Section
 	{

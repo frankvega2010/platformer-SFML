@@ -5,7 +5,7 @@
 #include "Thor/Time.hpp"
 
 
-namespace Juego
+namespace Game_Namespace
 {
 
 	pugi::xml_document doc;

@@ -11,7 +11,7 @@
 #include "setup/screens.h"
 
 
-using namespace Juego;
+using namespace Game_Namespace;
 using namespace Gameplay_Section;
 using namespace GameOver_Section;
 using namespace Menu_Section;
@@ -19,7 +19,7 @@ using namespace Settings_Section;
 using namespace Credits_Section;
 using namespace Controls_Section;
 
-namespace Juego
+namespace Game_Namespace
 {
 	static bool gameON = true;
 

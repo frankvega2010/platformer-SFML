@@ -3,7 +3,7 @@
 #include "Setup/Game.h"
 #include "Screens\gameplay.h"
 #include "setup/screens.h"
-namespace Juego
+namespace Game_Namespace
 {
 	namespace Controls_Section
 	{

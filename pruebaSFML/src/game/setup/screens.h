@@ -1,7 +1,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
-namespace Juego
+namespace Game_Namespace
 {
 	class Screens
 	{

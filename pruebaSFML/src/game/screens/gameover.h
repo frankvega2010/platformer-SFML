@@ -4,7 +4,7 @@
 #include "Screens/gameplay.h"
 #include "setup/screens.h"
 
-namespace Juego
+namespace Game_Namespace
 {
 	const int buttonMenu = 12; // arreglr
 	namespace GameOver_Section

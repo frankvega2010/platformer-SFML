@@ -2,7 +2,7 @@
 #define SETTINGS_H
 #include "game.h"
 #include "setup/screens.h"
-namespace Juego
+namespace Game_Namespace
 {
 	namespace Settings_Section
 	{
