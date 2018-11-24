@@ -1,6 +1,6 @@
 #include "player.h"
 
-namespace Juego
+namespace Game
 {
 	Player::Player()
 	{

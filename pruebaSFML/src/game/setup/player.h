@@ -2,7 +2,7 @@
 #define PLAYER_H
 #include "game.h"
 
-namespace Juego
+namespace Game
 {
 	enum playerControls
 	{
