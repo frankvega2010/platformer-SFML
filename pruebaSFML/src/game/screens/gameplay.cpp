@@ -150,6 +150,7 @@ namespace Game_Namespace
 
 			gravitySpeed = 800;
 
+			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 180);
 			player1.setColor(sf::Color::Red);
@@ -254,7 +255,7 @@ namespace Game_Namespace
 			}*/
 		}
 
-		void CheckCollisionWithTiles(sf::RectangleShape& shape, int i)
+		void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
 		{
 			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 			{
@@ -284,7 +285,7 @@ namespace Game_Namespace
 					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
 				{
 					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
-					isOnGround = true;
+					if(Character.getIsPlayer()) isOnGround = true;
 					cameraDown = false;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
 				}
@@ -453,8 +454,8 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
-					CheckCollisionWithTiles(playerRectangle,i);
-					CheckCollisionWithTiles(enemyRectangle, i);
+					CheckCollisionWithTiles(playerRectangle,i,player1);
+					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
 			}
 
 			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))

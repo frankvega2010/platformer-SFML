@@ -11,7 +11,7 @@ namespace Game_Namespace
 		_alive = true;
 		_speed = { 0,0 };
 		_gravity = true;
-		_isPlayer = true;
+		_isPlayer = false;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -23,7 +23,7 @@ namespace Game_Namespace
 		_move = { 0,0 };
 		_speed = { 0,0 };
 		_gravity = true;
-		_isPlayer = true;
+		_isPlayer = false;
 	}
 
 	Character::~Character()
