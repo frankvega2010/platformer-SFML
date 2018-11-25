@@ -21,11 +21,13 @@ using namespace Controls_Section;
 
 namespace Game_Namespace
 {
+	sf::Context context;
+
 	static bool gameON = true;
 
 	static sf::Event event;
 
-	int Game::_buttonOption=0;
+	int Game::_buttonOption = 0;
 	float Game::_defaultFontSize = 0;
 	float Game::_defaultFontSizeGameplayScore = 0;
 	float Game::_defaultFontSizeGameplayText = 0;
@@ -38,6 +40,7 @@ namespace Game_Namespace
 	int Game::_defaultStyle = 0;
 
 	Screens* gameScreens[MaxGameScreens];
+	//std::vector<Screens> gameScreens{MaxGameScreens};
 
 	sf::RenderWindow _window;
 
@@ -173,12 +176,12 @@ namespace Game_Namespace
 
 	void Game::init()
 	{
-
+		_window.setActive();
 	
 		
 		//std::cout << _window.getView().getSize().x;
 
-		//button->is
+		//button.is
 
 		//windowView.setViewport(sf::FloatRect(0,0,1280,800));
 		//windowView.setCenter(sf::Vector2f(0, 0));
@@ -249,7 +252,7 @@ namespace Game_Namespace
 					#ifdef AUDIO
 										StopMusicStream(pong_menu_song);
 					#endif
-										//event.type = sf::Event::Closed;
+										//event->type = sf::Event::Closed;
 					//_gameScreen = 0;
 					gameON = false;
 					return;
@@ -374,7 +377,7 @@ namespace Game_Namespace
 	{
 		_window.clear(sf::Color::Black);
 		//
-		//_window.clear(sf::Color::Black);
+		//_window->clear(sf::Color::Black);
 
 		gameScreens[_gameScreen]->draw();
 
@@ -387,7 +390,11 @@ namespace Game_Namespace
 
 	void Game::deInit()
 	{
-		
+		for (int i = 0; i < MaxGameScreens; i++)
+		{
+			delete gameScreens[i];
+			gameScreens[i] = NULL;
+		}
 	}
 
 	void Game::execute()

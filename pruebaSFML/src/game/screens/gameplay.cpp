@@ -60,7 +60,7 @@ namespace Game_Namespace
 	Character enemyTest;
 
 	sf::Texture playerTexture;
-	sf::Sprite playerSprite;
+	static sf::Sprite playerSprite;
 	sf::CircleShape triangle(100.0f, 3);
 	sf::CircleShape crosshairTest;
 	sf::RectangleShape playerRectangle;
