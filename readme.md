@@ -34,6 +34,10 @@ Work in Progress
 
 My name's Franco and I'm a game dev enthusiast who is currently studying Programming (and Game Design) so one day I can put all my effort and time in the videogames industry, which is constantly rising. I'm a beginner in Programming but I'm trying my best to make the best experiences possible as well as keeping the code nice and clean.
 
+## Bio (Mariano Martinez)
+
+My name's Mariano and I'm currently studying Programming (and Game Design), i also studied Sound engineering for about three years. I'm new at programming, so i hope i can learn a lot from the fun experience that is making video games.
+
 ## Contact (Mariano Martinez)
 
 Emails: 
