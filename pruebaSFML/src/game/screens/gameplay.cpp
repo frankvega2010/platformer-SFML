@@ -198,22 +198,22 @@ namespace Game_Namespace
 		void GameplayScreen::input()
 		{
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
 				cameraLeft = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
 				cameraRight = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				cameraUp = false;
 				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
 			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
 				cameraDown = false;
 				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
