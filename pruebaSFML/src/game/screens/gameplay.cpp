@@ -35,6 +35,16 @@ namespace Game_Namespace
 	static bool isJumping = false;
 	static bool isOnGround = false;
 
+	//static bool flipRight = false;
+	//static bool flipLeft = false;
+
+	//sf::Mouse playerMouse;
+
+	sf::Vector2i MousePosition;
+
+	// convert it to world coordinates
+	sf::Vector2f worldPos;
+
 	static int playerLivesTest = 3;
 	static bool currentlyTouchingPlayer = false;
 	//static bool playerInvincibility = false;
@@ -52,6 +62,7 @@ namespace Game_Namespace
 	sf::Texture playerTexture;
 	sf::Sprite playerSprite;
 	sf::CircleShape triangle(100.0f, 3);
+	sf::CircleShape crosshairTest;
 	sf::RectangleShape playerRectangle;
 	sf::RectangleShape enemyRectangle;
 	sf::RectangleShape enemyPlayerDetection;
@@ -98,6 +109,13 @@ namespace Game_Namespace
 
 		void GameplayScreen::init()
 		{
+			MousePosition = sf::Mouse::getPosition(_window);
+
+			// convert it to world coordinates
+			worldPos = _window.mapPixelToCoords(MousePosition);
+
+			//sf::Mouse::setPosition(sf::Vector2i(Game::getNewScreenWidth(), Game::getNewScreenHeight()), _window);
+
 			playerTexture.loadFromFile("res/assets/textures/playertest.png");
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
@@ -105,6 +123,7 @@ namespace Game_Namespace
 			playerSprite.setTexture(playerTexture);
 			playerSprite.setPosition(200, 1800);
 			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
+			
 
 			//map.ShowObjects();
 
@@ -120,6 +139,13 @@ namespace Game_Namespace
 			Lives.setCharacterSize(80);
 			Lives.setFont(deltaFont);
 			Lives.setPosition(200, 1400);
+			
+			
+			crosshairTest.setRadius(30);
+			crosshairTest.setOutlineThickness(5);
+			crosshairTest.setFillColor(sf::Color::Transparent);
+			crosshairTest.setOutlineColor(sf::Color::Red);
+			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
 			
 
 			gravitySpeed = 800;
@@ -270,6 +296,13 @@ namespace Game_Namespace
 
 		void GameplayScreen::update()
 		{
+			
+			MousePosition = sf::Mouse::getPosition(_window);
+
+			// convert it to world coordinates
+			worldPos = _window.mapPixelToCoords(MousePosition);
+			//MousePosition = sf::Mouse::getPosition(_window);
+			//sf::Mouse::getPosition()
 			_window.setView(view);
 			input();
 
@@ -320,12 +353,37 @@ namespace Game_Namespace
 
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
 			playerRectangle.move(player1.getMove());
+			//playerSprite.scale(-1, 1);
+
 			playerSprite.setPosition(playerRectangle.getPosition());
+			//playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
 			Lives.setString("Player Lives:" + toString(playerLivesTest));
+
+			crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
 			
-			Lives.move(player1.getMove());
+			Lives.move(player1.getMove());		
+			
 			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
+
+			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
+			{
+				/*playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
+				playerSprite.scale(-1, 1);*/
+				/*playerSprite.setOrigin({ playerSprite.getLocalBounds().width, 0 });
+				playerSprite.scale(-1, 1);*/
+				//playerSprite.setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , - playerSprite.getGlobalBounds().height));
+					//playerSprite.get
+			}
+			else if (crosshairTest.getPosition().x > playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
+			{
+				/*playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
+				playerSprite.scale(-1, 1);*/
+				//playerSprite.setOrigin({ 0, 0 });
+				//playerSprite.scale(1, 1);
+				//setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , playerSprite.getGlobalBounds().height));
+				//playerSprite.scale(1, 1);
+			}
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
@@ -433,6 +491,7 @@ namespace Game_Namespace
 			_window.draw(enemyRectangle);
 			_window.draw(Lives);
 			_window.draw(enemyPlayerDetection);
+			_window.draw(crosshairTest);
 		}
 
 		void GameplayScreen::deInit()

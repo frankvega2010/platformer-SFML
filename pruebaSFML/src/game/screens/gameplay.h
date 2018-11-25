@@ -9,6 +9,7 @@
 #include "pugixml.hpp"
 #include "pugiconfig.hpp"
 #include "Thor/Animations.hpp"
+//#include "SFML/Mouse.hpp"
 //#include "raylib.h"
 
 namespace Game_Namespace
