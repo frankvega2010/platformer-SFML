@@ -1,6 +1,7 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 //#include <sstream>
+#include <iostream>
 #include "Setup\game.h"
 #include "setup/screens.h"
 #include "setup/character.h"
@@ -10,6 +11,7 @@
 #include "pugixml.hpp"
 #include "pugiconfig.hpp"
 #include "Thor/Animations.hpp"
+#include "SpriteAnimation.h"
 //#include "SFML/Mouse.hpp"
 //#include "raylib.h"
 

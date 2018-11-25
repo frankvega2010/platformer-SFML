@@ -63,13 +63,18 @@ namespace Game_Namespace
 	Character player1;
 	Character enemyTest;
 
+	
+
 	sf::Texture playerTexture;
+	SpriteAnimation animation;
+
 	static sf::Sprite playerSprite;
 	sf::CircleShape triangle(100.0f, 3);
 	sf::CircleShape crosshairTest;
 	sf::RectangleShape playerRectangle;
 	sf::RectangleShape enemyRectangle;
 	sf::RectangleShape enemyPlayerDetection;
+
 
 	sf::Font deltaFont;
 	sf::Text deltaText;
@@ -120,11 +125,12 @@ namespace Game_Namespace
 
 			//sf::Mouse::setPosition(sf::Vector2i(Game::getNewScreenWidth(), Game::getNewScreenHeight()), _window);
 
-			playerTexture.loadFromFile("res/assets/textures/playertest.png");
+			playerTexture.loadFromFile("res/assets/textures/test10.png");
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
 
-			playerSprite.setTexture(playerTexture);
+
+			//playerSprite.setTexture(playerTexture);
 			playerSprite.setPosition(200, 1800);
 			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
 			
@@ -156,7 +162,8 @@ namespace Game_Namespace
 
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
-			player1.setSize(100, 180);
+			//player1.setSize(100, 180);
+			player1.setSize(100, 150);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 1400);
@@ -182,6 +189,18 @@ namespace Game_Namespace
 			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
 			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
 
+			playerRectangle.setTexture(&playerTexture);
+			animation.SetAnimation(&playerTexture, sf::Vector2u(8, 6), 0.1f);
+			/*sf::Vector2f textureSize = static_cast<sf::Vector2f>(playerTexture.getSize());
+			textureSize.x /= 8;
+			textureSize.y /= 6;
+			std::cout << textureSize.x << std::endl;
+			std::cout << textureSize.y << std::endl;
+			playerRectangle.setTextureRect(sf::IntRect(textureSize.x * 2,textureSize.y * 4, textureSize.x, textureSize.y));*/
+
+			
+			
+
 			int i = 0;
 			for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
 			{
@@ -204,6 +223,8 @@ namespace Game_Namespace
 
 		void GameplayScreen::input()
 		{
+			
+
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
@@ -304,6 +325,9 @@ namespace Game_Namespace
 
 		void GameplayScreen::update()
 		{
+
+			animation.Update(0, deltaTime.asSeconds());
+			playerRectangle.setTextureRect(animation.uvRect);
 			
 			MousePosition = sf::Mouse::getPosition(_window);
 
@@ -390,8 +414,8 @@ namespace Game_Namespace
 				
 				if (flipLeft)
 				{
-					playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
-					playerSprite.scale(-1, 1);
+					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
+					playerRectangle.scale(-1, 1);
 				}
 				flipLeft = false;
 				flipRight = true;
@@ -406,8 +430,8 @@ namespace Game_Namespace
 				
 				if (flipRight)
 				{
-					playerSprite.setOrigin({ 0, 0 });
-					playerSprite.scale(-1, 1);
+					playerRectangle.setOrigin({ 0, 0 });
+					playerRectangle.scale(-1, 1);
 				}
 				flipRight = false;
 				flipLeft = true;

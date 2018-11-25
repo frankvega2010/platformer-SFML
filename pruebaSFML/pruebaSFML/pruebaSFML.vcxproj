@@ -154,6 +154,7 @@
     <ClCompile Include="..\src\game\setup\game.cpp" />
     <ClCompile Include="..\src\game\setup\player.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
+    <ClCompile Include="..\src\game\setup\SpriteAnimation.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\pugixml\pugixml.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="..\src\game\setup\game.h" />
     <ClInclude Include="..\src\game\setup\player.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
+    <ClInclude Include="..\src\game\setup\SpriteAnimation.h" />
     <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml\pugixml.hpp" />
   </ItemGroup>
