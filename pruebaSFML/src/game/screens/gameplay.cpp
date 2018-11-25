@@ -35,8 +35,8 @@ namespace Game_Namespace
 	static bool isJumping = false;
 	static bool isOnGround = false;
 
-	//static bool flipRight = false;
-	//static bool flipLeft = false;
+	static bool flipRight = false;
+	static bool flipLeft = false;
 
 	//sf::Mouse playerMouse;
 
@@ -368,15 +368,30 @@ namespace Game_Namespace
 
 			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
 			{
-				/*playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
-				playerSprite.scale(-1, 1);*/
+				
+				if (flipLeft)
+				{
+					playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
+					playerSprite.scale(-1, 1);
+				}
+				flipLeft = false;
+				flipRight = true;
+				/**/
 				/*playerSprite.setOrigin({ playerSprite.getLocalBounds().width, 0 });
 				playerSprite.scale(-1, 1);*/
 				//playerSprite.setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , - playerSprite.getGlobalBounds().height));
 					//playerSprite.get
 			}
-			else if (crosshairTest.getPosition().x > playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
+			else
 			{
+				
+				if (flipRight)
+				{
+					playerSprite.setOrigin({ 0, 0 });
+					playerSprite.scale(-1, 1);
+				}
+				flipRight = false;
+				flipLeft = true;
 				/*playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
 				playerSprite.scale(-1, 1);*/
 				//playerSprite.setOrigin({ 0, 0 });
