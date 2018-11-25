@@ -10,13 +10,13 @@ namespace Game_Namespace
 
 	pugi::xml_document doc;
 
-	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firingrange.tmx");
+	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firerange.tmx");
 
 	pugi::xml_node object = doc.child("map").child("objectgroup");
 
 	pugi::xml_node_iterator someObjects = object.begin();
 
-	tmx::TileMap map("res/assets/tiles/firingrange.tmx");
+	tmx::TileMap map("res/assets/tiles/firerange.tmx");
 
 	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
 
