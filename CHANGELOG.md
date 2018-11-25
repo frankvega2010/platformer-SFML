@@ -4,12 +4,15 @@
 - Multiple Resolutions Customization.
 - Square-like player camera (the camera moves when the player reaches a certain point in the screen).
 - Base GUI for testing.
-- Placeholder Tilemap used for testing.
+- Fire Range Tilemap used for testing.
+- Placeholder Sprite for player.
+- Basic Enemy with simple AI.
+- Player Crosshair.
 
 ### Changed
 - Resolution Scaling Code.
 - Players Static Camera.
-
+- Player Control Scheme from Arrows to WASD.
 
 [Unreleased]
 - Multiple Levels.
@@ -20,4 +23,3 @@
 - 2 Types of enemies.
 - Music.
 - Sound Effects.
-	
