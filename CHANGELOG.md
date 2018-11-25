@@ -1,4 +1,4 @@
-## v0.1 [2018-11-??]
+## v0.1 [2018-11-25]
 ### Added
 - Tilemaps used for levels.
 - Multiple Resolutions Customization.
@@ -8,18 +8,21 @@
 - Placeholder Sprite for player.
 - Basic Enemy with simple AI.
 - Player Crosshair.
+- Player can aim and shoot down enemies with the Left Mouse Button.
 
 ### Changed
 - Resolution Scaling Code.
 - Players Static Camera.
 - Player Control Scheme from Arrows to WASD.
 
-[Unreleased]
+### [Unreleased]
 - Multiple Levels.
 - Victory & Loss Condition.
-- Player's aim with mouse movement.
+- Player's hand moves and rotates depending on mouse position.
 - 3 Weapons.
 - Limited Ammunition.
 - 2 Types of enemies.
 - Music.
 - Sound Effects.
+- Sprite Animations.
+- New GUI.
