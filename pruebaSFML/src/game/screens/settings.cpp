@@ -34,7 +34,12 @@ namespace Game_Namespace
 		{
 			Game::setNewScreenWidth(800);
 			Game::setNewScreenHeight(600);
-			_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));			
+			_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+			if (Game::getDefaultStyle() == sf::Style::Fullscreen)
+			{
+				_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+			}
+				
 		}
 
 		static void signalChangeTo1024x768()

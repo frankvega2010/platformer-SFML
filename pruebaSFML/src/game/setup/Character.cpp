@@ -12,6 +12,7 @@ namespace Game_Namespace
 		_speed = { 0,0 };
 		_gravity = true;
 		_isPlayer = false;
+		_hp = 0;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -24,6 +25,7 @@ namespace Game_Namespace
 		_speed = { 0,0 };
 		_gravity = true;
 		_isPlayer = false;
+		_hp = 0;
 	}
 
 	Character::~Character()
@@ -80,6 +82,16 @@ namespace Game_Namespace
 	void Character::setSpeed(float speedX, float speedY)
 	{
 		_speed = { speedX, speedY };
+	}
+
+	int Character::getHp()
+	{
+		return _hp;
+	}
+
+	void Character::setHp(int hp)
+	{
+		_hp = hp;
 	}
 
 	bool Character::getIsAlive()

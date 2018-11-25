@@ -21,7 +21,7 @@ using namespace Controls_Section;
 
 namespace Game_Namespace
 {
-	sf::Context context;
+	//sf::Context context;
 
 	static bool gameON = true;
 

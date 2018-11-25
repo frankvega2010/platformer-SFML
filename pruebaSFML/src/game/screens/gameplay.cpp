@@ -45,8 +45,9 @@ namespace Game_Namespace
 	// convert it to world coordinates
 	sf::Vector2f worldPos;
 
-	static int playerLivesTest = 3;
+	//static int playerLivesTest = 3;
 	static bool currentlyTouchingPlayer = false;
+	static bool canShoot = false;
 	//static bool playerInvincibility = false;
 
 	const sf::Time initialTime = sf::seconds(0.5f);
@@ -54,6 +55,9 @@ namespace Game_Namespace
 
 	const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
 	thor::CallbackTimer timerInvincibility;
+
+	const sf::Time pistolFireRate = sf::seconds(0.5f);
+	thor::CallbackTimer timerPistolFireRate;
 
 
 	Character player1;
@@ -156,12 +160,14 @@ namespace Game_Namespace
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 1400);
+			player1.setHp(100);
 
 			enemyTest.setPosition(200, 1000);
 			enemyTest.setSize(100, 180);
 			enemyTest.setColor(sf::Color::Yellow);
 			enemyTest.setIsAlive(true);
 			enemyTest.setSpeed(500, 1400);
+			enemyTest.setHp(100);
 			
 
 			enemyRectangle.setFillColor(enemyTest.getColor());
@@ -240,7 +246,7 @@ namespace Game_Namespace
 				Game::setIsKeyPressed(false);
 			}
 
-			/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 			{
 				if (!(Game::getIsKeyPressed()))
 				{
@@ -252,7 +258,7 @@ namespace Game_Namespace
 			else
 			{
 				Game::setIsKeyPressed(false);
-			}*/
+			}
 		}
 
 		void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
@@ -307,6 +313,13 @@ namespace Game_Namespace
 			//sf::Mouse::getPosition()
 			_window.setView(view);
 			input();
+
+
+			//pistol fire rate
+			if (timerPistolFireRate.isExpired())
+			{
+				timerPistolFireRate.reset(pistolFireRate);
+			}
 
 			//JUMP
 			if (timerInvincibility.isRunning())
@@ -364,7 +377,7 @@ namespace Game_Namespace
 			playerSprite.setPosition(playerRectangle.getPosition());
 			//playerSprite.setPosition(playerRectangle.getPosition());
 			deltaText.setString(toString(deltaTime));
-			Lives.setString("Player Lives:" + toString(playerLivesTest));
+			Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
 
 			crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
 			
@@ -468,6 +481,41 @@ namespace Game_Namespace
 				{
 					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
 				}
+
+				if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+				{
+					crosshairTest.setOutlineColor(sf::Color::Green);
+					canShoot = true;
+					if (canShoot)
+					{
+						//if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+						{
+							if (!timerPistolFireRate.isRunning())
+							{
+								timerPistolFireRate.start();
+								enemyTest.setHp(enemyTest.getHp() - 25);
+								enemyRectangle.setPosition(enemyRectangle.getPosition().x - 30, enemyRectangle.getPosition().y);
+								//enemyRectangle.setOutlineColor(sf::Color::Blue); // test purposes, later switch to enemy sprite color
+							}
+							else
+							{
+								//enemyRectangle.setOutlineColor(sf::Color::Transparent);
+							}
+							
+							//enemyRectangle.setFillColor(sf::Color::Blue);
+							//Lives.setFillColor(sf::Color::Blue);
+						}
+						//playerInvincibility = true;
+
+					}
+					//canShoot = false;
+				}
+				else
+				{
+					crosshairTest.setOutlineColor(sf::Color::Red);
+					canShoot = false;
+				}
 			}
 			else
 			{
@@ -482,7 +530,7 @@ namespace Game_Namespace
 					if (!(timerInvincibility.isRunning()))
 					{
 						timerInvincibility.start();
-						playerLivesTest--;
+						player1.setHp(player1.getHp() - 25);
 					}
 					//playerInvincibility = true;
 					
@@ -494,6 +542,25 @@ namespace Game_Namespace
 				enemyRectangle.setFillColor(sf::Color::Yellow);
 				currentlyTouchingPlayer = true;
 			}
+
+			if (enemyTest.getHp() <= 0)
+			{
+				enemyTest.setIsAlive(false);
+			}
+
+			if (enemyTest.getIsAlive())
+			{
+				enemyRectangle.setSize(enemyRectangle.getSize());
+				enemyPlayerDetection.setSize(enemyPlayerDetection.getSize());
+				
+			}
+			else
+			{
+				enemyRectangle.setSize(sf::Vector2f(0, 0));
+				enemyPlayerDetection.setSize(sf::Vector2f(0, 0));
+				
+			}
+			
 		}
 
 		void GameplayScreen::draw()

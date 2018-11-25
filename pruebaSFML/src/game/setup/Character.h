@@ -12,6 +12,7 @@ namespace Game_Namespace
 		sf::Color _color;
 		sf::Vector2f _move;
 		sf::Vector2f _speed;
+		int _hp;
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
@@ -29,6 +30,8 @@ namespace Game_Namespace
 		sf::Color getColor();
 		sf::Vector2f getSpeed();
 		void setSpeed(float speedX, float speedY);
+		int getHp();
+		void setHp(int hp);
 		bool getIsAlive();
 		void setIsAlive(bool alive);
 		bool getGravity();
