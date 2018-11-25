@@ -405,7 +405,10 @@ namespace Game_Namespace
 
 			crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
 			
-			Lives.move(player1.getMove());		
+			//Lives.setPosition(player1.getPosition());
+			//view.getCenter().x
+			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+			//Lives.setPosition(sf::Vector2f(playerRectangle.getPosition().x, playerRectangle.getPosition().y - 700));
 			
 			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
 
@@ -601,9 +604,9 @@ namespace Game_Namespace
 			_window.draw(playerRectangle);
 			_window.draw(playerSprite);
 			_window.draw(enemyRectangle);
-			_window.draw(Lives);
 			_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
+			_window.draw(Lives);
 		}
 
 		void GameplayScreen::deInit()
