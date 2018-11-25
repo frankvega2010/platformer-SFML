@@ -56,8 +56,8 @@ namespace Game_Namespace
 	thor::CallbackTimer timerInvincibility;
 
 
-	Player player1;
-	Enemy enemyTest;
+	Character player1;
+	Character enemyTest;
 
 	sf::Texture playerTexture;
 	sf::Sprite playerSprite;
@@ -232,6 +232,7 @@ namespace Game_Namespace
 					gravitySpeed = 0;
 					timerJump.start();
 				}
+				
 			}
 			else
 			{
@@ -324,8 +325,12 @@ namespace Game_Namespace
 
 			if (isJumping)
 			{
-				cameraDown = false;
-				playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				if (timerJump.isRunning())
+				{
+					cameraDown = false;
+					playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				}
+				
 				//Lives.setPosition(Lives.getPosition().x, Lives.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				if (timerJump.isExpired())
 				{
