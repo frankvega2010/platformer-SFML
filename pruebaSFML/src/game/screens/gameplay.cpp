@@ -204,9 +204,6 @@ namespace Game_Namespace
 
 		void GameplayScreen::input()
 		{
-			
-
-
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
 				cameraLeft = false;
@@ -472,6 +469,23 @@ namespace Game_Namespace
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
 		}
 
+		static void CheckPlayerGravity()
+		{
+			if (player1.getGravity())
+			{
+				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				cameraUp = false;
+			}
+		}
+
+		static void CheckEnemyGravity(Character& enemy,sf::RectangleShape& enemyRectangle)
+		{
+			if (enemy.getGravity())
+			{
+				enemyRectangle.setPosition(enemyRectangle.getPosition().x, enemyRectangle.getPosition().y + (enemyTest.getSpeed().y * deltaTime.asSeconds()));
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 			animation.Update(0, deltaTime.asSeconds());
@@ -527,17 +541,9 @@ namespace Game_Namespace
 			}
 
 			// gravity
-
-			if (player1.getGravity())
-			{
-				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
-				cameraUp = false;
-			}
-
-			if (enemyTest.getGravity())
-			{
-				enemyRectangle.setPosition(enemyRectangle.getPosition().x, enemyRectangle.getPosition().y + (enemyTest.getSpeed().y * deltaTime.asSeconds()));
-			}
+			CheckPlayerGravity();
+			CheckEnemyGravity(enemyTest,enemyRectangle);
+			
 
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
 			playerRectangle.move(player1.getMove());
