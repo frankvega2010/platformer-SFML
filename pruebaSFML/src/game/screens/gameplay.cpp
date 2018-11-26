@@ -376,6 +376,28 @@ namespace Game_Namespace
 			}
 		}
 
+		static void CanEnemyHearPlayer(sf::RectangleShape& enemyRectangleDetection, sf::RectangleShape& enemyRectangle)
+		{
+			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
+			{
+				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				{
+					enemyRectangle.move(300 * deltaTime.asSeconds(), 0);
+				}
+				else if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				{
+					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
+				}
+
+				isCrosshairOnTarget(enemyTest, enemyRectangle);
+			}
+			else
+			{
+				enemyRectangle.move(0, 0);
+				crosshairTest.setOutlineColor(sf::Color::Red);
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 
@@ -556,63 +578,7 @@ namespace Game_Namespace
 					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
 			}
 
-			//---------- CanEnemyHearPlayer(enemyRectangleDetection,enemyRectangle);
-
-			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
-			{
-				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
-				{
-					enemyRectangle.move(300 * deltaTime.asSeconds(), 0);
-				}
-				else if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
-				{
-					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
-				}
-
-				//--------- isCrosshairOnTarget(enemyRectangle);
-
-				isCrosshairOnTarget(enemyTest, enemyRectangle);
-
-				//if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
-				//{
-				//	crosshairTest.setOutlineColor(sf::Color::Green);
-				//	canShoot = true;
-				//	if (canShoot)
-				//	{
-				//		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-				//		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-				//		{
-				//			if (!timerPistolFireRate.isRunning())
-				//			{
-				//				timerPistolFireRate.start();
-				//				enemyTest.setHp(enemyTest.getHp() - 25);
-				//				enemyRectangle.setPosition(enemyRectangle.getPosition().x - 30, enemyRectangle.getPosition().y);
-				//				//enemyRectangle.setOutlineColor(sf::Color::Blue); // test purposes, later switch to enemy sprite color
-				//			}
-				//			else
-				//			{
-				//				//enemyRectangle.setOutlineColor(sf::Color::Transparent);
-				//			}
-				//			
-				//			//enemyRectangle.setFillColor(sf::Color::Blue);
-				//			//Lives.setFillColor(sf::Color::Blue);
-				//		}
-				//		//playerInvincibility = true;
-
-				//	}
-				//	//canShoot = false;
-				//}
-				//else
-				//{
-				//	crosshairTest.setOutlineColor(sf::Color::Red);
-				//	canShoot = false;
-				//}
-			}
-			else
-			{
-				enemyRectangle.move(0, 0);
-				crosshairTest.setOutlineColor(sf::Color::Red);
-			}
+			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
 
 			PlayerEnemyCollision(enemyTest,enemyRectangle);
 
