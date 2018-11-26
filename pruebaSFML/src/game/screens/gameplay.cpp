@@ -2,23 +2,27 @@
 
 #include "menu.h"
 
-
-
-
 namespace Game_Namespace
 {
+	////------------ Tilemap Settings
+	static pugi::xml_document doc;
 
-	pugi::xml_document doc;
+	static pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firerange.tmx");
 
-	pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firerange.tmx");
+	static pugi::xml_node object = doc.child("map").child("objectgroup");
 
-	pugi::xml_node object = doc.child("map").child("objectgroup");
+	static pugi::xml_node_iterator someObjects = object.begin();
 
-	pugi::xml_node_iterator someObjects = object.begin();
+	static tmx::TileMap map("res/assets/tiles/firerange.tmx");
 
-	tmx::TileMap map("res/assets/tiles/firerange.tmx");
+	const int maxColisionsBoxes = 30;
 
-	sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
+	static sf::RectangleShape rectangles[maxColisionsBoxes];
+	////---------------------------------------------------------
+
+	// Camera Settings
+
+	static sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
 
 	static bool cameraRight = false;
 	static bool cameraLeft = false;
@@ -29,45 +33,39 @@ namespace Game_Namespace
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
+
+	// Gravity
+
 	static int gravitySpeed = 0;
+
+	//Player Variables
 
 	static bool playerInput = false;
 	static bool isJumping = false;
 	static bool isOnGround = false;
 
-	sf::Vector2i MousePosition;
 
-	// convert it to world coordinates
-	sf::Vector2f worldPos;
+	// Mouse Position
 
+	static sf::Vector2i MousePosition;
+	static sf::Vector2f worldPos;
 
-	const sf::Time initialJumpTime = sf::seconds(0.5f);
-	thor::CallbackTimer timerJump;
-
-
-	const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
-	thor::CallbackTimer timerInvincibility;
-
-	const sf::Time pistolFireRate = sf::seconds(0.5f);
-	thor::CallbackTimer timerPistolFireRate;
-
-
-	Character player1;
-	Character enemyTest;
-
+	//Timers
 	
+	static const sf::Time initialJumpTime = sf::seconds(0.5f);
+	static thor::CallbackTimer timerJump;
 
-	sf::Texture playerTexture;
-	SpriteAnimation animation;
+	static const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
+	static thor::CallbackTimer timerInvincibility;
 
-	static sf::Sprite playerSprite;
-	sf::CircleShape triangle(100.0f, 3);
-	sf::CircleShape crosshairTest;
-	sf::RectangleShape playerRectangle;
-	sf::RectangleShape enemyRectangle;
-	sf::RectangleShape enemyPlayerDetection;
-	sf::RectangleShape gun;
-	sf::CircleShape gunLimit;
+	static const sf::Time pistolFireRate = sf::seconds(0.5f);
+	static thor::CallbackTimer timerPistolFireRate;
+
+	//Textures & Animations
+	static sf::Texture playerTexture;
+	static SpriteAnimation animation;
+
+	// Gun Rotation Variable
 
 	static sf::Vector2f v1;
 	static sf::Vector2f v2;
@@ -76,21 +74,28 @@ namespace Game_Namespace
 	static float modv2;
 	static float angle=180;
 
+	// Text
+	static sf::Font deltaFont;
 
-	sf::Font deltaFont;
-	sf::Text deltaText;
+	static sf::Text deltaText;
+	static sf::Text Lives;
 
-	sf::Text Lives;
+	// Characters
 
-	const int maxColisionsBoxes = 30;
+	static Character player1;
+	static Character enemyTest;
 
-	sf::RectangleShape rectangles[maxColisionsBoxes];
+	// Shapes
 
+	static sf::CircleShape crosshairTest;
+	static sf::RectangleShape playerRectangle;
+	static sf::RectangleShape enemyRectangle;
+	static sf::RectangleShape enemyPlayerDetection;
+	static sf::RectangleShape gun;
+	static sf::CircleShape gunLimit;
 
 	namespace Gameplay_Section
 	{
-		
-
 		static std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
@@ -119,87 +124,20 @@ namespace Game_Namespace
 
 		void GameplayScreen::init()
 		{
+			//// Window & Screen Settings
+			setHasScreenFinished(false);
+
 			MousePosition = sf::Mouse::getPosition(_window);
-
-			// convert it to world coordinates
 			worldPos = _window.mapPixelToCoords(MousePosition);
-
-			playerTexture.loadFromFile("res/assets/textures/test10.png");
-			playerTexture.setSmooth(true);
-			playerTexture.setRepeated(false);
-
-
-			playerSprite.setPosition(200, 1800);
-			
-
-			//map.ShowObjects();
 
 			view.setCenter(200.0f, 1800.f);
 			view.zoom(2.0f);
 
-			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
+			//map.ShowObjects();
 
-			deltaText.setCharacterSize(30);
-			deltaText.setFont(deltaFont);
-			deltaText.setPosition(400, 400);
+			//// World Entities
 
-			Lives.setCharacterSize(80);
-			Lives.setFont(deltaFont);
-			Lives.setPosition(200, 1400);
-			
-			
-			crosshairTest.setRadius(30);
-			crosshairTest.setOutlineThickness(5);
-			crosshairTest.setFillColor(sf::Color::Transparent);
-			crosshairTest.setOutlineColor(sf::Color::Red);
-			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
-
-			gunLimit.setRadius(140);
-			gunLimit.setOutlineThickness(10);
-			gunLimit.setFillColor(sf::Color::Transparent);
-			gunLimit.setOutlineColor(sf::Color::Blue);
-			gunLimit.setPosition({ playerSprite.getPosition().x -playerSprite.getGlobalBounds().width/2, playerSprite.getPosition().y - playerSprite.getGlobalBounds().height/2});
-			
-			gun.setFillColor(sf::Color::Yellow);
-			gun.setPosition(static_cast<sf::Vector2f>(gunLimit.getPosition()));
-			gun.setSize({ 80,30 });
-
-			gravitySpeed = 800;
-
-			player1.setIsPlayer(true);
-			player1.setPosition(200, 1800);
-			player1.setSize(100, 150);
-			player1.setColor(sf::Color::Red);
-			player1.setIsAlive(true);
-			player1.setSpeed(500, 1400);
-			player1.setHp(100);
-
-			enemyTest.setPosition(200, 1000);
-			enemyTest.setSize(100, 180);
-			enemyTest.setColor(sf::Color::Yellow);
-			enemyTest.setIsAlive(true);
-			enemyTest.setSpeed(500, 1400);
-			enemyTest.setHp(100);
-			enemyTest.setCurrentlyTouchingPlayer(true);
-			
-
-			enemyRectangle.setFillColor(enemyTest.getColor());
-			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
-			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
-
-			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
-			enemyPlayerDetection.setSize(sf::Vector2f(500.0f, 540));
-			enemyPlayerDetection.setFillColor({150,0,0,150});
-
-			playerRectangle.setFillColor(player1.getColor());
-			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
-			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
-
-			playerRectangle.setTexture(&playerTexture);
-			animation.SetAnimation(&playerTexture, sf::Vector2u(8, 6), 0.1f);
-
-			
-			
+			//Tilemap
 
 			int i = 0;
 			for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
@@ -215,10 +153,78 @@ namespace Game_Namespace
 			}
 			i = 0;
 
-			setHasScreenFinished(false);
+			// Player 1
+			playerTexture.loadFromFile("res/assets/textures/test10.png");
+			playerTexture.setSmooth(true);
+			playerTexture.setRepeated(false);
 
-			triangle.setFillColor(sf::Color::Cyan);
+			player1.setIsPlayer(true);
+			player1.setPosition(200, 1800);
+			player1.setSize(100, 150);
+			player1.setColor(sf::Color::Red);
+			player1.setIsAlive(true);
+			player1.setSpeed(500, 1400);
+			player1.setHp(100);
 
+			playerRectangle.setFillColor(player1.getColor());
+			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
+			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
+
+			playerRectangle.setTexture(&playerTexture);
+			animation.SetAnimation(&playerTexture, sf::Vector2u(8, 6), 0.1f);
+
+			// Player Gun
+
+			gunLimit.setRadius(140);
+			gunLimit.setOutlineThickness(10);
+			gunLimit.setFillColor(sf::Color::Transparent);
+			gunLimit.setOutlineColor(sf::Color::Blue);
+			gunLimit.setPosition({ playerRectangle.getPosition().x - playerRectangle.getGlobalBounds().width / 2, playerRectangle.getPosition().y - playerRectangle.getGlobalBounds().height / 2 });
+
+			gun.setFillColor(sf::Color::Yellow);
+			gun.setPosition(static_cast<sf::Vector2f>(gunLimit.getPosition()));
+			gun.setSize({ 80,30 });
+
+			// Enemy 1
+
+			enemyTest.setPosition(200, 1000);
+			enemyTest.setSize(100, 180);
+			enemyTest.setColor(sf::Color::Yellow);
+			enemyTest.setIsAlive(true);
+			enemyTest.setSpeed(500, 1400);
+			enemyTest.setHp(100);
+			enemyTest.setCurrentlyTouchingPlayer(true);
+
+			enemyRectangle.setFillColor(enemyTest.getColor());
+			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
+			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
+
+			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
+			enemyPlayerDetection.setSize(sf::Vector2f(500.0f, 540));
+			enemyPlayerDetection.setFillColor({ 150,0,0,150 });
+			 
+			//// Text
+
+			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
+
+			deltaText.setCharacterSize(30);
+			deltaText.setFont(deltaFont);
+			deltaText.setPosition(400, 400);
+
+			//// HUD
+
+			Lives.setCharacterSize(80);
+			Lives.setFont(deltaFont);
+			Lives.setPosition(200, 1400);
+
+			crosshairTest.setRadius(30);
+			crosshairTest.setOutlineThickness(5);
+			crosshairTest.setFillColor(sf::Color::Transparent);
+			crosshairTest.setOutlineColor(sf::Color::Red);
+			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
+
+			//// Game Mechanics
+			gravitySpeed = 800;
 		}
 
 		void GameplayScreen::input()
@@ -254,13 +260,9 @@ namespace Game_Namespace
 				{
 					isOnGround = false;
 					player1.setIsJumping(true);
-					//isJumping = true;
 					gravitySpeed = 0;
 					player1.StartTimerJump();
-					//player1.getTimerJump().start();
-					//timerJump.start();
-				}
-				
+				}			
 			}
 			else
 			{
@@ -281,6 +283,8 @@ namespace Game_Namespace
 				Game::setIsKeyPressed(false);
 			}
 		}
+
+		//------- Gameplay Functions
 
 		static void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
 		{
@@ -553,9 +557,7 @@ namespace Game_Namespace
 			}
 			else
 			{
-				//character.
 				character.setResetTimerJump(initialJumpTime);
-				//character.getTimerJump().reset(sf::seconds(0.5f));
 			}
 		}
 
@@ -587,46 +589,48 @@ namespace Game_Namespace
 			}
 		}
 
+		//-------END Gameplay Functions
+
 		void GameplayScreen::update()
 		{
-			animation.Update(0, deltaTime.asSeconds());
-			playerRectangle.setTextureRect(animation.uvRect);
+			////// Display			
+			HUDUpdate();
+			CheckCameraMovement();
+
+			//////Player Inputs
 			
 			MousePosition = sf::Mouse::getPosition(_window);
-			// convert it to world coordinates
-			worldPos = _window.mapPixelToCoords(MousePosition);
-
-			_window.setView(view);
+			worldPos = _window.mapPixelToCoords(MousePosition); // convert it to world coordinates
 			input();
 
+			//////Set View
+			_window.setView(view);
 
-			// CheckWeaponsFireRate(pistol); // WIP function
-			CheckWeaponsFireRate(timerPistolFireRate);
+			////// Characters
+
+			animation.Update(0, deltaTime.asSeconds());
+			playerRectangle.setTextureRect(animation.uvRect);
 
 			//Invincibility Frames
 			CheckInvincibilityFrames(timerInvincibility);
 
-			CheckCharacterJump(player1,playerRectangle);
-
 			// gravity
 			CheckPlayerGravity();
-			CheckEnemyGravity(enemyTest,enemyRectangle);
-			
+			CheckEnemyGravity(enemyTest, enemyRectangle);
+
+			// Jump
+			CheckCharacterJump(player1, playerRectangle);
+
+			// CheckWeaponsFireRate(pistol); // WIP function
+			CheckWeaponsFireRate(timerPistolFireRate);
 
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
+
 			playerRectangle.move(player1.getMove());
-
-			playerSprite.setPosition(playerRectangle.getPosition());
-			
-			HUDUpdate();
-
 
 			CheckPlayerFlipSprite();
 
-			CheckCameraMovement();
-
 			// Checks for collisions
-
 			for (int i = 0; i < maxColisionsBoxes; i++)
 			{
 					CheckCollisionWithTiles(playerRectangle,i,player1);
@@ -634,6 +638,7 @@ namespace Game_Namespace
 			}
 
 			gunRotation();
+
 			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
 
 			PlayerEnemyCollision(enemyTest,enemyRectangle, timerInvincibility);
@@ -657,7 +662,6 @@ namespace Game_Namespace
 
 			//// Player
 			_window.draw(playerRectangle);
-			_window.draw(playerSprite);
 
 			//// Enemy
 			_window.draw(enemyPlayerDetection);
