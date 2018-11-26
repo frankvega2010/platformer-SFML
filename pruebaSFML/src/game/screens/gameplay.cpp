@@ -464,6 +464,31 @@ namespace Game_Namespace
 			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
 		}
 
+		static void CheckPlayerFlipSprite()
+		{
+			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
+			{
+				if (flipLeft)
+				{
+					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
+					playerRectangle.scale(-1, 1);
+				}
+				flipLeft = false;
+				flipRight = true;
+			}
+			else
+			{
+
+				if (flipRight)
+				{
+					playerRectangle.setOrigin({ 0, 0 });
+					playerRectangle.scale(-1, 1);
+				}
+				flipRight = false;
+				flipLeft = true;
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 
@@ -554,86 +579,9 @@ namespace Game_Namespace
 			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
 
 
-			//------------- CheckPlayerFlipSprite();
-
-			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
-			{
-				
-				if (flipLeft)
-				{
-					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
-					playerRectangle.scale(-1, 1);
-				}
-				flipLeft = false;
-				flipRight = true;
-				/**/
-				/*playerSprite.setOrigin({ playerSprite.getLocalBounds().width, 0 });
-				playerSprite.scale(-1, 1);*/
-				//playerSprite.setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , - playerSprite.getGlobalBounds().height));
-					//playerSprite.get
-			}
-			else
-			{
-				
-				if (flipRight)
-				{
-					playerRectangle.setOrigin({ 0, 0 });
-					playerRectangle.scale(-1, 1);
-				}
-				flipRight = false;
-				flipLeft = true;
-				/*playerSprite.setOrigin({ playerSprite.getGlobalBounds().width / 2.45f, 0 });
-				playerSprite.scale(-1, 1);*/
-				//playerSprite.setOrigin({ 0, 0 });
-				//playerSprite.scale(1, 1);
-				//setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , playerSprite.getGlobalBounds().height));
-				//playerSprite.scale(1, 1);
-			}
+			CheckPlayerFlipSprite();
 
 			CheckCameraMovement();
-
-			/*if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
-			{
-				if (!(cameraRight))
-				{
-					cameraRight = true;
-					cameraLeft = false;
-				}
-			}
-			else if (playerRectangle.getPosition().x < view.getCenter().x - cameraLimitLeft)
-			{
-				if (!(cameraLeft))
-				{
-					cameraLeft = true;
-					cameraRight = false;
-				}
-			}
-
-			if (playerRectangle.getPosition().y > view.getCenter().y + cameraLimitDown)
-			{
-				if (!(cameraDown))
-				{
-					cameraDown = true;
-					cameraUp = false;
-				}
-			}
-			else if (playerRectangle.getPosition().y < view.getCenter().y - cameraLimitUp)
-			{
-				if (!(cameraUp))
-				{
-					cameraUp = true;
-					cameraDown = false;
-				}
-			}
-
-			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown);
-			if (cameraUp)
-			{
-				view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
-			}
-
-			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
-			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);*/
 
 			// Checks for collisions
 

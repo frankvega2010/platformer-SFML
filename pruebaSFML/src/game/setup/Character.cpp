@@ -15,6 +15,8 @@ namespace Game_Namespace
 		_hp = 0;
 		_currentlyTouchingPlayer = false;
 		_canShoot = false;
+		_flipLeft = false;
+		_flipRight = false;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -30,6 +32,8 @@ namespace Game_Namespace
 		_hp = 0;
 		_currentlyTouchingPlayer = false;
 		_canShoot = false;
+		_flipLeft = false;
+		_flipRight = false;
 	}
 
 	Character::~Character()
@@ -146,5 +150,25 @@ namespace Game_Namespace
 	void Character::setCanShoot(bool canShoot)
 	{
 		_canShoot = canShoot;
+	}
+
+	bool Character::getFlipLeft()
+	{
+		return _flipLeft;
+	}
+
+	void Character::setFlipLeft(bool flipLeft)
+	{
+		_flipLeft = flipLeft;
+	}
+
+	bool Character::getFlipRight()
+	{
+		return _flipRight;
+	}
+
+	void Character::setFlipRight(bool flipRight)
+	{
+		_flipRight = flipRight;
 	}
 }

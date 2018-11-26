@@ -18,6 +18,8 @@ namespace Game_Namespace
 		bool _isPlayer;
 		bool _currentlyTouchingPlayer;
 		bool _canShoot;
+		bool _flipLeft;
+		bool _flipRight;
 	public:
 		Character();
 		Character(int x, int y, int width, int height, sf::Color color);
@@ -44,6 +46,10 @@ namespace Game_Namespace
 		void setCurrentlyTouchingPlayer(bool currentlyTouchingPlayer);
 		bool getCanShoot();
 		void setCanShoot(bool canShoot);
+		bool getFlipLeft();
+		void setFlipLeft(bool flipLeft);
+		bool getFlipRight();
+		void setFlipRight(bool flipRight);
 	};
 }
 #endif // CHARACTER_H
