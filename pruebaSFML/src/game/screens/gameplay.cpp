@@ -2,7 +2,7 @@
 
 #include "menu.h"
 
-#include "Thor/Time.hpp"
+
 
 
 namespace Game_Namespace
@@ -41,8 +41,9 @@ namespace Game_Namespace
 	sf::Vector2f worldPos;
 
 
-	const sf::Time initialTime = sf::seconds(0.5f);
+	const sf::Time initialJumpTime = sf::seconds(0.5f);
 	thor::CallbackTimer timerJump;
+
 
 	const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
 	thor::CallbackTimer timerInvincibility;
@@ -90,7 +91,7 @@ namespace Game_Namespace
 	{
 		
 
-		std::string toString(sf::Time value)
+		static std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
 			stream.setf(std::ios_base::fixed);
@@ -99,7 +100,7 @@ namespace Game_Namespace
 			return stream.str();
 		}
 
-		std::string toString(int value)
+		static std::string toString(int value)
 		{
 			std::ostringstream stream;
 			stream.setf(std::ios_base::fixed);
@@ -249,12 +250,15 @@ namespace Game_Namespace
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				if (!(isJumping) && isOnGround)
+				if (!(player1.getIsJumping()) && isOnGround)
 				{
 					isOnGround = false;
-					isJumping = true;
+					player1.setIsJumping(true);
+					//isJumping = true;
 					gravitySpeed = 0;
-					timerJump.start();
+					player1.StartTimerJump();
+					//player1.getTimerJump().start();
+					//timerJump.start();
 				}
 				
 			}
@@ -530,6 +534,30 @@ namespace Game_Namespace
 			}
 		}
 
+		static void CheckCharacterJump(Character& character,sf::RectangleShape& characterRectangle)
+		{
+			if (character.getIsJumping())
+			{
+				if (character.isTimerJumpRunning())
+				{
+					cameraDown = false;
+					characterRectangle.setPosition(characterRectangle.getPosition().x, characterRectangle.getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
+				}
+
+				if (character.isTimerJumpExpired())
+				{
+					character.setIsJumping(false);
+					gravitySpeed = 800;
+				}
+			}
+			else
+			{
+				//character.
+				character.setResetTimerJump(initialJumpTime);
+				//character.getTimerJump().reset(sf::seconds(0.5f));
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 			animation.Update(0, deltaTime.asSeconds());
@@ -565,7 +593,9 @@ namespace Game_Namespace
 				}
 			}
 
-			if (isJumping)
+			CheckCharacterJump(player1,playerRectangle);
+
+			/*if (isJumping)
 			{
 				if (timerJump.isRunning())
 				{
@@ -582,7 +612,7 @@ namespace Game_Namespace
 			else
 			{
 				timerJump.reset(initialTime);
-			}
+			}*/
 
 			// gravity
 			CheckPlayerGravity();

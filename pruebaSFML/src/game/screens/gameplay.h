@@ -11,6 +11,7 @@
 #include "pugixml.hpp"
 #include "pugiconfig.hpp"
 #include "Thor/Animations.hpp"
+#include "Thor/Time.hpp"
 #include "SpriteAnimation.h"
 //#include "SFML/Mouse.hpp"
 //#include "raylib.h"

@@ -2,6 +2,10 @@
 #define CHARACTER_H
 #include "game.h"
 
+#include "Thor/Time.hpp"
+
+//using namespace thor;
+
 namespace Game_Namespace
 {
 	class Character
@@ -20,6 +24,8 @@ namespace Game_Namespace
 		bool _canShoot;
 		bool _flipLeft;
 		bool _flipRight;
+		bool _isJumping;
+		thor::CallbackTimer _timerJump;
 	public:
 		Character();
 		Character(int x, int y, int width, int height, sf::Color color);
@@ -50,6 +56,12 @@ namespace Game_Namespace
 		void setFlipLeft(bool flipLeft);
 		bool getFlipRight();
 		void setFlipRight(bool flipRight);
+		bool getIsJumping();
+		void setIsJumping(bool isJumping);
+		void StartTimerJump();
+		void setResetTimerJump(sf::Time initialTime);
+		bool isTimerJumpExpired();
+		bool isTimerJumpRunning();
 	};
 }
 #endif // CHARACTER_H

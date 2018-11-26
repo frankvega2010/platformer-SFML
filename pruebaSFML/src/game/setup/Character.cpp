@@ -17,6 +17,8 @@ namespace Game_Namespace
 		_canShoot = false;
 		_flipLeft = false;
 		_flipRight = false;
+		_isJumping = false;
+		//_timerJump.reset(sf::Time(sf::seconds(1.0f)));
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -34,6 +36,8 @@ namespace Game_Namespace
 		_canShoot = false;
 		_flipLeft = false;
 		_flipRight = false;
+		_isJumping = false;
+		//_timerJump.reset(sf::Time(sf::seconds(1.0f)));
 	}
 
 	Character::~Character()
@@ -170,5 +174,34 @@ namespace Game_Namespace
 	void Character::setFlipRight(bool flipRight)
 	{
 		_flipRight = flipRight;
+	}
+
+	bool Character::getIsJumping()
+	{
+		return _isJumping;
+	}
+
+	void Character::setIsJumping(bool isJumping)
+	{
+		_isJumping = isJumping;
+	}
+
+	void Character::StartTimerJump()
+	{
+		_timerJump.start();
+	}
+
+	void Character::setResetTimerJump(sf::Time initialTime)
+	{
+		_timerJump.reset(initialTime);
+	}
+
+	bool Character::isTimerJumpExpired()
+	{
+		return _timerJump.isExpired();
+	}
+	bool Character::isTimerJumpRunning()
+	{
+		return _timerJump.isRunning();
 	}
 }
