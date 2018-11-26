@@ -398,6 +398,26 @@ namespace Game_Namespace
 			}
 		}
 
+
+		static void CheckEnemyHP(Character& enemy,sf::RectangleShape& PlayerDetection , sf::RectangleShape& enemyRectangle)
+		{
+			if (enemy.getHp() <= 0)
+			{
+				enemy.setIsAlive(false);
+			}
+
+			if (enemy.getIsAlive())
+			{
+				enemyRectangle.setSize(enemyRectangle.getSize());
+				PlayerDetection.setSize(enemyPlayerDetection.getSize());
+			}
+			else
+			{
+				enemyRectangle.setSize(sf::Vector2f(0, 0));
+				PlayerDetection.setSize(sf::Vector2f(0, 0));
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 
@@ -564,7 +584,6 @@ namespace Game_Namespace
 			if (cameraUp)
 			{
 				view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
-				Lives.move(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 			}
 
 			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
@@ -582,23 +601,7 @@ namespace Game_Namespace
 
 			PlayerEnemyCollision(enemyTest,enemyRectangle);
 
-			if (enemyTest.getHp() <= 0)
-			{
-				enemyTest.setIsAlive(false);
-			}
-
-			if (enemyTest.getIsAlive())
-			{
-				enemyRectangle.setSize(enemyRectangle.getSize());
-				enemyPlayerDetection.setSize(enemyPlayerDetection.getSize());
-				
-			}
-			else
-			{
-				enemyRectangle.setSize(sf::Vector2f(0, 0));
-				enemyPlayerDetection.setSize(sf::Vector2f(0, 0));
-				
-			}
+			CheckEnemyHP(enemyTest,enemyPlayerDetection,enemyRectangle);
 			
 		}
 
