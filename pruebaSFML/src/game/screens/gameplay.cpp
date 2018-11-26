@@ -418,6 +418,52 @@ namespace Game_Namespace
 			}
 		}
 
+		static void CheckCameraMovement()
+		{
+			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
+			{
+				if (!(cameraRight))
+				{
+					cameraRight = true;
+					cameraLeft = false;
+				}
+			}
+			else if (playerRectangle.getPosition().x < view.getCenter().x - cameraLimitLeft)
+			{
+				if (!(cameraLeft))
+				{
+					cameraLeft = true;
+					cameraRight = false;
+				}
+			}
+
+			if (playerRectangle.getPosition().y > view.getCenter().y + cameraLimitDown)
+			{
+				if (!(cameraDown))
+				{
+					cameraDown = true;
+					cameraUp = false;
+				}
+			}
+			else if (playerRectangle.getPosition().y < view.getCenter().y - cameraLimitUp)
+			{
+				if (!(cameraUp))
+				{
+					cameraUp = true;
+					cameraDown = false;
+				}
+			}
+
+			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown);
+			if (cameraUp)
+			{
+				view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
+			}
+
+			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
+			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
+		}
+
 		void GameplayScreen::update()
 		{
 
@@ -544,9 +590,9 @@ namespace Game_Namespace
 				//playerSprite.scale(1, 1);
 			}
 
-			//------------ CheckCameraMovement()
+			CheckCameraMovement();
 
-			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
+			/*if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
 				if (!(cameraRight))
 				{
@@ -587,7 +633,7 @@ namespace Game_Namespace
 			}
 
 			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
-			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
+			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);*/
 
 			// Checks for collisions
 
