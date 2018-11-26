@@ -65,6 +65,15 @@ namespace Game_Namespace
 	sf::RectangleShape playerRectangle;
 	sf::RectangleShape enemyRectangle;
 	sf::RectangleShape enemyPlayerDetection;
+	sf::RectangleShape gun;
+	sf::CircleShape gunLimit;
+
+	static sf::Vector2f v1;
+	static sf::Vector2f v2;
+	static float prodVect;
+	static float modv1;
+	static float modv2;
+	static float angle=180;
 
 
 	sf::Font deltaFont;
@@ -143,7 +152,16 @@ namespace Game_Namespace
 			crosshairTest.setFillColor(sf::Color::Transparent);
 			crosshairTest.setOutlineColor(sf::Color::Red);
 			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
+
+			gunLimit.setRadius(140);
+			gunLimit.setOutlineThickness(10);
+			gunLimit.setFillColor(sf::Color::Transparent);
+			gunLimit.setOutlineColor(sf::Color::Blue);
+			gunLimit.setPosition({ playerSprite.getPosition().x -playerSprite.getGlobalBounds().width/2, playerSprite.getPosition().y - playerSprite.getGlobalBounds().height/2});
 			
+			gun.setFillColor(sf::Color::Yellow);
+			gun.setPosition(static_cast<sf::Vector2f>(gunLimit.getPosition()));
+			gun.setSize({ 80,30 });
 
 			gravitySpeed = 800;
 
@@ -297,7 +315,33 @@ namespace Game_Namespace
 			}
 		}
 
-		static void PlayerEnemyCollision(Character& enemy,sf::RectangleShape& enemyRectangle)
+		static void gunRotation()
+		{
+			gunLimit.setPosition({ playerRectangle.getPosition().x - 70,playerRectangle.getPosition().y - 70 });
+			gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 ,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 });
+
+			v1.x = 0;
+			v1.y = 0.0f - gun.getPosition().y;
+
+			v2.x = worldPos.x - gun.getPosition().x;
+			v2.y = worldPos.y - gun.getPosition().y;
+
+			prodVect = v1.x*v2.x + v1.y*v2.y;
+			modv1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
+			modv2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
+
+			angle = acos(prodVect / (modv1*modv2));
+			angle *= (180 / 3.1415f);
+			angle = angle + 270;
+			if (worldPos.x < gun.getPosition().x)
+			{
+				angle = 180 - angle;
+			}
+
+			gun.setRotation(angle);
+		}
+
+		static void PlayerEnemyCollision(Character& enemy, sf::RectangleShape& enemyRectangle)
 		{
 			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
@@ -565,6 +609,7 @@ namespace Game_Namespace
 					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
 			}
 
+			gunRotation();
 			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
 
 			PlayerEnemyCollision(enemyTest,enemyRectangle);
@@ -601,8 +646,10 @@ namespace Game_Namespace
 			// HUD
 			_window.draw(crosshairTest);
 			_window.draw(Lives);
-
-			// Draw everything else
+			_window.draw(enemyPlayerDetection);
+			_window.draw(crosshairTest);
+			_window.draw(gunLimit);
+			_window.draw(gun);
 		}
 
 		void GameplayScreen::deInit()
