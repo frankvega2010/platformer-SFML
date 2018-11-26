@@ -210,7 +210,7 @@ namespace Game_Namespace
 				rectangles[i].setSize(sf::Vector2f(it->attribute("width").as_int(),
 					it->attribute("height").as_int()));
 
-				rectangles[i].setFillColor(sf::Color::Green);
+				rectangles[i].setFillColor(sf::Color::Transparent);
 				i++;
 			}
 			i = 0;
@@ -345,16 +345,16 @@ namespace Game_Namespace
 			gun.setRotation(angle);
 		}
 
-		static void PlayerEnemyCollision(Character& enemy, sf::RectangleShape& enemyRectangle)
+		static void PlayerEnemyCollision(Character& enemy, sf::RectangleShape& enemyRectangle,thor::CallbackTimer& timer)
 		{
 			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
 				enemyRectangle.setFillColor(sf::Color::Cyan);
 				if (enemy.getCurrentlyTouchingPlayer())
 				{
-					if (!(timerInvincibility.isRunning()))
+					if (!(timer.isRunning()))
 					{
-						timerInvincibility.start();
+						timer.start();
 						player1.setHp(player1.getHp() - 25);
 					}
 				}
@@ -363,7 +363,7 @@ namespace Game_Namespace
 			else
 			{
 				enemyRectangle.setFillColor(sf::Color::Yellow);
-				enemy.setCurrentlyTouchingPlayer(false);
+				enemy.setCurrentlyTouchingPlayer(true);
 			}
 		}
 
@@ -604,21 +604,7 @@ namespace Game_Namespace
 			CheckWeaponsFireRate(timerPistolFireRate);
 
 			//Invincibility Frames
-			//CheckInvincibilityFrames(timerInvincibility);
-			if (timerInvincibility.isRunning())
-			{
-				playerRectangle.setFillColor(sf::Color::Green);
-			}
-
-			if (timerInvincibility.isExpired())
-			{
-				timerInvincibility.reset(initialInvincibilityTime);
-				playerRectangle.setFillColor(sf::Color::White);
-				if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
-				{
-					enemyTest.setCurrentlyTouchingPlayer(true);
-				}
-			}
+			CheckInvincibilityFrames(timerInvincibility);
 
 			CheckCharacterJump(player1,playerRectangle);
 
@@ -650,7 +636,7 @@ namespace Game_Namespace
 			gunRotation();
 			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
 
-			PlayerEnemyCollision(enemyTest,enemyRectangle);
+			PlayerEnemyCollision(enemyTest,enemyRectangle, timerInvincibility);
 
 			CheckEnemyHP(enemyTest,enemyPlayerDetection,enemyRectangle);
 			

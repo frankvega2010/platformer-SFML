@@ -64,4 +64,5 @@ namespace Game_Namespace
 		bool isTimerJumpRunning();
 	};
 }
+
 #endif // CHARACTER_H
