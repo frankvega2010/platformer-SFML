@@ -16,6 +16,7 @@ namespace Game_Namespace
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
+		bool _currentlyTouchingPlayer;
 	public:
 		Character();
 		Character(int x, int y, int width, int height, sf::Color color);
@@ -38,6 +39,8 @@ namespace Game_Namespace
 		void setGravity(bool gravity);
 		bool getIsPlayer();
 		void setIsPlayer(bool isPlayer);
+		bool getCurrentlyTouchingPlayer();
+		void setCurrentlyTouchingPlayer(bool currentlyTouchingPlayer);
 	};
 }
 #endif // CHARACTER_H

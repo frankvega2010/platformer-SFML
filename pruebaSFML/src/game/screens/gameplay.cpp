@@ -175,6 +175,7 @@ namespace Game_Namespace
 			enemyTest.setIsAlive(true);
 			enemyTest.setSpeed(500, 1400);
 			enemyTest.setHp(100);
+			enemyTest.setCurrentlyTouchingPlayer(true);
 			
 
 			enemyRectangle.setFillColor(enemyTest.getColor());
@@ -282,7 +283,7 @@ namespace Game_Namespace
 			}
 		}
 
-		void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
+		static void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
 		{
 			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 			{
@@ -320,6 +321,30 @@ namespace Game_Namespace
 			else
 			{
 				rectangles[i].setFillColor({ 255,255,255 }); // Testing Collision, delete later!
+			}
+		}
+
+		static void PlayerEnemyCollision(Character enemy,sf::RectangleShape enemyRectangle)
+		{
+			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+			{
+				enemyRectangle.setFillColor(sf::Color::Cyan);
+				if (enemy.getCurrentlyTouchingPlayer())
+				{
+					if (!(timerInvincibility.isRunning()))
+					{
+						timerInvincibility.start();
+						player1.setHp(player1.getHp() - 25);
+					}
+				}
+				enemy.setCurrentlyTouchingPlayer(false);
+				//currentlyTouchingPlayer = false;
+			}
+			else
+			{
+				enemyRectangle.setFillColor(sf::Color::Yellow);
+				enemy.setCurrentlyTouchingPlayer(false);
+				//currentlyTouchingPlayer = true;
 			}
 		}
 
@@ -412,6 +437,9 @@ namespace Game_Namespace
 			
 			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
 
+
+			//------------- CheckPlayerFlipSprite();
+
 			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
 			{
 				
@@ -445,6 +473,8 @@ namespace Game_Namespace
 				//setTextureRect(sf::IntRect(0, playerSprite.getGlobalBounds().height, playerSprite.getGlobalBounds().width , playerSprite.getGlobalBounds().height));
 				//playerSprite.scale(1, 1);
 			}
+
+			//------------ CheckCameraMovement()
 
 			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
@@ -498,6 +528,8 @@ namespace Game_Namespace
 					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
 			}
 
+			//---------- CanEnemyHearPlayer(enemyRectangleDetection,enemyRectangle);
+
 			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
 			{
 				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
@@ -508,6 +540,8 @@ namespace Game_Namespace
 				{
 					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
 				}
+
+				//--------- isCrosshairOnTarget(enemyRectangle);
 
 				if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 				{
@@ -549,26 +583,30 @@ namespace Game_Namespace
 				enemyRectangle.move(0, 0);
 			}
 
-			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
-			{
-				enemyRectangle.setFillColor(sf::Color::Cyan);
-				if (currentlyTouchingPlayer)
-				{
-					if (!(timerInvincibility.isRunning()))
-					{
-						timerInvincibility.start();
-						player1.setHp(player1.getHp() - 25);
-					}
-					//playerInvincibility = true;
-					
-				}
-				currentlyTouchingPlayer = false;
-			}
-			else
-			{
-				enemyRectangle.setFillColor(sf::Color::Yellow);
-				currentlyTouchingPlayer = true;
-			}
+			//----------- PlayerEnemyCollision(enemyRectangle);
+
+			PlayerEnemyCollision(enemyTest,enemyRectangle);
+
+			//if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+			//{
+			//	enemyRectangle.setFillColor(sf::Color::Cyan);
+			//	if (currentlyTouchingPlayer)
+			//	{
+			//		if (!(timerInvincibility.isRunning()))
+			//		{
+			//			timerInvincibility.start();
+			//			player1.setHp(player1.getHp() - 25);
+			//		}
+			//		//playerInvincibility = true;
+			//		
+			//	}
+			//	currentlyTouchingPlayer = false;
+			//}
+			//else
+			//{
+			//	enemyRectangle.setFillColor(sf::Color::Yellow);
+			//	currentlyTouchingPlayer = true;
+			//}
 
 			if (enemyTest.getHp() <= 0)
 			{
@@ -599,14 +637,27 @@ namespace Game_Namespace
 			}
 			_window.draw(map);
 
-			// Draw everything else
-			_window.draw(deltaText);
+			
+			////---------------------
+			// Sprites / Shapes
+
+			//// Player
 			_window.draw(playerRectangle);
 			_window.draw(playerSprite);
-			_window.draw(enemyRectangle);
+
+			//// Enemy
 			_window.draw(enemyPlayerDetection);
+			_window.draw(enemyRectangle);
+			////---------------------
+
+			// Text
+			_window.draw(deltaText);
+
+			// HUD
 			_window.draw(crosshairTest);
 			_window.draw(Lives);
+
+			// Draw everything else
 		}
 
 		void GameplayScreen::deInit()

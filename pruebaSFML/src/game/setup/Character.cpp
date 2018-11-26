@@ -13,6 +13,7 @@ namespace Game_Namespace
 		_gravity = true;
 		_isPlayer = false;
 		_hp = 0;
+		_currentlyTouchingPlayer = false;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -26,6 +27,7 @@ namespace Game_Namespace
 		_gravity = true;
 		_isPlayer = false;
 		_hp = 0;
+		_currentlyTouchingPlayer = false;
 	}
 
 	Character::~Character()
@@ -122,5 +124,15 @@ namespace Game_Namespace
 	void Character::setIsPlayer(bool isPlayer)
 	{
 		_isPlayer = isPlayer;
+	}
+
+	void Character::setCurrentlyTouchingPlayer(bool currentlyTouchingPlayer)
+	{
+		_currentlyTouchingPlayer = currentlyTouchingPlayer;
+	}
+
+	bool Character::getCurrentlyTouchingPlayer()
+	{
+		return _currentlyTouchingPlayer;
 	}
 }
