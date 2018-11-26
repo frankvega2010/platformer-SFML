@@ -489,6 +489,16 @@ namespace Game_Namespace
 			}
 		}
 
+		static void HUDUpdate()
+		{
+			deltaText.setString(toString(deltaTime));
+
+			Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
+			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+
+			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
+		}
+
 		void GameplayScreen::update()
 		{
 
@@ -566,17 +576,13 @@ namespace Game_Namespace
 
 			playerSprite.setPosition(playerRectangle.getPosition());
 			//playerSprite.setPosition(playerRectangle.getPosition());
-			deltaText.setString(toString(deltaTime));
-			Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
+			
+			////Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
 
-			crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
+			////crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
 			
-			//Lives.setPosition(player1.getPosition());
-			//view.getCenter().x
-			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
-			//Lives.setPosition(sf::Vector2f(playerRectangle.getPosition().x, playerRectangle.getPosition().y - 700));
-			
-			//Lives.setPosition(playerRectangle.getPosition().x,playerRectangle.getPosition().y - Lives.getPosition().y);
+			HUDUpdate();
+			////Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
 
 
 			CheckPlayerFlipSprite();
