@@ -18,7 +18,7 @@ namespace Game_Namespace
 		_flipLeft = false;
 		_flipRight = false;
 		_isJumping = false;
-		//_timerJump.reset(sf::Time(sf::seconds(1.0f)));
+		_isOnGround = false;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -37,7 +37,7 @@ namespace Game_Namespace
 		_flipLeft = false;
 		_flipRight = false;
 		_isJumping = false;
-		//_timerJump.reset(sf::Time(sf::seconds(1.0f)));
+		_isOnGround = false;
 	}
 
 	Character::~Character()
@@ -184,6 +184,16 @@ namespace Game_Namespace
 	void Character::setIsJumping(bool isJumping)
 	{
 		_isJumping = isJumping;
+	}
+
+	bool Character::getIsOnGround()
+	{
+		return _isOnGround;
+	}
+
+	void Character::setIsOnGround(bool isOnGround)
+	{
+		_isOnGround = isOnGround;
 	}
 
 	void Character::StartTimerJump()

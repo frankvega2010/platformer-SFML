@@ -25,6 +25,7 @@ namespace Game_Namespace
 		bool _flipLeft;
 		bool _flipRight;
 		bool _isJumping;
+		bool _isOnGround;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -58,6 +59,8 @@ namespace Game_Namespace
 		void setFlipRight(bool flipRight);
 		bool getIsJumping();
 		void setIsJumping(bool isJumping);
+		bool getIsOnGround();
+		void setIsOnGround(bool isOnGround);
 		void StartTimerJump();
 		void setResetTimerJump(sf::Time initialTime);
 		bool isTimerJumpExpired();

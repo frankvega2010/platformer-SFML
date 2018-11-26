@@ -38,13 +38,6 @@ namespace Game_Namespace
 
 	static int gravitySpeed = 0;
 
-	//Player Variables
-
-	static bool playerInput = false;
-	static bool isJumping = false;
-	static bool isOnGround = false;
-
-
 	// Mouse Position
 
 	static sf::Vector2i MousePosition;
@@ -256,9 +249,10 @@ namespace Game_Namespace
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 			{
-				if (!(player1.getIsJumping()) && isOnGround)
+				if (!(player1.getIsJumping()) && player1.getIsOnGround())
 				{
-					isOnGround = false;
+					player1.setIsOnGround(false);
+					//isOnGround = false;
 					player1.setIsJumping(true);
 					gravitySpeed = 0;
 					player1.StartTimerJump();
@@ -312,7 +306,7 @@ namespace Game_Namespace
 				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
 					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
 				{
-					if(Character.getIsPlayer()) isOnGround = true;
+					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
 					cameraDown = false;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
 				}
