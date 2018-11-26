@@ -35,20 +35,11 @@ namespace Game_Namespace
 	static bool isJumping = false;
 	static bool isOnGround = false;
 
-	static bool flipRight = false;
-	static bool flipLeft = false;
-
-	//sf::Mouse playerMouse;
-
 	sf::Vector2i MousePosition;
 
 	// convert it to world coordinates
 	sf::Vector2f worldPos;
 
-	//static int playerLivesTest = 3;
-	static bool currentlyTouchingPlayer = false;
-	static bool canShoot = false;
-	//static bool playerInvincibility = false;
 
 	const sf::Time initialTime = sf::seconds(0.5f);
 	thor::CallbackTimer timerJump;
@@ -123,16 +114,12 @@ namespace Game_Namespace
 			// convert it to world coordinates
 			worldPos = _window.mapPixelToCoords(MousePosition);
 
-			//sf::Mouse::setPosition(sf::Vector2i(Game::getNewScreenWidth(), Game::getNewScreenHeight()), _window);
-
 			playerTexture.loadFromFile("res/assets/textures/test10.png");
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
 
 
-			//playerSprite.setTexture(playerTexture);
 			playerSprite.setPosition(200, 1800);
-			//playerSprite.setColor(sf::Color(255, 255, 255, 128));
 			
 
 			//map.ShowObjects();
@@ -162,7 +149,6 @@ namespace Game_Namespace
 
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
-			//player1.setSize(100, 180);
 			player1.setSize(100, 150);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
@@ -192,12 +178,6 @@ namespace Game_Namespace
 
 			playerRectangle.setTexture(&playerTexture);
 			animation.SetAnimation(&playerTexture, sf::Vector2u(8, 6), 0.1f);
-			/*sf::Vector2f textureSize = static_cast<sf::Vector2f>(playerTexture.getSize());
-			textureSize.x /= 8;
-			textureSize.y /= 6;
-			std::cout << textureSize.x << std::endl;
-			std::cout << textureSize.y << std::endl;
-			playerRectangle.setTextureRect(sf::IntRect(textureSize.x * 2,textureSize.y * 4, textureSize.x, textureSize.y));*/
 
 			
 			
@@ -290,7 +270,6 @@ namespace Game_Namespace
 				if (shape.getPosition().x + shape.getGlobalBounds().width > rectangles[i].getPosition().x &&
 					shape.getPosition().x + shape.getGlobalBounds().width < rectangles[i].getPosition().x + 10)
 				{
-					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 					shape.setPosition(rectangles[i].getPosition().x - (shape.getGlobalBounds().width), shape.getPosition().y);
 				}
 
@@ -298,21 +277,18 @@ namespace Game_Namespace
 					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10
 					)
 				{
-					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 					shape.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), shape.getPosition().y);
 				}
 
 				if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
 					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20)
 				{
-					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
 				}
 
 				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
 					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
 				{
-					rectangles[i].setFillColor({ 255,0,0 }); // Testing Collision, delete later!
 					if(Character.getIsPlayer()) isOnGround = true;
 					cameraDown = false;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
@@ -320,7 +296,7 @@ namespace Game_Namespace
 			}
 			else
 			{
-				rectangles[i].setFillColor({ 255,255,255 }); // Testing Collision, delete later!
+				// blank
 			}
 		}
 
@@ -338,13 +314,11 @@ namespace Game_Namespace
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
-				//currentlyTouchingPlayer = false;
 			}
 			else
 			{
 				enemyRectangle.setFillColor(sf::Color::Yellow);
 				enemy.setCurrentlyTouchingPlayer(false);
-				//currentlyTouchingPlayer = true;
 			}
 		}
 
@@ -353,7 +327,7 @@ namespace Game_Namespace
 			if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
 				
-				player1.setCanShoot(true);// canShoot = true;
+				player1.setCanShoot(true);
 				if (player1.getCanShoot())
 				{
 					crosshairTest.setOutlineColor(sf::Color::Green);
@@ -372,7 +346,6 @@ namespace Game_Namespace
 			{
 				crosshairTest.setOutlineColor(sf::Color::Red);
 				player1.setCanShoot(false);
-				//canShoot = false;
 			}
 		}
 
@@ -468,24 +441,24 @@ namespace Game_Namespace
 		{
 			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
 			{
-				if (flipLeft)
+				if (player1.getFlipLeft())
 				{
 					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
 					playerRectangle.scale(-1, 1);
 				}
-				flipLeft = false;
-				flipRight = true;
+				player1.setFlipLeft(false);
+				player1.setFlipRight(true);
 			}
 			else
 			{
 
-				if (flipRight)
+				if (player1.getFlipRight())
 				{
 					playerRectangle.setOrigin({ 0, 0 });
 					playerRectangle.scale(-1, 1);
 				}
-				flipRight = false;
-				flipLeft = true;
+				player1.setFlipRight(false);
+				player1.setFlipLeft(true);
 			}
 		}
 
@@ -501,16 +474,13 @@ namespace Game_Namespace
 
 		void GameplayScreen::update()
 		{
-
 			animation.Update(0, deltaTime.asSeconds());
 			playerRectangle.setTextureRect(animation.uvRect);
 			
 			MousePosition = sf::Mouse::getPosition(_window);
-
 			// convert it to world coordinates
 			worldPos = _window.mapPixelToCoords(MousePosition);
-			//MousePosition = sf::Mouse::getPosition(_window);
-			//sf::Mouse::getPosition()
+
 			_window.setView(view);
 			input();
 
@@ -533,7 +503,7 @@ namespace Game_Namespace
 				playerRectangle.setFillColor(sf::Color::White);
 				if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 				{
-					currentlyTouchingPlayer = true;
+					enemyTest.setCurrentlyTouchingPlayer(true);
 				}
 			}
 
@@ -545,7 +515,6 @@ namespace Game_Namespace
 					playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				}
 				
-				//Lives.setPosition(Lives.getPosition().x, Lives.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				if (timerJump.isExpired())
 				{
 					isJumping = false;
@@ -572,17 +541,10 @@ namespace Game_Namespace
 
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
 			playerRectangle.move(player1.getMove());
-			//playerSprite.scale(-1, 1);
 
 			playerSprite.setPosition(playerRectangle.getPosition());
-			//playerSprite.setPosition(playerRectangle.getPosition());
-			
-			////Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
-
-			////crosshairTest.setPosition(worldPos.x - 30,worldPos.y - 30);
 			
 			HUDUpdate();
-			////Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
 
 
 			CheckPlayerFlipSprite();
