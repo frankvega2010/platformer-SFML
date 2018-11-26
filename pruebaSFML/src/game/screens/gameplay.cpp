@@ -511,7 +511,8 @@ namespace Game_Namespace
 		{
 			deltaText.setString(toString(deltaTime));
 
-			Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
+			Lives.setString("Player HP: " + toString(player1.getHp()));
+			//Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
 			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
 
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
@@ -567,6 +568,25 @@ namespace Game_Namespace
 			}
 		}
 
+		//WIP Function
+		static void CheckInvincibilityFrames(thor::CallbackTimer& timer)
+		{
+			if (timer.isRunning())
+			{
+				playerRectangle.setFillColor(sf::Color::Green);
+			}
+
+			if (timer.isExpired())
+			{
+				timer.reset(initialInvincibilityTime);
+				playerRectangle.setFillColor(sf::Color::White);
+				if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+				{
+					enemyTest.setCurrentlyTouchingPlayer(true);
+				}
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 			animation.Update(0, deltaTime.asSeconds());
@@ -584,6 +604,7 @@ namespace Game_Namespace
 			CheckWeaponsFireRate(timerPistolFireRate);
 
 			//Invincibility Frames
+			//CheckInvincibilityFrames(timerInvincibility);
 			if (timerInvincibility.isRunning())
 			{
 				playerRectangle.setFillColor(sf::Color::Green);
