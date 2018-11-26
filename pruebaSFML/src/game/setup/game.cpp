@@ -66,10 +66,11 @@ namespace Game_Namespace
 
 		setScreenWidth(1920);
 		setScreenHeight(1080);
-		_window.setPosition(sf::Vector2i(0, 0));
+		
 		_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "SFML Template", _defaultStyle);
 		Game::setNewScreenWidth(1440);
 		Game::setNewScreenHeight(900);
+		_window.setPosition(sf::Vector2i(Game::getNewScreenWidth()/16, Game::getNewScreenHeight() /16));
 		_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
 	}
 
