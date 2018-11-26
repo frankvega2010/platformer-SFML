@@ -17,6 +17,7 @@ namespace Game_Namespace
 		bool _gravity;
 		bool _isPlayer;
 		bool _currentlyTouchingPlayer;
+		bool _canShoot;
 	public:
 		Character();
 		Character(int x, int y, int width, int height, sf::Color color);
@@ -41,6 +42,8 @@ namespace Game_Namespace
 		void setIsPlayer(bool isPlayer);
 		bool getCurrentlyTouchingPlayer();
 		void setCurrentlyTouchingPlayer(bool currentlyTouchingPlayer);
+		bool getCanShoot();
+		void setCanShoot(bool canShoot);
 	};
 }
 #endif // CHARACTER_H

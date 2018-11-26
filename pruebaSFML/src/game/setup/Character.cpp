@@ -14,6 +14,7 @@ namespace Game_Namespace
 		_isPlayer = false;
 		_hp = 0;
 		_currentlyTouchingPlayer = false;
+		_canShoot = false;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -28,6 +29,7 @@ namespace Game_Namespace
 		_isPlayer = false;
 		_hp = 0;
 		_currentlyTouchingPlayer = false;
+		_canShoot = false;
 	}
 
 	Character::~Character()
@@ -134,5 +136,15 @@ namespace Game_Namespace
 	bool Character::getCurrentlyTouchingPlayer()
 	{
 		return _currentlyTouchingPlayer;
+	}
+
+	bool Character::getCanShoot()
+	{
+		return _canShoot;
+	}
+
+	void Character::setCanShoot(bool canShoot)
+	{
+		_canShoot = canShoot;
 	}
 }
