@@ -558,6 +558,15 @@ namespace Game_Namespace
 			}
 		}
 
+		//WIP Function
+		static void CheckWeaponsFireRate(thor::CallbackTimer& weaponFireRate)
+		{
+			if (weaponFireRate.isExpired())
+			{
+				weaponFireRate.reset(pistolFireRate);
+			}
+		}
+
 		void GameplayScreen::update()
 		{
 			animation.Update(0, deltaTime.asSeconds());
@@ -571,13 +580,10 @@ namespace Game_Namespace
 			input();
 
 
-			//pistol fire rate
-			if (timerPistolFireRate.isExpired())
-			{
-				timerPistolFireRate.reset(pistolFireRate);
-			}
+			// CheckWeaponsFireRate(pistol); // WIP function
+			CheckWeaponsFireRate(timerPistolFireRate);
 
-			//JUMP
+			//Invincibility Frames
 			if (timerInvincibility.isRunning())
 			{
 				playerRectangle.setFillColor(sf::Color::Green);
@@ -594,25 +600,6 @@ namespace Game_Namespace
 			}
 
 			CheckCharacterJump(player1,playerRectangle);
-
-			/*if (isJumping)
-			{
-				if (timerJump.isRunning())
-				{
-					cameraDown = false;
-					playerRectangle.setPosition(playerRectangle.getPosition().x, playerRectangle.getPosition().y + (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
-				}
-				
-				if (timerJump.isExpired())
-				{
-					isJumping = false;
-					gravitySpeed = 800;
-				}
-			}
-			else
-			{
-				timerJump.reset(initialTime);
-			}*/
 
 			// gravity
 			CheckPlayerGravity();
