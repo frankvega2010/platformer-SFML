@@ -386,9 +386,6 @@ namespace Game_Namespace
 					break;
 				}
 				}
-				/*gameScreens[Controls]->deInit();
-				_gameScreen= Menu;
-				gameScreens[Menu]->init();*/
 			}
 		}
 		break;

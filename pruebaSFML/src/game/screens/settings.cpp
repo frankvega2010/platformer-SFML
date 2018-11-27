@@ -183,7 +183,7 @@ namespace Game_Namespace
 			controlsButton = tgui::Button::create();
 			gui.add(controlsButton);
 			controlsButton->setRenderer(blackTheme.getRenderer("Button"));
-			controlsButton->setSize(240, 100);
+			controlsButton->setSize(250, 110);
 			controlsButton->setTextSize(40);// 240 100
 			controlsButton->setPosition(530, 780);
 			controlsButton->setText("Controls");
