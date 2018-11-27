@@ -21,8 +21,9 @@ namespace Game_Namespace
 		{
 		}
 
-		static void signalGoToMenu()
+		static void signalGoToSettings()
 		{
+			Game::setButtonOption(buttonSettings);
 			Screens::setHasScreenFinished(true);
 		}
 
@@ -44,10 +45,10 @@ namespace Game_Namespace
 			maxDistance = 0;
 
 			buttons[0]->setText("More Controls");
-			buttons[1]->setText("Menu");
+			buttons[1]->setText("Settings");
 
 			//buttons[0]->connect("Pressed", signalChangeTo800x600);
-			buttons[1]->connect("Pressed", signalGoToMenu);
+			buttons[1]->connect("Pressed", signalGoToSettings);
 
 			setHasScreenFinished(false);
 		}
