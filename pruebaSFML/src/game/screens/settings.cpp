@@ -9,11 +9,15 @@ using namespace Gameplay_Section;
 
 namespace Game_Namespace
 {
-	static const int maxButtons = 8;
+	static const int maxButtons = 7;
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	static tgui::Button::Ptr buttons[maxButtons];
+
+	static tgui::Slider::Ptr slider;
+
+	static tgui::Label::Ptr label;
 
 	namespace Settings_Section
 	{
@@ -90,16 +94,16 @@ namespace Game_Namespace
 			}
 		}
 
-		static void signalToggleFullscreen()
-		{
-			//_window.
-			//_window.setPosition(sf::Vector2i(0,0));
-			if (Game::getDefaultStyle() == sf::Style::Default) Game::setDefaultStyle(sf::Style::Fullscreen);
-			else if (Game::getDefaultStyle() == sf::Style::Fullscreen)Game::setDefaultStyle(sf::Style::Default);
-			_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
-			//_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
-			//_window.create();
-		}
+		//static void signalToggleFullscreen()
+		//{
+		//	//_window.
+		//	//_window.setPosition(sf::Vector2i(0,0));
+		//	if (Game::getDefaultStyle() == sf::Style::Default) Game::setDefaultStyle(sf::Style::Fullscreen);
+		//	else if (Game::getDefaultStyle() == sf::Style::Fullscreen)Game::setDefaultStyle(sf::Style::Default);
+		//	_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
+		//	//_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
+		//	//_window.create();
+		//}
 
 		void SettingsScreen::init()
 		{
@@ -112,9 +116,9 @@ namespace Game_Namespace
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(40);// 240 100
 
-				buttons[i]->setPosition(50 , 100 + maxDistance);
+				buttons[i]->setPosition(50 , 70 + maxDistance);
 
-				maxDistance = maxDistance + 120;
+				maxDistance = maxDistance + 130;
 			}
 			maxDistance = 0;
 
@@ -124,8 +128,8 @@ namespace Game_Namespace
 			buttons[3]->setText("1440x900");
 			buttons[4]->setText("1600x900");
 			buttons[5]->setText("1920x1080");
-			buttons[6]->setText("Fullscreen");
-			buttons[7]->setText("Menu");
+			//buttons[6]->setText("Fullscreen");
+			buttons[6]->setText("Menu");
 
 			buttons[0]->connect("Pressed", signalChangeTo800x600);
 			buttons[1]->connect("Pressed", signalChangeTo1024x768);
@@ -133,8 +137,22 @@ namespace Game_Namespace
 			buttons[3]->connect("Pressed", signalChangeTo1440x900);
 			buttons[4]->connect("Pressed", signalChangeTo1600x900);
 			buttons[5]->connect("Pressed", signalChangeTo1920x1080);
-			buttons[6]->connect("Pressed", signalToggleFullscreen);
-			buttons[7]->connect("Pressed", signalGoToMenu);
+			//buttons[6]->connect("Pressed", signalToggleFullscreen);
+			buttons[6]->connect("Pressed", signalGoToMenu);
+
+			label = tgui::Label::create();
+			label->setRenderer(blackTheme.getRenderer("Label"));
+			label->setText("Music Volume");
+			label->setPosition(500, 180);
+			label->setTextSize(40);
+			gui.add(label);
+
+			slider = tgui::Slider::create();
+			slider->setRenderer(blackTheme.getRenderer("Slider"));
+			slider->setPosition(500, 280);
+			slider->setSize(300, 30);
+			slider->setValue(10);
+			gui.add(slider);
 
 			setHasScreenFinished(false);
 		}
