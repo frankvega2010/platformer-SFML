@@ -161,9 +161,11 @@ namespace Game_Namespace
 
 			sliderMusic = tgui::Slider::create();
 			sliderMusic->setRenderer(blackTheme.getRenderer("Slider"));
+			sliderMusic->setMinimum(0);
+			sliderMusic->setMaximum(100);
 			sliderMusic->setPosition(500, 280);
 			sliderMusic->setSize(300, 30);
-			sliderMusic->setValue(6);
+			sliderMusic->setValue(globalMusicVolume);
 			gui.add(sliderMusic);
 
 			labelSoundVolume = tgui::Label::create();
@@ -201,6 +203,7 @@ namespace Game_Namespace
 
 		void SettingsScreen::update()
 		{
+			globalMusicVolume = sliderMusic->getValue();
 			globalSoundVolume=sliderSound->getValue();
 			input();
 		}

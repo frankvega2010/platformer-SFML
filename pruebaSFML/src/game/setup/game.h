@@ -94,6 +94,7 @@ namespace Game_Namespace
 	extern sf::Time deltaTime;
 
 	extern int globalSoundVolume;
+	extern int globalMusicVolume;
 
 	//extern Sound pong_hit_wall;
 	//extern Sound pong_hit_player;
