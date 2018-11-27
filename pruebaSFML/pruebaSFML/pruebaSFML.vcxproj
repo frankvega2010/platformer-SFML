@@ -92,7 +92,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;$(SolutionDir)lib\STP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;thor-d.lib;tgui-d.lib;STP-d.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;thor-d.lib;tgui-d.lib;STP-d.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(ProjectDir)copyfiles.bat "$(TargetDir)" "$(SolutionDir)" "1"</Command>
@@ -121,7 +121,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\SFML-2.5.1\lib;$(SolutionDir)lib\thor-v2.0-msvc2015\lib;$(SolutionDir)lib\TGUI-0.8\lib;$(SolutionDir)lib\STP\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;thor.lib;tgui.lib;STP.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;thor.lib;tgui.lib;STP.lib;zlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>

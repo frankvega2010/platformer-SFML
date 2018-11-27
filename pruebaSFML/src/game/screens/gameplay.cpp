@@ -56,7 +56,14 @@ namespace Game_Namespace
 
 	//Textures & Animations
 	static sf::Texture playerTexture;
+	static sf::Texture playerHands;
 	static SpriteAnimation animation;
+	static SpriteAnimation pistolAnimation;
+
+	// Audio
+
+	static sf::SoundBuffer pistolshoot;
+	static sf::Sound pistolGunShoot;
 
 	// Gun Rotation Variable
 
@@ -151,6 +158,11 @@ namespace Game_Namespace
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
 
+			//playerHands.loadFromFile("res/assets/textures/hands.png");
+			playerHands.loadFromFile("res/assets/textures/pistol.png");
+			playerHands.setSmooth(true);
+			playerHands.setRepeated(false);
+
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 150);
@@ -174,9 +186,11 @@ namespace Game_Namespace
 			gunLimit.setOutlineColor(sf::Color::Blue);
 			gunLimit.setPosition({ playerRectangle.getPosition().x - playerRectangle.getGlobalBounds().width / 2, playerRectangle.getPosition().y - playerRectangle.getGlobalBounds().height / 2 });
 
-			gun.setFillColor(sf::Color::Yellow);
-			gun.setPosition(static_cast<sf::Vector2f>(gunLimit.getPosition()));
-			gun.setSize({ 80,30 });
+			gun.setFillColor(sf::Color::White);
+			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
+			gun.setSize({ 140,90 }); // 100 60
+			gun.setTexture(&playerHands);
+			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.05f);
 
 			// Enemy 1
 
@@ -193,8 +207,9 @@ namespace Game_Namespace
 			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
 
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
-			enemyPlayerDetection.setSize(sf::Vector2f(500.0f, 540));
+			enemyPlayerDetection.setSize(sf::Vector2f(1800.0f, 540));
 			enemyPlayerDetection.setFillColor({ 150,0,0,150 });
+			//enemyPlayerDetection.setFillColor(sf::Color::Transparent);
 			 
 			//// Text
 
@@ -218,6 +233,13 @@ namespace Game_Namespace
 
 			//// Game Mechanics
 			gravitySpeed = 800;
+
+			//// Audio
+
+			pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
+			pistolGunShoot.setBuffer(pistolshoot);
+			pistolGunShoot.setVolume(60);
+			
 		}
 
 		void GameplayScreen::input()
@@ -320,7 +342,10 @@ namespace Game_Namespace
 		static void gunRotation()
 		{
 			gunLimit.setPosition({ playerRectangle.getPosition().x - 70,playerRectangle.getPosition().y - 70 });
-			gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 ,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 });
+			gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 ,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
+			//if(player1.getFlipRight()) gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 + 10,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
+			
+			//if (player1.getFlipLeft()) gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 - 30,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
 
 			v1.x = 0;
 			v1.y = 0.0f - gun.getPosition().y;
@@ -376,12 +401,18 @@ namespace Game_Namespace
 					crosshairTest.setOutlineColor(sf::Color::Green);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
+						
 						if (!timerPistolFireRate.isRunning())
 						{
+							pistolGunShoot.play();
 							timerPistolFireRate.start();
 							enemy.setHp(enemyTest.getHp() - 25);
 							enemyRectangle.setPosition(enemyRectangle.getPosition().x - 30, enemyRectangle.getPosition().y);
 						}
+					}
+					else
+					{
+						
 					}
 				}
 			}
@@ -488,6 +519,8 @@ namespace Game_Namespace
 				{
 					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
 					playerRectangle.scale(-1, 1);
+					gun.setOrigin({ -20,40 }); // -20 0
+					gun.scale(1, -1);
 				}
 				player1.setFlipLeft(false);
 				player1.setFlipRight(true);
@@ -499,6 +532,8 @@ namespace Game_Namespace
 				{
 					playerRectangle.setOrigin({ 0, 0 });
 					playerRectangle.scale(-1, 1);
+					gun.setOrigin({ -20, 40 });
+					gun.scale(1, -1);
 				}
 				player1.setFlipRight(false);
 				player1.setFlipLeft(true);
@@ -560,7 +595,12 @@ namespace Game_Namespace
 		{
 			if (weaponFireRate.isExpired())
 			{
+				pistolAnimation.SetSingleFrame(sf::Vector2u(0, 0));
 				weaponFireRate.reset(pistolFireRate);
+			}
+			else if (weaponFireRate.isRunning())
+			{
+				pistolAnimation.UpdateY(0, deltaTime.asSeconds());
 			}
 		}
 
@@ -603,7 +643,10 @@ namespace Game_Namespace
 			////// Characters
 
 			animation.Update(0, deltaTime.asSeconds());
+			//pistolAnimation.UpdateY(0, deltaTime.asSeconds());
+			//pistolAnimation.SetSingleFrame(sf::Vector2u(0, 0));
 			playerRectangle.setTextureRect(animation.uvRect);
+			gun.setTextureRect(pistolAnimation.uvRect);
 
 			//Invincibility Frames
 			CheckInvincibilityFrames(timerInvincibility);
@@ -618,7 +661,7 @@ namespace Game_Namespace
 			// CheckWeaponsFireRate(pistol); // WIP function
 			CheckWeaponsFireRate(timerPistolFireRate);
 
-			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 190);
+			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 800, enemyRectangle.getPosition().y - 190);
 
 			playerRectangle.move(player1.getMove());
 
