@@ -79,6 +79,7 @@ namespace Game_Namespace
 
 	static sf::Text deltaText;
 	static sf::Text Lives;
+	static sf::Text LivesEnemy;
 
 	// Characters
 
@@ -224,6 +225,10 @@ namespace Game_Namespace
 			Lives.setCharacterSize(80);
 			Lives.setFont(deltaFont);
 			Lives.setPosition(200, 1400);
+
+			LivesEnemy.setCharacterSize(80);
+			LivesEnemy.setFont(deltaFont);
+			LivesEnemy.setPosition(50, 1400);
 
 			crosshairTest.setRadius(30);
 			crosshairTest.setOutlineThickness(5);
@@ -561,8 +566,12 @@ namespace Game_Namespace
 			deltaText.setString(toString(deltaTime));
 
 			Lives.setString("Player HP: " + toString(player1.getHp()));
-			//Lives.setString("Enemy HP: " + toString(enemyTest.getHp()));
 			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+
+			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
+			LivesEnemy.setPosition(sf::Vector2f(view.getCenter().x - 600, view.getCenter().y - 800));
+			
+			
 
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
 		}
@@ -725,6 +734,7 @@ namespace Game_Namespace
 			// HUD
 			_window.draw(crosshairTest);
 			_window.draw(Lives);
+			_window.draw(LivesEnemy);
 			_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
 			_window.draw(gunLimit);
