@@ -15,9 +15,15 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
-	static tgui::Slider::Ptr slider;
+	static tgui::Button::Ptr controlsButton;
 
-	static tgui::Label::Ptr label;
+	static tgui::Slider::Ptr sliderMusic;
+
+	static tgui::Label::Ptr labelMusicVolume;
+
+	static tgui::Slider::Ptr sliderSound;
+
+	static tgui::Label::Ptr labelSoundVolume;
 
 	namespace Settings_Section
 	{
@@ -31,6 +37,12 @@ namespace Game_Namespace
 
 		static void signalGoToMenu()
 		{
+			Screens::setHasScreenFinished(true);
+		}
+
+		static void signalGoToControls()
+		{
+			Game::setButtonOption(buttonControls);
 			Screens::setHasScreenFinished(true);
 		}
 
@@ -140,19 +152,42 @@ namespace Game_Namespace
 			//buttons[6]->connect("Pressed", signalToggleFullscreen);
 			buttons[6]->connect("Pressed", signalGoToMenu);
 
-			label = tgui::Label::create();
-			label->setRenderer(blackTheme.getRenderer("Label"));
-			label->setText("Music Volume");
-			label->setPosition(500, 180);
-			label->setTextSize(40);
-			gui.add(label);
+			labelMusicVolume = tgui::Label::create();
+			labelMusicVolume->setRenderer(blackTheme.getRenderer("Label"));
+			labelMusicVolume->setText("Music Volume");
+			labelMusicVolume->setPosition(500, 180);
+			labelMusicVolume->setTextSize(40);
+			gui.add(labelMusicVolume);
 
-			slider = tgui::Slider::create();
-			slider->setRenderer(blackTheme.getRenderer("Slider"));
-			slider->setPosition(500, 280);
-			slider->setSize(300, 30);
-			slider->setValue(10);
-			gui.add(slider);
+			sliderMusic = tgui::Slider::create();
+			sliderMusic->setRenderer(blackTheme.getRenderer("Slider"));
+			sliderMusic->setPosition(500, 280);
+			sliderMusic->setSize(300, 30);
+			sliderMusic->setValue(6);
+			gui.add(sliderMusic);
+
+			labelSoundVolume = tgui::Label::create();
+			labelSoundVolume->setRenderer(blackTheme.getRenderer("Label"));
+			labelSoundVolume->setText("Sound Volume");
+			labelSoundVolume->setPosition(500, 480);
+			labelSoundVolume->setTextSize(40);
+			gui.add(labelSoundVolume);
+
+			sliderSound = tgui::Slider::create();
+			sliderSound->setRenderer(blackTheme.getRenderer("Slider"));
+			sliderSound->setPosition(500, 580);
+			sliderSound->setSize(300, 30);
+			sliderSound->setValue(6);
+			gui.add(sliderSound);
+
+			controlsButton = tgui::Button::create();
+			gui.add(controlsButton);
+			controlsButton->setRenderer(blackTheme.getRenderer("Button"));
+			controlsButton->setSize(240, 100);
+			controlsButton->setTextSize(40);// 240 100
+			controlsButton->setPosition(530, 780);
+			controlsButton->setText("Controls");
+			controlsButton->connect("Pressed", signalGoToControls);
 
 			setHasScreenFinished(false);
 		}
@@ -179,6 +214,11 @@ namespace Game_Namespace
 			{
 				buttons[i]->setVisible(false);
 			}
+			labelMusicVolume->setVisible(false);
+			sliderMusic->setVisible(false);
+			labelSoundVolume->setVisible(false);
+			sliderSound->setVisible(false);
+			controlsButton->setVisible(false);
 		}
 
 		bool SettingsScreen::finish()

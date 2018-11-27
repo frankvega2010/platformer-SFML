@@ -270,8 +270,21 @@ namespace Game_Namespace
 			if (gameScreens[Settings]->finish())
 			{
 				gameScreens[Settings]->deInit();
-				_gameScreen= Menu;
-				gameScreens[Menu]->init();
+				switch (_buttonOption)
+				{
+				case buttonControls:
+				{
+					_gameScreen = Controls;
+					gameScreens[Controls]->init();
+					break;
+				}
+				case buttonMenu:
+				{
+					_gameScreen = Menu;
+					gameScreens[Menu]->init();
+					break;
+				}
+				}
 			}
 		}
 		break;
@@ -364,8 +377,18 @@ namespace Game_Namespace
 			if (gameScreens[Controls]->finish())
 			{
 				gameScreens[Controls]->deInit();
+				switch (_buttonOption)
+				{
+				case buttonSettings:
+				{
+					_gameScreen = Settings;
+					gameScreens[Settings]->init();
+					break;
+				}
+				}
+				/*gameScreens[Controls]->deInit();
 				_gameScreen= Menu;
-				gameScreens[Menu]->init();
+				gameScreens[Menu]->init();*/
 			}
 		}
 		break;

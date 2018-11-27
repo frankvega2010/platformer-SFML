@@ -85,8 +85,8 @@ namespace Game_Namespace
 
 		static void signalGoToControls()
 		{
-			Game::setButtonOption(buttonControls);
-			Screens::setHasScreenFinished(true);
+			/*Game::setButtonOption(buttonControls);
+			Screens::setHasScreenFinished(true);*/
 		}
 
 		void MenuScreen::init()
@@ -123,7 +123,7 @@ namespace Game_Namespace
 			maxDistance = 0;
 
 			buttons[0]->setText("Play");
-			buttons[1]->setText("Controls");
+			buttons[1]->setText("Tutorial");
 			buttons[2]->setText("Settings");
 			buttons[3]->setText("Credits");
 			buttons[4]->setText("Quit");
