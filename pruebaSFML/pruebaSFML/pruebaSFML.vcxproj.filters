@@ -67,6 +67,9 @@
     <ClCompile Include="..\src\game\setup\SpriteAnimation.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\setup\weapons.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\setup\game.h">
@@ -109,6 +112,9 @@
       <Filter>Game\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\setup\SpriteAnimation.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\setup\weapons.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
   </ItemGroup>
