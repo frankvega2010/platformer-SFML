@@ -10,6 +10,7 @@ echo Copiando librerias dinamicas
 IF %config% == "1" (
 
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-graphics-d-2.dll" "%targetdir%" /E /Y /S
+XCOPY "%solutiondir%lib\SFML-2.5.1\bin\openal32.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-system-d-2.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-window-d-2.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-audio-d-2.dll" "%targetdir%" /E /Y /S
@@ -20,6 +21,7 @@ XCOPY "%solutiondir%lib\STP\bin\zlibd.dll" "%targetdir%" /E /Y /S
 
 ) ELSE IF %config% == "2" (
 
+XCOPY "%solutiondir%lib\SFML-2.5.1\bin\openal32.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-graphics-2.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-system-2.dll" "%targetdir%" /E /Y /S
 XCOPY "%solutiondir%lib\SFML-2.5.1\bin\sfml-window-2.dll" "%targetdir%" /E /Y /S
