@@ -238,7 +238,7 @@ namespace Game_Namespace
 
 			pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
 			pistolGunShoot.setBuffer(pistolshoot);
-			pistolGunShoot.setVolume(60);
+			pistolGunShoot.setVolume(globalSoundVolume);
 			
 		}
 
@@ -353,7 +353,7 @@ namespace Game_Namespace
 			}
 		}
 
-		static void gunRotation()
+		static void GunRotation()
 		{
 			gunLimit.setPosition({ playerRectangle.getPosition().x - 70,playerRectangle.getPosition().y - 70 });
 			gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 ,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
@@ -688,7 +688,7 @@ namespace Game_Namespace
 					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
 			}
 
-			gunRotation();
+			GunRotation();
 
 			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
 
