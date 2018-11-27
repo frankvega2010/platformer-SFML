@@ -43,6 +43,30 @@ void SpriteAnimation::Update(int row, float deltaTime)
 
 }
 
+void SpriteAnimation::UpdateReverse(int row, float deltaTime)
+{
+	currentImage.y = row;
+	totalTime += deltaTime;
+
+	//currentImage.x = 3;
+	//currentImage.x = 0;
+
+	if (totalTime >= switchTime)
+	{
+		totalTime -= switchTime;
+		currentImage.x--;
+
+		if (currentImage.x <= 0)
+		{
+			currentImage.x = 9;
+		}
+	}
+
+	uvRect.left = currentImage.x * uvRect.width;
+	uvRect.top = currentImage.y * uvRect.height;
+
+}
+
 void SpriteAnimation::UpdateY(int row, float deltaTime)
 {
 	currentImage.x = row;

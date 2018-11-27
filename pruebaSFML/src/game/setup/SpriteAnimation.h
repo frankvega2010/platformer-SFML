@@ -16,6 +16,7 @@ public:
 	SpriteAnimation(sf::Texture* texture, sf::Vector2u imageCount,float switchTime);
 	~SpriteAnimation();
 	void Update(int row,float deltaTime);
+	void UpdateReverse(int row, float deltaTime);
 	void UpdateY(int row, float deltaTime);
 	void SetAnimation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);
 	void SetAnimationY(sf::Texture* texture, sf::Vector2u imageCount, float switchTime);

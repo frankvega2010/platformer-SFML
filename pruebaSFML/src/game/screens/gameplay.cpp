@@ -154,7 +154,7 @@ namespace Game_Namespace
 			i = 0;
 
 			// Player 1
-			playerTexture.loadFromFile("res/assets/textures/test10.png");
+			playerTexture.loadFromFile("res/assets/textures/playersprite.png");
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
 
@@ -176,7 +176,7 @@ namespace Game_Namespace
 			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
 
 			playerRectangle.setTexture(&playerTexture);
-			animation.SetAnimation(&playerTexture, sf::Vector2u(8, 6), 0.1f);
+			animation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
 
 			// Player Gun
 
@@ -246,16 +246,27 @@ namespace Game_Namespace
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
+				else if(player1.getFlipRight()) animation.Update(0, deltaTime.asSeconds());
+				else if (player1.getFlipLeft()) animation.Update(1, deltaTime.asSeconds());
+				
+				
 				cameraLeft = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
+				else if (player1.getFlipLeft()) animation.Update(0, deltaTime.asSeconds());
+				else if (player1.getFlipRight()) animation.Update(1, deltaTime.asSeconds());
+				
+
 				cameraRight = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
+				
 				cameraUp = false;
 				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
 			}
@@ -267,6 +278,9 @@ namespace Game_Namespace
 			else
 			{
 				player1.setMove(0, 0);
+				//
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
+				else animation.SetSingleFrame(sf::Vector2u(0, 0));
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -517,6 +531,7 @@ namespace Game_Namespace
 			{
 				if (player1.getFlipLeft())
 				{
+					//animation.setCurrentImageX(9);
 					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
 					playerRectangle.scale(-1, 1);
 					gun.setOrigin({ -20,40 }); // -20 0
@@ -530,6 +545,7 @@ namespace Game_Namespace
 
 				if (player1.getFlipRight())
 				{
+					//animation.setCurrentImageX(9);
 					playerRectangle.setOrigin({ 0, 0 });
 					playerRectangle.scale(-1, 1);
 					gun.setOrigin({ -20, 40 });
@@ -642,9 +658,7 @@ namespace Game_Namespace
 
 			////// Characters
 
-			animation.Update(0, deltaTime.asSeconds());
-			//pistolAnimation.UpdateY(0, deltaTime.asSeconds());
-			//pistolAnimation.SetSingleFrame(sf::Vector2u(0, 0));
+			//animation.Update(0, deltaTime.asSeconds());
 			playerRectangle.setTextureRect(animation.uvRect);
 			gun.setTextureRect(pistolAnimation.uvRect);
 
