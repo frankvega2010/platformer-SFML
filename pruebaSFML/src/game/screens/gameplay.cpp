@@ -246,9 +246,9 @@ namespace Game_Namespace
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
-				else if(player1.getFlipRight()) animation.Update(0, deltaTime.asSeconds());
-				else if (player1.getFlipLeft()) animation.Update(1, deltaTime.asSeconds());
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
+				else if(player1.getFlipRight()) animation.Update(playerWalkBackward, deltaTime.asSeconds());
+				else if (player1.getFlipLeft()) animation.Update(playerWalkForward, deltaTime.asSeconds());
 				
 				
 				cameraLeft = false;
@@ -256,9 +256,9 @@ namespace Game_Namespace
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
-				else if (player1.getFlipLeft()) animation.Update(0, deltaTime.asSeconds());
-				else if (player1.getFlipRight()) animation.Update(1, deltaTime.asSeconds());
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
+				else if (player1.getFlipLeft()) animation.Update(playerWalkBackward, deltaTime.asSeconds());
+				else if (player1.getFlipRight()) animation.Update(playerWalkForward, deltaTime.asSeconds());
 				
 
 				cameraRight = false;
@@ -279,7 +279,7 @@ namespace Game_Namespace
 			{
 				player1.setMove(0, 0);
 				//
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, 2));
+				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
 				else animation.SetSingleFrame(sf::Vector2u(0, 0));
 			}
 
@@ -321,26 +321,26 @@ namespace Game_Namespace
 			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 			{
 				if (shape.getPosition().x + shape.getGlobalBounds().width > rectangles[i].getPosition().x &&
-					shape.getPosition().x + shape.getGlobalBounds().width < rectangles[i].getPosition().x + 10)
+					shape.getPosition().x + shape.getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
 				{
 					shape.setPosition(rectangles[i].getPosition().x - (shape.getGlobalBounds().width), shape.getPosition().y);
 				}
 
 				if (shape.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
-					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10
+					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
 					)
 				{
 					shape.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), shape.getPosition().y);
 				}
 
 				if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20)
+					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
 				{
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
 				}
 
 				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
-					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20)
+					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
 					cameraDown = false;
@@ -616,7 +616,7 @@ namespace Game_Namespace
 			}
 			else if (weaponFireRate.isRunning())
 			{
-				pistolAnimation.UpdateY(0, deltaTime.asSeconds());
+				pistolAnimation.UpdateY(pistolShoot, deltaTime.asSeconds());
 			}
 		}
 
