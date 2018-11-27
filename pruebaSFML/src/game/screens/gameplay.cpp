@@ -229,6 +229,7 @@ namespace Game_Namespace
 			LivesEnemy.setCharacterSize(80);
 			LivesEnemy.setFont(deltaFont);
 			LivesEnemy.setPosition(50, 1400);
+			LivesEnemy.setFillColor(sf::Color::Transparent);
 
 			crosshairTest.setRadius(30);
 			crosshairTest.setOutlineThickness(5);
@@ -413,7 +414,8 @@ namespace Game_Namespace
 		{
 			if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
-				
+				LivesEnemy.setFillColor(sf::Color::White);
+
 				player1.setCanShoot(true);
 				if (player1.getCanShoot())
 				{
@@ -431,12 +433,12 @@ namespace Game_Namespace
 					}
 					else
 					{
-						
 					}
 				}
 			}
 			else
 			{
+				LivesEnemy.setFillColor(sf::Color::Transparent);
 				crosshairTest.setOutlineColor(sf::Color::Red);
 				player1.setCanShoot(false);
 			}
@@ -479,6 +481,7 @@ namespace Game_Namespace
 			}
 			else
 			{
+				LivesEnemy.setFillColor(sf::Color::Transparent);
 				enemyRectangle.setSize(sf::Vector2f(0, 0));
 				PlayerDetection.setSize(sf::Vector2f(0, 0));
 			}
@@ -569,10 +572,8 @@ namespace Game_Namespace
 			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
 
 			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
-			LivesEnemy.setPosition(sf::Vector2f(view.getCenter().x - 600, view.getCenter().y - 800));
+			LivesEnemy.setPosition(sf::Vector2f(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 100));
 			
-			
-
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
 		}
 
