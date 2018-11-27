@@ -27,6 +27,7 @@ namespace Game_Namespace
 
 	static sf::Event event;
 
+	int globalSoundVolume;
 	int Game::_buttonOption = 0;
 	float Game::_defaultFontSize = 0;
 	float Game::_defaultFontSizeGameplayScore = 0;
@@ -179,7 +180,7 @@ namespace Game_Namespace
 	{
 		_window.setActive();
 	
-		
+		globalSoundVolume = 40;
 		//std::cout << _window.getView().getSize().x;
 
 		//button.is
