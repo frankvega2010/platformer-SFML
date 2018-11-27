@@ -152,6 +152,7 @@
     <ClCompile Include="..\src\game\setup\Character.cpp" />
     <ClCompile Include="..\src\game\setup\enemy.cpp" />
     <ClCompile Include="..\src\game\setup\game.cpp" />
+    <ClCompile Include="..\src\game\setup\Pistol.cpp" />
     <ClCompile Include="..\src\game\setup\player.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\game\setup\SpriteAnimation.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="..\src\game\setup\Character.h" />
     <ClInclude Include="..\src\game\setup\enemy.h" />
     <ClInclude Include="..\src\game\setup\game.h" />
+    <ClInclude Include="..\src\game\setup\Pistol.h" />
     <ClInclude Include="..\src\game\setup\player.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
     <ClInclude Include="..\src\game\setup\SpriteAnimation.h" />
