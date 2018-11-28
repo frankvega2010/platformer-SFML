@@ -19,6 +19,7 @@ namespace Game_Namespace
 		_flipRight = false;
 		_isJumping = false;
 		_isOnGround = false;
+		_isOnWhichGround = -1;
 	}
 
 	Character::Character(int x, int y, int width, int height, sf::Color color)
@@ -38,6 +39,7 @@ namespace Game_Namespace
 		_flipRight = false;
 		_isJumping = false;
 		_isOnGround = false;
+		_isOnWhichGround = -1;
 	}
 
 	Character::~Character()
@@ -210,8 +212,19 @@ namespace Game_Namespace
 	{
 		return _timerJump.isExpired();
 	}
+
 	bool Character::isTimerJumpRunning()
 	{
 		return _timerJump.isRunning();
+	}
+
+	int Character::getIsOnWhichGround()
+	{
+		return _isOnWhichGround;
+	}
+
+	void Character::setIsOnWhichGround(int isOnWhichGround)
+	{
+		_isOnWhichGround = isOnWhichGround;
 	}
 }

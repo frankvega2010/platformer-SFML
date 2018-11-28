@@ -17,6 +17,7 @@ namespace Game_Namespace
 		sf::Vector2f _move;
 		sf::Vector2f _speed;
 		int _hp;
+		int _isOnWhichGround;
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
@@ -65,6 +66,8 @@ namespace Game_Namespace
 		void setResetTimerJump(sf::Time initialTime);
 		bool isTimerJumpExpired();
 		bool isTimerJumpRunning();
+		int getIsOnWhichGround();
+		void setIsOnWhichGround(int isOnWhichGround);
 	};
 }
 

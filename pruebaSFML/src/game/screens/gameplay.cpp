@@ -36,6 +36,8 @@ namespace Game_Namespace
 
 	// Gravity
 
+	static int gravityValue = -1;
+
 	static int gravitySpeed = 0;
 
 	// Mouse Position
@@ -296,7 +298,8 @@ namespace Game_Namespace
 					player1.setIsOnGround(false);
 					//isOnGround = false;
 					player1.setIsJumping(true);
-					gravitySpeed = 0;
+					//player1.setGravity(false);
+					//gravitySpeed = 0;
 					player1.StartTimerJump();
 				}			
 			}
@@ -322,7 +325,7 @@ namespace Game_Namespace
 
 		//------- Gameplay Functions
 
-		static void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character Character)
+		static void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character& Character)
 		{
 			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 			{
@@ -350,7 +353,20 @@ namespace Game_Namespace
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
 					cameraDown = false;
+					Character.setGravity(false);
+					Character.setIsOnWhichGround(i);
+					/*player1.setGravity(false);
+					enemyTest.setGravity(false);
+					player1.setIsOnWhichGround(i);
+					enemyTest.setIsOnWhichGround(i);*/
+					gravityValue = i;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
+				}
+				else
+				{
+					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+					/*if (player1.getIsOnWhichGround() == i) player1.setGravity(true);
+					if (enemyTest.getIsOnWhichGround() == i) enemyTest.setGravity(true);*/
 				}
 			}
 			else
