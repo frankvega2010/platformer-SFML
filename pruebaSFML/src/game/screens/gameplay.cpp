@@ -18,6 +18,10 @@ namespace Game_Namespace
 	const int maxColisionsBoxes = 30;
 
 	static sf::RectangleShape rectangles[maxColisionsBoxes];
+
+	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
+
+	static tgui::Button::Ptr pauseButton;
 	////---------------------------------------------------------
 
 	// Camera Settings
@@ -95,8 +99,15 @@ namespace Game_Namespace
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
 
+
 	namespace Gameplay_Section
 	{
+		static void signalGoToPause()
+		{
+			Game::setButtonOption(buttonPause);
+			Screens::setHasScreenFinished(true);
+		}
+
 		static std::string toString(sf::Time value)
 		{
 			std::ostringstream stream;
@@ -133,6 +144,8 @@ namespace Game_Namespace
 
 			view.setCenter(200.0f, 1800.f);
 			view.zoom(2.0f);
+
+			
 
 			//map.ShowObjects();
 
@@ -245,6 +258,16 @@ namespace Game_Namespace
 			pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
 			pistolGunShoot.setBuffer(pistolshoot);
 			pistolGunShoot.setVolume(globalSoundVolume);
+
+			pauseButton = tgui::Button::create();
+			gui.add(pauseButton);
+			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
+			pauseButton->setSize(50, 50);
+			pauseButton->setTextSize(30);// 240 100
+
+			pauseButton->setPosition(940,10);
+			pauseButton->setText("||");
+			pauseButton->connect("Pressed", signalGoToPause);
 			
 		}
 
@@ -340,22 +363,31 @@ namespace Game_Namespace
 				}
 
 				if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
+					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 10) // - 20
 				{
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
 				}
 
 				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
-					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
+					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y +10) // + 20
 				{
-					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
+					if (Character.getIsPlayer())
+					{
+						player1.setIsOnGround(true); //isOnGround = true;
+						player1.setGravity(false);
+					}
 					cameraDown = false;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
+				}
+				else
+				{
+					player1.setIsOnGround(false); //isOnGround = true;
+					player1.setGravity(true);
 				}
 			}
 			else
 			{
-				// blank
+
 			}
 		}
 
@@ -668,6 +700,11 @@ namespace Game_Namespace
 
 			////// Characters
 
+			if (player1.getIsJumping())
+			{
+				player1.setGravity(true);
+			}
+
 			//animation.Update(0, deltaTime.asSeconds());
 			playerRectangle.setTextureRect(animation.uvRect);
 			gun.setTextureRect(pistolAnimation.uvRect);
@@ -746,6 +783,7 @@ namespace Game_Namespace
 		{
 			_window.setView(_window.getDefaultView());
 			view.zoom(0.5f);
+			pauseButton->setVisible(false);
 		}
 
 		bool GameplayScreen::finish()

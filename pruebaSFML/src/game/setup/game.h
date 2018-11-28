@@ -31,6 +31,7 @@ namespace Game_Namespace
 		Quit,
 		Credits,
 		Settings,
+		Pause,
 		MaxGameScreens
 	};
 

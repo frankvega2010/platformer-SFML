@@ -10,6 +10,8 @@ namespace Game_Namespace
 		buttonControls,
 		buttonSettings,
 		buttonCredits,
+		buttonResume,
+		buttonPause,
 		buttonQuit
 	};
 
