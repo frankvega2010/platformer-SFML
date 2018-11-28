@@ -74,9 +74,13 @@ namespace Game_Namespace
 	//Textures & Animations
 	static sf::Texture playerTexture;
 	static sf::Texture playerHands;
+
+	//HUD
 	static sf::Texture lifeHUD;
 	static sf::RectangleShape lifeHUDRectangle;
 	static sf::RectangleShape lifeBar;
+	static sf::Texture weaponHUD;
+	static sf::RectangleShape weaponHUDRectangle;
 
 	static SpriteAnimation animation;
 	static SpriteAnimation pistolAnimation;
@@ -306,12 +310,18 @@ namespace Game_Namespace
 
 			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
 			lifeHUDRectangle.setFillColor(sf::Color::White);
-			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
 			lifeHUDRectangle.setSize({ 600, 250 });
 			lifeHUDRectangle.setTexture(&lifeHUD);
 			lifeBar.setFillColor(sf::Color::Red);
-			lifeBar.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
-			lifeBar.setSize({ 450, 80 });
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
+			lifeBar.setSize({ 450, 78 });
+
+			weaponHUD.loadFromFile("res/assets/textures/weaponHUD.png");
+			weaponHUDRectangle.setFillColor(sf::Color::White);
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-700, view.getCenter().y - 800));
+			weaponHUDRectangle.setSize({ 500, 250 });
+			weaponHUDRectangle.setTexture(&weaponHUD);
 
 			//// Game Mechanics
 			gravitySpeed = 800;
@@ -493,7 +503,7 @@ namespace Game_Namespace
 					{
 						timer.start();
 						player1.setHp(player1.getHp() - 25);
-						lifeBar.setSize({ lifeBar.getSize().x - lifeBar.getSize().x*0.25f,lifeBar.getSize().y });
+						lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
@@ -664,8 +674,9 @@ namespace Game_Namespace
 			deltaText.setString(toString(deltaTime));
 
 
-			lifeBar.setPosition(sf::Vector2f(view.getCenter().x+68, view.getCenter().y - 700));
-			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1232, view.getCenter().y - 700));
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 
 			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
 			LivesEnemy.setPosition(sf::Vector2f(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 100));
@@ -856,6 +867,7 @@ namespace Game_Namespace
 			_window.draw(crosshairTest);
 			_window.draw(lifeBar);
 			_window.draw(lifeHUDRectangle);
+			_window.draw(weaponHUDRectangle);
 			_window.draw(LivesEnemy);
 			_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
