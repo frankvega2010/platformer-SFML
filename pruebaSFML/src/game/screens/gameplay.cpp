@@ -171,7 +171,7 @@ namespace Game_Namespace
 			player1.setSize(100, 150);
 			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
-			player1.setSpeed(500, 1400);
+			player1.setSpeed(500, 2100);
 			player1.setHp(100);
 
 			playerRectangle.setFillColor(player1.getColor());
