@@ -335,36 +335,32 @@ namespace Game_Namespace
 					shape.setPosition(rectangles[i].getPosition().x - (shape.getGlobalBounds().width), shape.getPosition().y);
 				}
 
-				if (shape.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
+				else if (shape.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
 					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
 					)
 				{
 					shape.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), shape.getPosition().y);
 				}
 
-				if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
+				else if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
 					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
 				{
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
 				}
 
-				if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
+				else if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
 					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
-					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
-				}
-				else
-				{
-					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
 				}
 			}
 			else
 			{
-				// blank
+				if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
 			}
 		}
 
