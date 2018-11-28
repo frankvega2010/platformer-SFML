@@ -22,6 +22,17 @@ namespace Game_Namespace
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	static tgui::Button::Ptr pauseButton;
+
+	static const int maxButtons = 3;
+
+	sf::Font font2;
+
+	sf::Text pauseTitle;
+
+	sf::Text pauseText;
+
+	static tgui::Button::Ptr buttons[maxButtons];
+
 	////---------------------------------------------------------
 
 	// Camera Settings
@@ -99,13 +110,13 @@ namespace Game_Namespace
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
 
+	static bool gameOnPause;
 
 	namespace Gameplay_Section
 	{
 		static void signalGoToPause()
 		{
-			Game::setButtonOption(buttonPause);
-			Screens::setHasScreenFinished(true);
+			gameOnPause = true;
 		}
 
 		static std::string toString(sf::Time value)
@@ -134,8 +145,49 @@ namespace Game_Namespace
 		{
 		}
 
+		static void signalGoToPlay()
+		{
+			gameOnPause = false;
+		}
+
+		static void signalGoToRestart()
+		{
+			Game::setButtonOption(buttonRestart);
+			Screens::setHasScreenFinished(true);
+		}
+
+		static void signalGoToMenu()
+		{
+			Game::setButtonOption(buttonMenu);
+			Screens::setHasScreenFinished(true);
+		}
+
 		void GameplayScreen::init()
 		{
+			//// Buttons init
+			int maxDistance = 0;
+			for (int i = 0; i < maxButtons; i++)
+			{
+				buttons[i] = tgui::Button::create();
+				gui.add(buttons[i]);
+				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
+				buttons[i]->setSize(240, 100);
+				buttons[i]->setTextSize(40);// 240 100
+
+				buttons[i]->setPosition(400, 270 + maxDistance);
+
+				maxDistance = maxDistance + 130;
+			}
+			maxDistance = 0;
+
+			buttons[0]->setText("Resume");
+			buttons[1]->setText("Restart");
+			buttons[2]->setText("Menu");
+
+			buttons[0]->connect("Pressed", signalGoToPlay);
+			buttons[1]->connect("Pressed", signalGoToRestart);
+			buttons[2]->connect("Pressed", signalGoToMenu);
+
 			//// Window & Screen Settings
 			setHasScreenFinished(false);
 
@@ -145,7 +197,7 @@ namespace Game_Namespace
 			view.setCenter(200.0f, 1800.f);
 			view.zoom(2.0f);
 
-			
+			gameOnPause = false;
 
 			//map.ShowObjects();
 
@@ -180,8 +232,9 @@ namespace Game_Namespace
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 150);
-			player1.setColor(sf::Color::Red);
+			player1.setColor(sf::Color::White);
 			player1.setIsAlive(true);
+			player1.setGravity(true);
 			player1.setSpeed(500, 1400);
 			player1.setHp(100);
 
@@ -685,63 +738,82 @@ namespace Game_Namespace
 
 		void GameplayScreen::update()
 		{
-			////// Display			
-			HUDUpdate();
-			CheckCameraMovement();
+			if (!gameOnPause)
+			{
+				/////// Setting the pause buttons OFF
+				for (int i = 0; i < maxButtons; i++)
+				{
+					buttons[i]->setVisible(false);
+				}
 
-			//////Player Inputs
+				////// Display			
+				HUDUpdate();
+				CheckCameraMovement();
+
+				//////Player Inputs
+
+				MousePosition = sf::Mouse::getPosition(_window);
+				worldPos = _window.mapPixelToCoords(MousePosition); // convert it to world coordinates
+				input();
+
+				//////Set View
+				_window.setView(view);
+
+				////// Characters
+
+				if (player1.getIsJumping())
+				{
+					player1.setGravity(true);
+				}
+
+				//animation.Update(0, deltaTime.asSeconds());
+				playerRectangle.setTextureRect(animation.uvRect);
+				gun.setTextureRect(pistolAnimation.uvRect);
+
+				//Invincibility Frames
+				CheckInvincibilityFrames(timerInvincibility);
+
+				// gravity
+				CheckPlayerGravity();
+				CheckEnemyGravity(enemyTest, enemyRectangle);
+
+				// Jump
+				CheckCharacterJump(player1, playerRectangle);
+
+				// CheckWeaponsFireRate(pistol); // WIP function
+				CheckWeaponsFireRate(timerPistolFireRate);
+
+				enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 800, enemyRectangle.getPosition().y - 190);
+
+				playerRectangle.move(player1.getMove());
+
+				CheckPlayerFlipSprite();
+
+				// Checks for collisions
+				for (int i = 0; i < maxColisionsBoxes; i++)
+				{
+					CheckCollisionWithTiles(playerRectangle, i, player1);
+					CheckCollisionWithTiles(enemyRectangle, i, enemyTest);
+				}
+
+				GunRotation();
+
+				CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
+
+				PlayerEnemyCollision(enemyTest, enemyRectangle, timerInvincibility);
+
+				CheckEnemyHP(enemyTest, enemyPlayerDetection, enemyRectangle);
+			}
+			else if (gameOnPause)
+			{
+				//Setting the pause buttons ON
+				for (int i = 0; i < maxButtons; i++)
+				{
+					buttons[i]->setVisible(true);
+				}
+
+			}
 			
-			MousePosition = sf::Mouse::getPosition(_window);
-			worldPos = _window.mapPixelToCoords(MousePosition); // convert it to world coordinates
-			input();
-
-			//////Set View
-			_window.setView(view);
-
-			////// Characters
-
-			if (player1.getIsJumping())
-			{
-				player1.setGravity(true);
-			}
-
-			//animation.Update(0, deltaTime.asSeconds());
-			playerRectangle.setTextureRect(animation.uvRect);
-			gun.setTextureRect(pistolAnimation.uvRect);
-
-			//Invincibility Frames
-			CheckInvincibilityFrames(timerInvincibility);
-
-			// gravity
-			CheckPlayerGravity();
-			CheckEnemyGravity(enemyTest, enemyRectangle);
-
-			// Jump
-			CheckCharacterJump(player1, playerRectangle);
-
-			// CheckWeaponsFireRate(pistol); // WIP function
-			CheckWeaponsFireRate(timerPistolFireRate);
-
-			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 800, enemyRectangle.getPosition().y - 190);
-
-			playerRectangle.move(player1.getMove());
-
-			CheckPlayerFlipSprite();
-
-			// Checks for collisions
-			for (int i = 0; i < maxColisionsBoxes; i++)
-			{
-					CheckCollisionWithTiles(playerRectangle,i,player1);
-					CheckCollisionWithTiles(enemyRectangle, i,enemyTest);
-			}
-
-			GunRotation();
-
-			CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
-
-			PlayerEnemyCollision(enemyTest,enemyRectangle, timerInvincibility);
-
-			CheckEnemyHP(enemyTest,enemyPlayerDetection,enemyRectangle);
 			
 		}
 
@@ -784,6 +856,10 @@ namespace Game_Namespace
 			_window.setView(_window.getDefaultView());
 			view.zoom(0.5f);
 			pauseButton->setVisible(false);
+			for (int i = 0; i < maxButtons; i++)
+			{
+				buttons[i]->setVisible(false);
+			}
 		}
 
 		bool GameplayScreen::finish()

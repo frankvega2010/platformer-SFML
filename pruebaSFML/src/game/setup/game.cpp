@@ -8,7 +8,6 @@
 #include "Screens/settings.h"
 #include "Screens/credits.h"
 #include "Screens/controls.h"
-#include "Screens/pause.h"
 #include "setup/screens.h"
 
 
@@ -19,7 +18,6 @@ using namespace Menu_Section;
 using namespace Settings_Section;
 using namespace Credits_Section;
 using namespace Controls_Section;
-using namespace Pause_Section;
 
 namespace Game_Namespace
 {
@@ -207,7 +205,6 @@ namespace Game_Namespace
 		gameScreens[Settings] = new SettingsScreen();
 		gameScreens[GameOver] = new GameOverScreen();
 		gameScreens[Credits] = new CreditsScreen();
-		gameScreens[Pause] = new PauseScreen();
 
 		_gameScreen = Menu;
 		gameScreens[Menu]->init();
@@ -253,15 +250,6 @@ namespace Game_Namespace
 					_gameScreen= Controls;
 					gameScreens[Controls]->init();
 					break;
-				}
-				case buttonPause:
-				{
-				}
-				case buttonResume:
-				{
-				}
-				case buttonRestart:
-				{
 				}
 				case buttonQuit:
 				{
@@ -339,16 +327,6 @@ namespace Game_Namespace
 		{
 			gameScreens[Play]->update();
 			//UpdateGameplayScreen();
-
-			switch (_buttonOption)
-			{
-			case buttonPause:
-			{
-				_gameScreen = Pause;
-				gameScreens[Pause]->init();
-				break;
-			}
-			}
 
 			if (gameScreens[Play]->finish())
 			{

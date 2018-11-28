@@ -37,6 +37,7 @@ namespace Game_Namespace
 
 		static void signalGoToMenu()
 		{
+			Game::setButtonOption(buttonMenu);
 			Screens::setHasScreenFinished(true);
 		}
 

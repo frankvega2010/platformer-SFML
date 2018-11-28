@@ -4,7 +4,6 @@
 #include <iostream>
 #include "Setup\game.h"
 #include "setup/screens.h"
-#include "screens\pause.h"
 #include "setup/character.h"
 #include "setup/player.h"
 #include "setup/enemy.h"
