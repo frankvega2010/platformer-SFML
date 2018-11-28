@@ -298,7 +298,7 @@ namespace Game_Namespace
 					player1.setIsOnGround(false);
 					//isOnGround = false;
 					player1.setIsJumping(true);
-					//player1.setGravity(false);
+					player1.setGravity(false);
 					//gravitySpeed = 0;
 					player1.StartTimerJump();
 				}			
@@ -355,18 +355,11 @@ namespace Game_Namespace
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
-					/*player1.setGravity(false);
-					enemyTest.setGravity(false);
-					player1.setIsOnWhichGround(i);
-					enemyTest.setIsOnWhichGround(i);*/
-					gravityValue = i;
 					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height));
 				}
 				else
 				{
 					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
-					/*if (player1.getIsOnWhichGround() == i) player1.setGravity(true);
-					if (enemyTest.getIsOnWhichGround() == i) enemyTest.setGravity(true);*/
 				}
 			}
 			else
@@ -623,7 +616,7 @@ namespace Game_Namespace
 				if (character.isTimerJumpExpired())
 				{
 					character.setIsJumping(false);
-					gravitySpeed = 800;
+					character.setGravity(true);
 				}
 			}
 			else
