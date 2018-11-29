@@ -1,3 +1,11 @@
+## v?.? [2018-11-29]
+### Added
+- Player's hand moves and rotates depending on mouse position.
+- Sprite Animations.
+- New GUI.
+- New HUD.
+
+
 ## v0.1 [2018-11-25]
 ### Added
 - Tilemaps used for levels.
@@ -18,11 +26,8 @@
 ### [Unreleased]
 - Multiple Levels.
 - Victory & Loss Condition.
-- Player's hand moves and rotates depending on mouse position.
 - 3 Weapons.
 - Limited Ammunition.
 - 2 Types of enemies.
 - Music.
 - Sound Effects.
-- Sprite Animations.
-- New GUI.
