@@ -4,4 +4,4 @@ pruebaSFML/res/raw/ filter=lfs diff=lfs merge=lfs -text
 *.ai filter=lfs diff=lfs merge=lfs -text
 *.boscaceoil filter=lfs diff=lfs merge=lfs -text
 *.bfxr filter=lfs diff=lfs merge=lfs -text
-.dbproj filter=lfs diff=lfs merge=lfs -text
+*.dbproj filter=lfs diff=lfs merge=lfs -text
