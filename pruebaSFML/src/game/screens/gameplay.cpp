@@ -57,6 +57,8 @@ namespace Game_Namespace
 	// Victory Condition
 
 	static int zombiesKilled = 0;
+	static const int zombiesKilledObjetiveLevel1 = 3;
+	static bool playerWon = false;
 
 	// Gravity
 
@@ -84,7 +86,6 @@ namespace Game_Namespace
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
 	static sf::Texture playerHands;
-	//static SpriteAnimation zombie;
 	static SpriteAnimation playerAnimation;
 	static SpriteAnimation pistolAnimation;
 
@@ -111,6 +112,8 @@ namespace Game_Namespace
 	static sf::Text LivesEnemies[maxEnemiesLevelTutorial];
 	static sf::Text zombiesKilledText;
 
+	static sf::Text playerWonText;
+
 	// Characters
 	
 
@@ -123,6 +126,7 @@ namespace Game_Namespace
 	static sf::CircleShape crosshairTest;
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
+	static sf::RectangleShape Exit;
 
 	//HUD
 	static sf::Texture lifeHUD;
@@ -186,6 +190,8 @@ namespace Game_Namespace
 		void GameplayScreen::init()
 		{
 			//// Buttons init
+			playerWon = false;
+			zombiesKilled = 0;
 			int maxDistance = 0;
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -314,6 +320,12 @@ namespace Game_Namespace
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
 
+			playerWonText.setCharacterSize(80);
+			playerWonText.setFont(deltaFont);
+			playerWonText.setPosition(400, 400);
+			playerWonText.setString("You Passed the level!");
+
+
 			//// HUD
 
 			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
@@ -369,6 +381,15 @@ namespace Game_Namespace
 			pauseButton->setPosition(940, 10);
 			pauseButton->setText("II");
 			pauseButton->connect("Pressed", signalGoToPause);
+
+			// Exit
+
+			Exit.setPosition(900, 1000);
+			Exit.setSize(sf::Vector2f(100, 200));
+			Exit.setFillColor(sf::Color::Blue);
+			//player1.setPosition(200, 1400);
+			//player1.setSize(100, 150);
+			//player1.setColor(sf::Color::White);
 
 		}
 
@@ -917,9 +938,20 @@ namespace Game_Namespace
 				GunRotation();
 
 				
+				if (zombiesKilled >= zombiesKilledObjetiveLevel1)
+				{
+					zombiesKilledText.setFillColor(sf::Color::Green);
+				}
 
 				
 
+				if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= zombiesKilledObjetiveLevel1)
+				{
+					playerWon = true;
+					gameOnPause = true;
+				}
+				
+					//if (player1.getRectangle().getGlobalBounds().intersects(enemy.getPlayerDetection().getGlobalBounds()))
 				
 			}
 			else if (gameOnPause)
@@ -928,6 +960,17 @@ namespace Game_Namespace
 				for (int i = 0; i < maxButtons; i++)
 				{
 					buttons[i]->setVisible(true);
+				}
+
+				if (playerWon)
+				{
+					buttons[0]->setVisible(false);
+					playerWonText.setFillColor(sf::Color::Green);
+					playerWonText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
+				}
+				else
+				{
+					playerWonText.setFillColor(sf::Color::Transparent);
 				}
 
 			}
@@ -944,7 +987,7 @@ namespace Game_Namespace
 			}
 			_window.draw(map);
 
-
+			_window.draw(Exit);
 			////---------------------
 			// Sprites / Shapes
 
@@ -962,6 +1005,7 @@ namespace Game_Namespace
 
 			// Text
 			_window.draw(deltaText);
+			_window.draw(playerWonText);
 
 			// HUD
 			_window.draw(zombiesKilledText);
