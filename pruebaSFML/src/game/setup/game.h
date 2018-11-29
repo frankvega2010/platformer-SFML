@@ -95,6 +95,7 @@ namespace Game_Namespace
 
 	extern int globalSoundVolume;
 	extern int globalMusicVolume;
+	extern sf::Music menuSong;
 
 	//extern Sound pong_hit_wall;
 	//extern Sound pong_hit_player;

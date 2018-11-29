@@ -53,6 +53,9 @@ namespace Game_Namespace
 
 	sf::Clock deltaClock;
 	sf::Time deltaTime;
+	sf::Music menuSong;
+
+
 
 	Game::Game()
 	{
@@ -183,6 +186,7 @@ namespace Game_Namespace
 	
 		globalSoundVolume = 40;
 		globalMusicVolume = 40;
+		
 		//std::cout << _window.getView().getSize().x;
 
 		//button.is
@@ -208,10 +212,16 @@ namespace Game_Namespace
 
 		_gameScreen = Menu;
 		gameScreens[Menu]->init();
+
+		menuSong.openFromFile("res/assets/music/menuSong.wav");
+		menuSong.setLoop(true);
+		menuSong.setVolume(globalMusicVolume);
+		menuSong.play();
 	}
 
 	void Game::update()
 	{
+		menuSong.setVolume(globalMusicVolume);
 		switch (_gameScreen)
 		{
 		case Menu:
@@ -325,12 +335,14 @@ namespace Game_Namespace
 
 		case Play:
 		{
+			menuSong.stop();
 			gameScreens[Play]->update();
 			//UpdateGameplayScreen();
 
 			if (gameScreens[Play]->finish())
 			{
 				gameScreens[Play]->deInit();
+				
 				switch (_buttonOption)
 				{
 				case buttonMenu:
@@ -357,7 +369,7 @@ namespace Game_Namespace
 					break;
 				}
 				}
-				
+				menuSong.play();
 			}
 		}
 		break;
