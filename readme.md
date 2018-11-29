@@ -1,6 +1,6 @@
 # Patient Zero [WIP]
 ## A Platformer shooter game made with SFML Library by Franco Vega and Mariano Martinez.
-### Current Version : WIP
+### Current Version : 0.1
 #
 ## Introduction
 
@@ -17,9 +17,11 @@ As for now, the current features we want to add to the game are:
 - Music.
 - Sound Effects.
 
+Some features may be missing for the release of the version 1.0, but we will include them in future patches!
+
 ## Brief Information about the game's story
 
-Work in Progress
+A virus has spread all over the city and you are one of the current survivors of the apocalypse. With the help of your gun, you will have to through waves of zombies in order to escape the city and reach a safe zone!
 
 ## Screenshots
 
