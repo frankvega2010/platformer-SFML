@@ -136,6 +136,7 @@ namespace Game_Namespace
 
 	// Text
 	static sf::Font deltaFont;
+	static sf::Font font2;
 
 	static sf::Text LivesEnemies[maxEnemiesLevelTutorial];
 	static sf::Text zombiesKilledText;
@@ -364,50 +365,58 @@ namespace Game_Namespace
 
 			//// Text
 
-			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
-			font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
+			if (levelNumber==0)
+			{
+				deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
+				font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
 
 
-			playerStateText.setCharacterSize(80);
-			playerStateText.setFont(deltaFont);
-			playerStateText.setPosition(400, 400);
-			playerStateText.setString("");
+				playerStateText.setCharacterSize(80);
+				playerStateText.setFont(deltaFont);
+				playerStateText.setPosition(400, 400);
+				playerStateText.setString("");
 
-			tutorialText[0].setCharacterSize(50);
-			tutorialText[0].setFont(font2);
-			tutorialText[0].setPosition(200, 1600);
-			tutorialText[0].setFillColor(sf::Color::Black);
-			tutorialText[0].setString("Press W and D to move horizontally");
+				tutorialText[0].setCharacterSize(50);
+				tutorialText[0].setFont(font2);
+				tutorialText[0].setPosition(200, 1600);
+				tutorialText[0].setFillColor(sf::Color::Black);
+				tutorialText[0].setString("Press W and D to move horizontally");
 
-			tutorialText[1].setCharacterSize(50);
-			tutorialText[1].setFont(font2);
-			tutorialText[1].setPosition(200, 1700);
-			tutorialText[1].setFillColor(sf::Color::Black);
-			tutorialText[1].setString("Press SPACEBAR to jump, go to the next room!");
+				tutorialText[1].setCharacterSize(50);
+				tutorialText[1].setFont(font2);
+				tutorialText[1].setPosition(200, 1700);
+				tutorialText[1].setFillColor(sf::Color::Black);
+				tutorialText[1].setString("Press SPACEBAR to jump, go to the next room!");
 
-			tutorialText[2].setCharacterSize(50);
-			tutorialText[2].setFont(font2);
-			tutorialText[2].setPosition(3525, 1700);
-			tutorialText[2].setFillColor(sf::Color::Black);
-			tutorialText[2].setString("Aim with the mouse cursor and shoot with Left Mouse Button");
+				tutorialText[2].setCharacterSize(50);
+				tutorialText[2].setFont(font2);
+				tutorialText[2].setPosition(3525, 1700);
+				tutorialText[2].setFillColor(sf::Color::Black);
+				tutorialText[2].setString("Aim with the mouse cursor and shoot with Left Mouse Button");
 
-			tutorialText[3].setCharacterSize(50);
-			tutorialText[3].setFont(font2);
-			tutorialText[3].setPosition(3525, 1900);
-			tutorialText[3].setFillColor(sf::Color::Black);
-			tutorialText[3].setString("You will be able to shoot once your crosshair is in the enemy position");
+				tutorialText[3].setCharacterSize(50);
+				tutorialText[3].setFont(font2);
+				tutorialText[3].setPosition(3525, 1900);
+				tutorialText[3].setFillColor(sf::Color::Black);
+				tutorialText[3].setString("You will be able to shoot once your crosshair is in the enemy position");
 
-			tutorialText[4].setCharacterSize(50);
-			tutorialText[4].setFont(font2);
-			tutorialText[4].setPosition(2500, 1200);
-			tutorialText[4].setFillColor(sf::Color::Black);
-			tutorialText[4].setString("Once you have killed enough zombies,the exit will be unlocked!");
+				tutorialText[4].setCharacterSize(50);
+				tutorialText[4].setFont(font2);
+				tutorialText[4].setPosition(2500, 1200);
+				tutorialText[4].setFillColor(sf::Color::Black);
+				tutorialText[4].setString("Once you have killed enough zombies,the exit will be unlocked!");
 
-			tutorialText[5].setCharacterSize(50);
-			tutorialText[5].setFont(font2);
-			tutorialText[5].setPosition(1300, 1100);
-			tutorialText[5].setFillColor(sf::Color::Black);
-			tutorialText[5].setString("Go to the blue rectangle to exit the tutorial!");
+				tutorialText[5].setCharacterSize(50);
+				tutorialText[5].setFont(font2);
+				tutorialText[5].setPosition(1300, 1100);
+				tutorialText[5].setFillColor(sf::Color::Black);
+				tutorialText[5].setString("Go to the blue rectangle to exit the tutorial!");
+			}
+			else
+			{
+
+			}
+			
 
 
 			//// HUD
@@ -1233,9 +1242,12 @@ namespace Game_Namespace
 			////---------------------
 
 			// Text
-			for (int i = 0; i < maxTutorialTexts; i++)
+			if (levelNumber == 0)
 			{
-				_window.draw(tutorialText[i]);
+				for (int i = 0; i < maxTutorialTexts; i++)
+				{
+					_window.draw(tutorialText[i]);
+				}
 			}
 			_window.draw(playerStateText);
 			
