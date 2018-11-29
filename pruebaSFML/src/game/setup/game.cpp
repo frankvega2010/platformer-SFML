@@ -342,7 +342,6 @@ namespace Game_Namespace
 			if (gameScreens[Play]->finish())
 			{
 				gameScreens[Play]->deInit();
-				
 				switch (_buttonOption)
 				{
 				case buttonMenu:
