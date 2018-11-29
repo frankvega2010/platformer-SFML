@@ -247,7 +247,7 @@ namespace Game_Namespace
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 150);
-			player1.setColor(sf::Color::Red);
+			player1.setColor(sf::Color::White);
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 2100);
 			player1.setHp(100);

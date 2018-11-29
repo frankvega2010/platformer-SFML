@@ -93,7 +93,6 @@ namespace Game_Namespace
 
 		void MenuScreen::init()
 		{
-			
 			//_window.setView(windowView);
 			testS.setPosition(0, 0);
 			testS.setSize(sf::Vector2f(1280,800));
