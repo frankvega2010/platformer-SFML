@@ -3,6 +3,7 @@
 #include "game.h"
 
 #include "Thor/Time.hpp"
+#include "SpriteAnimation.h"
 
 //using namespace thor;
 
@@ -11,11 +12,13 @@ namespace Game_Namespace
 	class Character
 	{
 	private:
-		sf::Vector2i _position;
-		sf::Vector2i _size;
+		sf::Vector2f _position;
+		sf::Vector2f _size;
 		sf::Color _color;
 		sf::Vector2f _move;
 		sf::Vector2f _speed;
+		sf::RectangleShape _rectangle;
+		sf::RectangleShape _rectanglePlayerDetection;
 		int _hp;
 		int _isOnWhichGround;
 		bool _alive;
@@ -30,16 +33,24 @@ namespace Game_Namespace
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
-		Character(int x, int y, int width, int height, sf::Color color);
+		Character(float x, float y, float width, float height, sf::Color color);
 		~Character();
-		void setPosition(int x, int y);
-		sf::Vector2i getPosition();
+		void setPosition(float x, float y);
+		sf::Vector2f getPosition();
+		void setTexture(sf::Texture& texture);
+		void setTextureRect(sf::IntRect uvRect);
+		void setPlayerDetectionPosition(float x, float y);
+		sf::Vector2f getPlayerDetectionPosition();
 		void setMove(float x, float y);
 		sf::Vector2f getMove();
-		void setSize(int width, int height);
-		sf::Vector2i getSize();
+		void setSize(float width, float height);
+		sf::Vector2f getSize();
+		void setPlayerDetectionSize(float width, float height);
+		sf::Vector2f getPlayerDetectionSize();
 		void setColor(sf::Color color);
 		sf::Color getColor();
+		void setPlayerDetectionColor(sf::Color color);
+		sf::Color getPlayerDetectionColor();
 		sf::Vector2f getSpeed();
 		void setSpeed(float speedX, float speedY);
 		int getHp();
@@ -68,6 +79,10 @@ namespace Game_Namespace
 		bool isTimerJumpRunning();
 		int getIsOnWhichGround();
 		void setIsOnWhichGround(int isOnWhichGround);
+		void setOrigin(int x, int y);
+		void scale(int x, int y);
+		sf::RectangleShape getRectangle();
+		sf::RectangleShape getPlayerDetection();
 	};
 }
 

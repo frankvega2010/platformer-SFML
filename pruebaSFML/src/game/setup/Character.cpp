@@ -22,7 +22,7 @@ namespace Game_Namespace
 		_isOnWhichGround = -1;
 	}
 
-	Character::Character(int x, int y, int width, int height, sf::Color color)
+	Character::Character(float x, float y, float width, float height, sf::Color color)
 	{
 		_position = { x,y };
 		_size = { width,height };
@@ -47,46 +47,92 @@ namespace Game_Namespace
 
 	}
 
-	void Character::setPosition(int x, int y)
+	void Character::setPosition(float x, float y)
 	{
-		_position = { x,y };
+		//_position = { x,y };
+		_rectangle.setPosition(sf::Vector2f(x, y));
+
 	}
 
-	sf::Vector2i Character::getPosition()
+	sf::Vector2f Character::getPosition()
 	{
-		return _position;
+		//return _position;
+		return _rectangle.getPosition();
+	}
+
+	void Character::setPlayerDetectionPosition(float x, float y)
+	{
+		_rectanglePlayerDetection.setPosition(sf::Vector2f(x, y));
+	}
+
+	sf::Vector2f Character::getPlayerDetectionPosition()
+	{
+		return _rectanglePlayerDetection.getPosition();
+	}
+
+	void Character::setTexture(sf::Texture& texture)
+	{
+		_rectangle.setTexture(&texture);
+	}
+
+	void Character::setTextureRect(sf::IntRect uvRect)
+	{
+		_rectangle.setTextureRect(uvRect);
 	}
 
 	void Character::setMove(float x, float y)
 	{
-		_move = { x,y };
+		//_move = { x,y };
+		_rectangle.move(x, y);
 	}
 
 	sf::Vector2f Character::getMove()
 	{
-		return _move;
+		return _move; // It doesnt need to have a get I think.
 	}
 
-
-	void Character::setSize(int width, int height)
+	void Character::setSize(float width, float height)
 	{
-		_size = { width,height };
+		//_size = { width,height };
+		_rectangle.setSize(sf::Vector2f(width, height));
 	}
 
-	sf::Vector2i Character::getSize()
+	sf::Vector2f Character::getSize()
 	{
-		return _size;
+		return _rectangle.getSize();
+	}
+
+	void Character::setPlayerDetectionSize(float width, float height)
+	{
+		_rectanglePlayerDetection.setSize(sf::Vector2f(width, height));
+	}
+
+	sf::Vector2f Character::getPlayerDetectionSize()
+	{
+		return _rectanglePlayerDetection.getSize();
 	}
 
 	void Character::setColor(sf::Color color)
 	{
-		_color = color;
+		//_color = color;
+		_rectangle.setFillColor(color);
 	}
 
 	sf::Color Character::getColor()
 	{
-		return _color;
+		return _rectangle.getFillColor();
 	}
+
+	void Character::setPlayerDetectionColor(sf::Color color)
+	{
+		_rectanglePlayerDetection.setFillColor(color);
+	}
+
+	sf::Color Character::getPlayerDetectionColor()
+	{
+		return _rectanglePlayerDetection.getFillColor();
+	}
+
 
 	sf::Vector2f Character::getSpeed()
 	{
@@ -227,4 +273,25 @@ namespace Game_Namespace
 	{
 		_isOnWhichGround = isOnWhichGround;
 	}
+
+	sf::RectangleShape Character::getRectangle()
+	{
+		return _rectangle;
+	}
+
+	sf::RectangleShape Character::getPlayerDetection()
+	{
+		return _rectanglePlayerDetection;
+	}
+
+	void Character::setOrigin(int x, int y)
+	{
+		_rectangle.setOrigin(x, y);
+	}
+
+	void Character::scale(int x, int y)
+	{
+		_rectangle.scale(x, y);
+	}
+
 }

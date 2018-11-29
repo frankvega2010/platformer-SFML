@@ -23,8 +23,6 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr pauseButton;
 
-	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
-
 	static const int maxButtons = 3;
 
 	sf::Font font2;
@@ -50,7 +48,6 @@ namespace Game_Namespace
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
-
 	// Gravity
 
 	static int gravityValue = -1;
@@ -63,7 +60,7 @@ namespace Game_Namespace
 	static sf::Vector2f worldPos;
 
 	//Timers
-	
+
 	static const sf::Time initialJumpTime = sf::seconds(0.5f);
 	static thor::CallbackTimer timerJump;
 
@@ -77,20 +74,12 @@ namespace Game_Namespace
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
 	static sf::Texture playerHands;
-
-	//HUD
-	static sf::Texture lifeHUD;
-	static sf::RectangleShape lifeHUDRectangle;
-	static sf::RectangleShape lifeBar;
-	static sf::Texture weaponHUD;
-	static sf::RectangleShape weaponHUDRectangle;
-
 	static SpriteAnimation zombie;
-	static SpriteAnimation animation;
+	static SpriteAnimation playerAnimation;
 	static SpriteAnimation pistolAnimation;
 
-	static bool zombieFlipLeft = false;
-	static bool zombieFlipRight = false;
+	//static bool zombieFlipLeft = false;
+	//static bool zombieFlipRight = false;
 
 	// Audio
 
@@ -104,13 +93,13 @@ namespace Game_Namespace
 	static float prodVect;
 	static float modv1;
 	static float modv2;
-	static float angle=180;
+	static float angle = 180;
 
 	// Text
 	static sf::Font deltaFont;
 
 	static sf::Text deltaText;
-
+	static sf::Text Lives;
 	static sf::Text LivesEnemy;
 
 	// Characters
@@ -121,9 +110,9 @@ namespace Game_Namespace
 	// Shapes
 
 	static sf::CircleShape crosshairTest;
-	static sf::RectangleShape playerRectangle;
-	static sf::RectangleShape enemyRectangle;
-	static sf::RectangleShape enemyPlayerDetection;
+	//static sf::RectangleShape playerRectangle;
+	//static sf::RectangleShape enemyTest.getRectangle();
+	//static sf::RectangleShape enemyPlayerDetection;
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
 
@@ -190,7 +179,7 @@ namespace Game_Namespace
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(40);// 240 100
-				buttons[i]->setInheritedFont(fontButtons);
+
 				buttons[i]->setPosition(400, 270 + maxDistance);
 
 				maxDistance = maxDistance + 130;
@@ -245,20 +234,32 @@ namespace Game_Namespace
 			playerHands.setSmooth(true);
 			playerHands.setRepeated(false);
 
+			//player1.loadTexture("res/assets/textures/playersprite.png");
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 150);
-			player1.setColor(sf::Color::White);
+			player1.setColor(sf::Color::Red);
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 2100);
 			player1.setHp(100);
+			//player1.setTexture();
+			//player1.setAnimation(sf::Vector2u(9, 3), 0.1f);
+			//player1.getRectangle().setTexture(&playerTexture);
+			player1.setTexture(playerTexture);
+			playerAnimation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
 
-			playerRectangle.setFillColor(player1.getColor());
-			playerRectangle.setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
-			playerRectangle.setSize(static_cast<sf::Vector2f>(player1.getSize()));
+			/*player1.getRectangle().setFillColor(sf::Color::Red);
+			player1.getRectangle().setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
+			player1.getRectangle().setSize(static_cast<sf::Vector2f>(player1.getSize()));*/
 
-			playerRectangle.setTexture(&playerTexture);
-			animation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
+			//player1.getRectangle().setFillColor(player1.getColor());
+			//player1.getRectangle().setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
+			//player1.getRectangle().setSize(static_cast<sf::Vector2f>(player1.getSize()));
+			//player1.getRectangle().setTexture(&player1.getTexture());
+			//player1.set
+			//player1.getRectangle().setTexture(&playerTexture);
+			//animation.SetAnimation()
+			//animation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
 
 			// Player Gun
 
@@ -266,7 +267,7 @@ namespace Game_Namespace
 			gunLimit.setOutlineThickness(10);
 			gunLimit.setFillColor(sf::Color::Transparent);
 			gunLimit.setOutlineColor(sf::Color::Blue);
-			gunLimit.setPosition({ playerRectangle.getPosition().x - playerRectangle.getGlobalBounds().width / 2, playerRectangle.getPosition().y - playerRectangle.getGlobalBounds().height / 2 });
+			gunLimit.setPosition({ player1.getRectangle().getPosition().x - player1.getRectangle().getGlobalBounds().width / 2, player1.getRectangle().getPosition().y - player1.getRectangle().getGlobalBounds().height / 2 });
 
 			gun.setFillColor(sf::Color::White);
 			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
@@ -288,21 +289,29 @@ namespace Game_Namespace
 			enemyTest.setHp(100);
 			enemyTest.setCurrentlyTouchingPlayer(true);
 
-			enemyRectangle.setFillColor(enemyTest.getColor());
-			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
-			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
+			enemyTest.getRectangle().setFillColor(enemyTest.getColor());
+			enemyTest.getRectangle().setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
+			enemyTest.getRectangle().setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
 
-			enemyRectangle.setTexture(&zombieTexture);
+			//enemyTest.getRectangle().setTexture(&zombieTexture);
+			enemyTest.setTexture(zombieTexture);
 			zombie.SetAnimation(&zombieTexture, sf::Vector2u(9, 5), 0.1f);
 
-			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
-			enemyPlayerDetection.setSize(sf::Vector2f(1800.0f, 540));
+			enemyTest.setPlayerDetectionPosition(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y);
+			enemyTest.setPlayerDetectionSize(1800.0f, 540);
+			enemyTest.setPlayerDetectionColor({ 150,0,0,150 });
+
+
+			////enemyTest.getPlayerDetection().setPosition(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y);
+			////enemyTest.getPlayerDetection().setSize(sf::Vector2f(1800.0f, 540));
+
 			//enemyPlayerDetection.setFillColor({ 150,0,0,150 });
-			enemyPlayerDetection.setFillColor(sf::Color::Transparent);
+
+			////enemyTest.getPlayerDetection().setFillColor(sf::Color::Transparent);
 
 
 			//enemyPlayerDetection.setFillColor(sf::Color::Transparent);
-			 
+
 			//// Text
 
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
@@ -312,6 +321,10 @@ namespace Game_Namespace
 			deltaText.setPosition(400, 400);
 
 			//// HUD
+
+			Lives.setCharacterSize(80);
+			Lives.setFont(deltaFont);
+			Lives.setPosition(200, 1400);
 
 			LivesEnemy.setCharacterSize(80);
 			LivesEnemy.setFont(deltaFont);
@@ -324,21 +337,6 @@ namespace Game_Namespace
 			crosshairTest.setOutlineColor(sf::Color::Red);
 			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
 
-			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
-			lifeHUDRectangle.setFillColor(sf::Color::White);
-			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
-			lifeHUDRectangle.setSize({ 600, 250 });
-			lifeHUDRectangle.setTexture(&lifeHUD);
-			lifeBar.setFillColor(sf::Color::Red);
-			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
-			lifeBar.setSize({ 450, 78 });
-
-			weaponHUD.loadFromFile("res/assets/textures/weaponHUD.png");
-			weaponHUDRectangle.setFillColor(sf::Color::White);
-			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-700, view.getCenter().y - 800));
-			weaponHUDRectangle.setSize({ 500, 250 });
-			weaponHUDRectangle.setTexture(&weaponHUD);
-
 			//// Game Mechanics
 			gravitySpeed = 800;
 
@@ -348,45 +346,43 @@ namespace Game_Namespace
 			pistolGunShoot.setBuffer(pistolshoot);
 			pistolGunShoot.setVolume(globalSoundVolume);
 
-			//PAUSE
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
 			pauseButton->setSize(50, 50);
-			pauseButton->setInheritedFont(fontButtons);
 			pauseButton->setTextSize(30);// 240 100
 
-			pauseButton->setPosition(940,10);
-			pauseButton->setText("II");
+			pauseButton->setPosition(940, 10);
+			pauseButton->setText("||");
 			pauseButton->connect("Pressed", signalGoToPause);
-			
+
 		}
 
 		void GameplayScreen::input()
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
-				else if(player1.getFlipRight()) animation.Update(playerWalkBackward, deltaTime.asSeconds());
-				else if (player1.getFlipLeft()) animation.Update(playerWalkForward, deltaTime.asSeconds());
-				
-				
+				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
+				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
+				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
+
+
 				cameraLeft = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
-				else if (player1.getFlipLeft()) animation.Update(playerWalkBackward, deltaTime.asSeconds());
-				else if (player1.getFlipRight()) animation.Update(playerWalkForward, deltaTime.asSeconds());
-				
+				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
+				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
+				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
+
 
 				cameraRight = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-				
+
 				cameraUp = false;
 				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
 			}
@@ -399,8 +395,8 @@ namespace Game_Namespace
 			{
 				player1.setMove(0, 0);
 				//
-				if (!(player1.getIsOnGround())) animation.SetSingleFrame(sf::Vector2u(0, playerJump));
-				else animation.SetSingleFrame(sf::Vector2u(0, 0));
+				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
+				else playerAnimation.SetSingleFrame(sf::Vector2u(0, 0));
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
@@ -413,7 +409,7 @@ namespace Game_Namespace
 					player1.setGravity(false);
 					//gravitySpeed = 0;
 					player1.StartTimerJump();
-				}			
+				}
 			}
 			else
 			{
@@ -437,37 +433,37 @@ namespace Game_Namespace
 
 		//------- Gameplay Functions
 
-		static void CheckCollisionWithTiles(sf::RectangleShape& shape, int i,Character& Character)
+		static void CheckCollisionWithTiles(Character& Character, int i)
 		{
-			if (shape.getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
+			if (Character.getRectangle().getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 			{
-				if (shape.getPosition().x + shape.getGlobalBounds().width > rectangles[i].getPosition().x &&
-					shape.getPosition().x + shape.getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
+				if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles[i].getPosition().x &&
+					Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
 				{
-					shape.setPosition(rectangles[i].getPosition().x - (shape.getGlobalBounds().width), shape.getPosition().y);
+					Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
 				}
 
-				else if (shape.getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
-					shape.getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
+				else if (Character.getRectangle().getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
+					Character.getRectangle().getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
 					)
 				{
-					shape.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), shape.getPosition().y);
+					Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
 				}
 
-				else if (shape.getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-					shape.getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
+				else if (Character.getRectangle().getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
+					Character.getRectangle().getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
 				{
-					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
+					Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
 				}
 
-				else if (shape.getPosition().y + shape.getGlobalBounds().height > rectangles[i].getPosition().y &&
-					shape.getPosition().y + shape.getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
+				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles[i].getPosition().y &&
+					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
-					shape.setPosition(shape.getPosition().x, rectangles[i].getPosition().y - (shape.getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
+					Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
 				}
 				else
 				{
@@ -483,11 +479,11 @@ namespace Game_Namespace
 
 		static void GunRotation()
 		{
-			gunLimit.setPosition({ playerRectangle.getPosition().x - 70,playerRectangle.getPosition().y - 70 });
-			gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 ,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
-			//if(player1.getFlipRight()) gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 + 10,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
-			
-			//if (player1.getFlipLeft()) gun.setPosition({ playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2 - 30,playerRectangle.getPosition().y + playerRectangle.getGlobalBounds().height / 2 - 30 });
+			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
+			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
+			//if(player1.getFlipRight()) gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
+
+			//if (player1.getFlipLeft()) gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 30,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
 
 			v1.x = 0;
 			v1.y = 0.0f - gun.getPosition().y;
@@ -510,18 +506,17 @@ namespace Game_Namespace
 			gun.setRotation(angle);
 		}
 
-		static void PlayerEnemyCollision(Character& enemy, sf::RectangleShape& enemyRectangle,thor::CallbackTimer& timer)
+		static void PlayerEnemyCollision(Character& enemy, thor::CallbackTimer& timer)
 		{
-			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+			if (player1.getRectangle().getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
-				//enemyRectangle.setFillColor(sf::Color::Cyan);
+				//enemyTest.getRectangle().setFillColor(sf::Color::Cyan);
 				if (enemy.getCurrentlyTouchingPlayer())
 				{
 					if (!(timer.isRunning()))
 					{
 						timer.start();
 						player1.setHp(player1.getHp() - 25);
-						lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
@@ -529,14 +524,14 @@ namespace Game_Namespace
 			}
 			else
 			{
-				//enemyRectangle.setFillColor(sf::Color::Yellow);
+				//enemyTest.getRectangle().setFillColor(sf::Color::Yellow);
 				enemy.setCurrentlyTouchingPlayer(true);
 			}
 		}
 
-		static void isCrosshairOnTarget(Character& enemy,sf::RectangleShape& enemyRectangle)
+		static void isCrosshairOnTarget(Character& enemy)
 		{
-			if (crosshairTest.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+			if (crosshairTest.getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
 				LivesEnemy.setFillColor(sf::Color::White);
 
@@ -546,13 +541,13 @@ namespace Game_Namespace
 					crosshairTest.setOutlineColor(sf::Color::Green);
 					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 					{
-						
+
 						if (!timerPistolFireRate.isRunning())
 						{
 							pistolGunShoot.play();
 							timerPistolFireRate.start();
 							enemy.setHp(enemyTest.getHp() - 25);
-							enemyRectangle.setPosition(enemyRectangle.getPosition().x - 30, enemyRectangle.getPosition().y);
+							enemy.setPosition(enemy.getPosition().x - 30, enemy.getPosition().y);
 						}
 					}
 					else
@@ -568,43 +563,48 @@ namespace Game_Namespace
 			}
 		}
 
-		static void CanEnemyHearPlayer(sf::RectangleShape& enemyRectangleDetection, sf::RectangleShape& enemyRectangle)
+		static void CanEnemyHearPlayer(Character& enemy)
 		{
-			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
+			if (player1.getRectangle().getGlobalBounds().intersects(enemy.getPlayerDetection().getGlobalBounds()))
 			{
 
-				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				if (player1.getRectangle().getPosition().x > enemy.getPlayerDetection().getPosition().x + enemy.getPlayerDetection().getGlobalBounds().width / 2)
 				{
-					if (zombieFlipLeft)
+					if (enemy.getFlipLeft())
 					{
-						enemyRectangle.setOrigin({ 0, 0 });
-						enemyRectangle.scale(-1, 1);
+						enemy.setOrigin( 0, 0 );
+						enemy.scale(-1, 1);
 					}
-					enemyRectangle.move(300 * deltaTime.asSeconds(), 0);
+					enemy.setMove(300 * deltaTime.asSeconds(), 0);
 					zombie.Update(3, deltaTime.asSeconds());
-					zombieFlipLeft = false;
-					zombieFlipRight = true;
-					
+					enemy.setFlipLeft(false);
+					enemy.setFlipRight(true);
+					//zombieFlipLeft = false;
+					//zombieFlipRight = true;
+
 				}
-				else if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
+				else if (player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width < enemy.getPlayerDetection().getPosition().x + enemy.getPlayerDetection().getGlobalBounds().width / 2)
 				{
-					if (zombieFlipRight)
+					if (enemy.getFlipRight())
 					{
-						enemyRectangle.setOrigin({ enemyRectangle.getGlobalBounds().width, 0 });
-						enemyRectangle.scale(-1, 1);
+						enemy.setOrigin(enemy.getRectangle().getGlobalBounds().width, 0 );
+						enemy.scale(-1, 1);
 					}
-					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
+					enemy.setMove(-300 * deltaTime.asSeconds(), 0);
 					zombie.Update(3, deltaTime.asSeconds());
-					zombieFlipRight = false;
-					zombieFlipLeft = true;
-					
+					enemy.setFlipRight(false);
+					enemy.setFlipLeft(true);
+
+					//zombieFlipRight = false;
+					//zombieFlipLeft = true;
+
 				}
 
-				isCrosshairOnTarget(enemyTest, enemyRectangle);
+				isCrosshairOnTarget(enemyTest);
 			}
 			else
 			{
-				enemyRectangle.move(0, 0);
+				enemy.getRectangle().move(0, 0);
 				zombie.Update(2, deltaTime.asSeconds());
 				//zombie.SetSingleFrame(sf::Vector2u(0, 1));
 				crosshairTest.setOutlineColor(sf::Color::Red);
@@ -612,7 +612,7 @@ namespace Game_Namespace
 		}
 
 
-		static void CheckEnemyHP(Character& enemy,sf::RectangleShape& PlayerDetection , sf::RectangleShape& enemyRectangle)
+		static void CheckEnemyHP(Character& enemy)
 		{
 			if (enemy.getHp() <= 0)
 			{
@@ -621,16 +621,16 @@ namespace Game_Namespace
 
 			if (enemy.getIsAlive())
 			{
-				enemyRectangle.setSize(enemyRectangle.getSize());
-				PlayerDetection.setSize(enemyPlayerDetection.getSize());
+				enemy.setSize(enemy.getSize().x, enemy.getSize().y);
+				enemy.setPlayerDetectionSize(enemy.getPlayerDetectionSize().x, enemy.getPlayerDetectionSize().y);
 			}
 			else
 			{
 				if (zombie.UpdateOnce(1, deltaTime.asSeconds()))
 				{
 					LivesEnemy.setFillColor(sf::Color::Transparent);
-					enemyRectangle.setSize(sf::Vector2f(0, 0));
-					PlayerDetection.setSize(sf::Vector2f(0, 0));
+					enemy.setSize(0, 0);
+					enemy.setPlayerDetectionSize(0, 0);
 				}
 				//zombie.UpdateOnce(1, deltaTime.asSeconds());
 			}
@@ -638,7 +638,7 @@ namespace Game_Namespace
 
 		static void CheckCameraMovement()
 		{
-			if (playerRectangle.getPosition().x > view.getCenter().x + cameraLimitRight)
+			if (player1.getRectangle().getPosition().x > view.getCenter().x + cameraLimitRight)
 			{
 				if (!(cameraRight))
 				{
@@ -646,7 +646,7 @@ namespace Game_Namespace
 					cameraLeft = false;
 				}
 			}
-			else if (playerRectangle.getPosition().x < view.getCenter().x - cameraLimitLeft)
+			else if (player1.getRectangle().getPosition().x < view.getCenter().x - cameraLimitLeft)
 			{
 				if (!(cameraLeft))
 				{
@@ -655,7 +655,7 @@ namespace Game_Namespace
 				}
 			}
 
-			if (playerRectangle.getPosition().y > view.getCenter().y + cameraLimitDown)
+			if (player1.getRectangle().getPosition().y > view.getCenter().y + cameraLimitDown)
 			{
 				if (!(cameraDown))
 				{
@@ -663,7 +663,7 @@ namespace Game_Namespace
 					cameraUp = false;
 				}
 			}
-			else if (playerRectangle.getPosition().y < view.getCenter().y - cameraLimitUp)
+			else if (player1.getRectangle().getPosition().y < view.getCenter().y - cameraLimitUp)
 			{
 				if (!(cameraUp))
 				{
@@ -672,25 +672,25 @@ namespace Game_Namespace
 				}
 			}
 
-			if (cameraDown) view.setCenter(view.getCenter().x, playerRectangle.getPosition().y - cameraLimitDown);
+			if (cameraDown) view.setCenter(view.getCenter().x, player1.getRectangle().getPosition().y - cameraLimitDown);
 			if (cameraUp)
 			{
-				view.setCenter(view.getCenter().x, playerRectangle.getPosition().y + cameraLimitUp);
+				view.setCenter(view.getCenter().x, player1.getRectangle().getPosition().y + cameraLimitUp);
 			}
 
-			if (cameraRight) view.setCenter(playerRectangle.getPosition().x - cameraLimitRight, view.getCenter().y);
-			if (cameraLeft) view.setCenter(playerRectangle.getPosition().x + cameraLimitLeft, view.getCenter().y);
+			if (cameraRight) view.setCenter(player1.getRectangle().getPosition().x - cameraLimitRight, view.getCenter().y);
+			if (cameraLeft) view.setCenter(player1.getRectangle().getPosition().x + cameraLimitLeft, view.getCenter().y);
 		}
 
 		static void CheckPlayerFlipSprite()
 		{
-			if (crosshairTest.getPosition().x < playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width / 2)
+			if (crosshairTest.getPosition().x < player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2)
 			{
 				if (player1.getFlipLeft())
 				{
 					//animation.setCurrentImageX(9);
-					playerRectangle.setOrigin({ playerRectangle.getGlobalBounds().width, 0 });
-					playerRectangle.scale(-1, 1);
+					player1.setOrigin(player1.getRectangle().getGlobalBounds().width, 0);
+					player1.scale(-1, 1);
 					gun.setOrigin({ -20,40 }); // -20 0
 					gun.scale(1, -1);
 				}
@@ -703,8 +703,8 @@ namespace Game_Namespace
 				if (player1.getFlipRight())
 				{
 					//animation.setCurrentImageX(9);
-					playerRectangle.setOrigin({ 0, 0 });
-					playerRectangle.scale(-1, 1);
+					player1.setOrigin(0, 0 );
+					player1.scale(-1, 1);
 					gun.setOrigin({ -20, 40 });
 					gun.scale(1, -1);
 				}
@@ -717,14 +717,12 @@ namespace Game_Namespace
 		{
 			deltaText.setString(toString(deltaTime));
 
-
-			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1232, view.getCenter().y - 700));
-			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
-			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			Lives.setString("Player HP: " + toString(player1.getHp()));
+			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
 
 			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
-			LivesEnemy.setPosition(sf::Vector2f(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 100));
-			
+			LivesEnemy.setPosition(sf::Vector2f(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y - 100));
+
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
 		}
 
@@ -732,27 +730,27 @@ namespace Game_Namespace
 		{
 			if (player1.getGravity())
 			{
-				playerRectangle.setPosition(playerRectangle.getPosition().x, (playerRectangle.getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				player1.setPosition(player1.getRectangle().getPosition().x, (player1.getRectangle().getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
 				cameraUp = false;
 			}
 		}
 
-		static void CheckEnemyGravity(Character& enemy,sf::RectangleShape& enemyRectangle)
+		static void CheckEnemyGravity(Character& enemy)
 		{
 			if (enemy.getGravity())
 			{
-				enemyRectangle.setPosition(enemyRectangle.getPosition().x, enemyRectangle.getPosition().y + (enemyTest.getSpeed().y * deltaTime.asSeconds()));
+				enemy.setPosition(enemy.getRectangle().getPosition().x, enemy.getRectangle().getPosition().y + (enemy.getSpeed().y * deltaTime.asSeconds()));
 			}
 		}
 
-		static void CheckCharacterJump(Character& character,sf::RectangleShape& characterRectangle)
+		static void CheckCharacterJump(Character& character)
 		{
 			if (character.getIsJumping())
 			{
 				if (character.isTimerJumpRunning())
 				{
 					cameraDown = false;
-					characterRectangle.setPosition(characterRectangle.getPosition().x, characterRectangle.getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
+					character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				}
 
 				if (character.isTimerJumpExpired())
@@ -786,14 +784,14 @@ namespace Game_Namespace
 		{
 			if (timer.isRunning())
 			{
-				playerRectangle.setFillColor(sf::Color::Green);
+				player1.setColor(sf::Color::Green);
 			}
 
 			if (timer.isExpired())
 			{
 				timer.reset(initialInvincibilityTime);
-				playerRectangle.setFillColor(sf::Color::White);
-				if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
+				player1.setColor(sf::Color::White);
+				if (player1.getRectangle().getGlobalBounds().intersects(enemyTest.getRectangle().getGlobalBounds()))
 				{
 					enemyTest.setCurrentlyTouchingPlayer(true);
 				}
@@ -833,43 +831,44 @@ namespace Game_Namespace
 				}
 
 				//animation.Update(0, deltaTime.asSeconds());
-				playerRectangle.setTextureRect(animation.uvRect);
+				player1.setTextureRect(playerAnimation.uvRect);
 				gun.setTextureRect(pistolAnimation.uvRect);
-				enemyRectangle.setTextureRect(zombie.uvRect);
+				enemyTest.setTextureRect(zombie.uvRect);
 
 				//Invincibility Frames
 				CheckInvincibilityFrames(timerInvincibility);
 
 				// gravity
 				CheckPlayerGravity();
-				CheckEnemyGravity(enemyTest, enemyRectangle);
+				CheckEnemyGravity(enemyTest);
 
 				// Jump
-				CheckCharacterJump(player1, playerRectangle);
+				CheckCharacterJump(player1); // Check rectangle here
 
-				// CheckWeaponsFireRate(pistol); // WIP function
+											 // CheckWeaponsFireRate(pistol); // WIP function
 				CheckWeaponsFireRate(timerPistolFireRate);
 
-				enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 800, enemyRectangle.getPosition().y - 190);
 
-				playerRectangle.move(player1.getMove());
+				enemyTest.setPlayerDetectionPosition(enemyTest.getRectangle().getPosition().x - 800, enemyTest.getRectangle().getPosition().y - 190);
+				
+				player1.getRectangle().move(player1.getMove());
 
 				CheckPlayerFlipSprite();
 
 				// Checks for collisions
 				for (int i = 0; i < maxColisionsBoxes; i++)
 				{
-					CheckCollisionWithTiles(playerRectangle, i, player1);
-					CheckCollisionWithTiles(enemyRectangle, i, enemyTest);
+					CheckCollisionWithTiles(player1, i); // Check rectangle here
+					CheckCollisionWithTiles(enemyTest, i);
 				}
 
 				GunRotation();
 
-				CanEnemyHearPlayer(enemyPlayerDetection, enemyRectangle);
+				CanEnemyHearPlayer(enemyTest);
 
-				PlayerEnemyCollision(enemyTest, enemyRectangle, timerInvincibility);
+				PlayerEnemyCollision(enemyTest, timerInvincibility);
 
-				CheckEnemyHP(enemyTest, enemyPlayerDetection, enemyRectangle);
+				CheckEnemyHP(enemyTest);
 			}
 			else if (gameOnPause)
 			{
@@ -880,8 +879,8 @@ namespace Game_Namespace
 				}
 
 			}
-			
-			
+
+
 		}
 
 		void GameplayScreen::draw()
@@ -893,16 +892,16 @@ namespace Game_Namespace
 			}
 			_window.draw(map);
 
-			
+
 			////---------------------
 			// Sprites / Shapes
 
 			//// Player
-			_window.draw(playerRectangle);
+			_window.draw(player1.getRectangle());
 
 			//// Enemy
-			_window.draw(enemyPlayerDetection);
-			_window.draw(enemyRectangle);
+			_window.draw(enemyTest.getPlayerDetection());
+			_window.draw(enemyTest.getRectangle());
 			////---------------------
 
 			// Text
@@ -910,11 +909,9 @@ namespace Game_Namespace
 
 			// HUD
 			_window.draw(crosshairTest);
-			_window.draw(lifeBar);
-			_window.draw(lifeHUDRectangle);
-			_window.draw(weaponHUDRectangle);
+			_window.draw(Lives);
 			_window.draw(LivesEnemy);
-			_window.draw(enemyPlayerDetection);
+			//_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
 			_window.draw(gunLimit);
 			_window.draw(gun);
