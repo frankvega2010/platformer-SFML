@@ -281,7 +281,7 @@ namespace Game_Namespace
 			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
 			gun.setSize({ 140,90 });
 			gun.setTexture(&playerHands);
-			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.05f);
+			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.08f);
 
 			// Enemy 1
 
