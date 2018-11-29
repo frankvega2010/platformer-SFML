@@ -11,6 +11,8 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	namespace Credits_Section
 	{
 
@@ -37,7 +39,7 @@ namespace Game_Namespace
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(50);// 240 100
-
+				buttons[i]->setInheritedFont(fontButtons);
 				buttons[i]->setPosition(120, 700 + maxDistance);
 
 				maxDistance = maxDistance + 120;

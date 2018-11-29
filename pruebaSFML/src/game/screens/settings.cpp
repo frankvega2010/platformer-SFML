@@ -25,6 +25,8 @@ namespace Game_Namespace
 
 	static tgui::Label::Ptr labelSoundVolume;
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	namespace Settings_Section
 	{
 		SettingsScreen::SettingsScreen()
@@ -128,7 +130,7 @@ namespace Game_Namespace
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(40);// 240 100
-
+				buttons[i]->setInheritedFont(fontButtons);
 				buttons[i]->setPosition(50 , 70 + maxDistance);
 
 				maxDistance = maxDistance + 130;
@@ -158,6 +160,7 @@ namespace Game_Namespace
 			labelMusicVolume->setText("Music Volume");
 			labelMusicVolume->setPosition(500, 180);
 			labelMusicVolume->setTextSize(40);
+			labelMusicVolume->setInheritedFont(fontButtons);
 			gui.add(labelMusicVolume);
 
 			sliderMusic = tgui::Slider::create();
@@ -174,6 +177,7 @@ namespace Game_Namespace
 			labelSoundVolume->setText("Sound Volume");
 			labelSoundVolume->setPosition(500, 480);
 			labelSoundVolume->setTextSize(40);
+			labelSoundVolume->setInheritedFont(fontButtons);
 			gui.add(labelSoundVolume);
 
 			sliderSound = tgui::Slider::create();
@@ -190,6 +194,7 @@ namespace Game_Namespace
 			controlsButton->setRenderer(blackTheme.getRenderer("Button"));
 			controlsButton->setSize(250, 110);
 			controlsButton->setTextSize(40);// 240 100
+			controlsButton->setInheritedFont(fontButtons);
 			controlsButton->setPosition(530, 780);
 			controlsButton->setText("Controls");
 			controlsButton->connect("Pressed", signalGoToControls);

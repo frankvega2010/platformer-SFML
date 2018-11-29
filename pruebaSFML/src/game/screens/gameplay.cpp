@@ -23,6 +23,8 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr pauseButton;
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	static const int maxButtons = 3;
 
 	sf::Font font2;
@@ -183,7 +185,7 @@ namespace Game_Namespace
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(40);// 240 100
-
+				buttons[i]->setInheritedFont(fontButtons);
 				buttons[i]->setPosition(400, 270 + maxDistance);
 
 				maxDistance = maxDistance + 130;
@@ -332,14 +334,16 @@ namespace Game_Namespace
 			pistolGunShoot.setBuffer(pistolshoot);
 			pistolGunShoot.setVolume(globalSoundVolume);
 
+			//PAUSE
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
 			pauseButton->setSize(50, 50);
+			pauseButton->setInheritedFont(fontButtons);
 			pauseButton->setTextSize(30);// 240 100
 
 			pauseButton->setPosition(940,10);
-			pauseButton->setText("||");
+			pauseButton->setText("II");
 			pauseButton->connect("Pressed", signalGoToPause);
 			
 		}

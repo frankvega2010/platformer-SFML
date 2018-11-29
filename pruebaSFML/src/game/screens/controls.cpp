@@ -9,6 +9,8 @@ namespace Game_Namespace
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	static tgui::Button::Ptr buttons[maxButtons];
 
 	namespace Controls_Section
@@ -36,13 +38,17 @@ namespace Game_Namespace
 				gui.add(buttons[i]);
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
-				buttons[i]->setTextSize(50);// 240 100
+				//buttons[i]->setTextSize(50);// 240 100
+				buttons[i]->setInheritedFont(fontButtons);
 
 				buttons[i]->setPosition(120, 700 + maxDistance);
 
 				maxDistance = maxDistance + 120;
 			}
 			maxDistance = 0;
+
+			buttons[0]->setTextSize(38);
+			buttons[1]->setTextSize(50);
 
 			buttons[0]->setText("More Controls");
 			buttons[1]->setText("Settings");

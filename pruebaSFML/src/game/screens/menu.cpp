@@ -19,13 +19,15 @@ namespace Game_Namespace
 {
 	static const int maxButtons = 5;
 
-	sf::Font font;
+	static sf::Font fontTitle;
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+	static sf::Font fontSubtitle;
 
-	sf::Text menuTitle;
-	sf::Text menuSubTitle1;
-	sf::Text menuSubTitle2;
+	static sf::Text menuTitle;
+	static sf::Text menuSubTitle1;
+	static sf::Text menuSubTitle2;
 
-	sf::Text menuText;
+	static sf::Text menuText;
 
 	sf::RectangleShape testS;
 
@@ -105,7 +107,8 @@ namespace Game_Namespace
 				gui.add(buttons[i]);
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
-				buttons[i]->setTextSize(50);// 240 100
+				buttons[i]->setTextSize(60);// 240 100
+				buttons[i]->setInheritedFont(fontButtons);
 
 				if (i < 3)
 				{
@@ -128,25 +131,33 @@ namespace Game_Namespace
 			buttons[3]->setText("Credits");
 			buttons[4]->setText("Quit");
 
-			if (!font.loadFromFile("res/assets/fonts/sansation.ttf"))
+			if (!fontTitle.loadFromFile("res/assets/fonts/STAMPACT.TTF"))
+			{
+				cout << "could not load font file" << endl;// error...
+			}
+			//if (!fontButtons.getFont("res/assets/fonts/DSnet Stamped.ttf"))
+			//{
+			//	cout << "could not load font file" << endl;// error...
+			//}
+			if (!fontSubtitle.loadFromFile("res/assets/fonts/Roman_New_Times.otf"))
 			{
 				cout << "could not load font file" << endl;// error...
 			}
 
-			menuTitle.setFont(font);
-			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 2.f));
+			menuTitle.setFont(fontTitle);
+			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 1.8f));
 			menuTitle.setFillColor(sf::Color::Red);
 			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 400.f), 50.f);
 			menuTitle.setString("Patient Zero");
 
-			menuSubTitle1.setFont(font);
-			menuSubTitle1.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() - 20));
+			menuSubTitle1.setFont(fontSubtitle);
+			menuSubTitle1.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle1.setFillColor(sf::Color::Red);
 			menuSubTitle1.setPosition(menuTitle.getPosition().x + 300, 140);
 			menuSubTitle1.setString("");
 
-			menuSubTitle2.setFont(font);
-			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() - 20));
+			menuSubTitle2.setFont(fontSubtitle);
+			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle2.setFillColor(sf::Color::Red);
 			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 180);
 			menuSubTitle2.setString("Version 0.1");
