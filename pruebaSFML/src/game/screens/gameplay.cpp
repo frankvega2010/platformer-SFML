@@ -59,6 +59,7 @@ namespace Game_Namespace
 	static int zombiesKilled = 0;
 	static const int zombiesKilledObjetiveLevel1 = 3;
 	static bool playerWon = false;
+	static bool playerLost = false;
 
 	// Gravity
 
@@ -112,7 +113,7 @@ namespace Game_Namespace
 	static sf::Text LivesEnemies[maxEnemiesLevelTutorial];
 	static sf::Text zombiesKilledText;
 
-	static sf::Text playerWonText;
+	static sf::Text playerStateText;
 
 	// Characters
 	
@@ -191,6 +192,7 @@ namespace Game_Namespace
 		{
 			//// Buttons init
 			playerWon = false;
+			playerLost = false;
 			zombiesKilled = 0;
 			int maxDistance = 0;
 			for (int i = 0; i < maxButtons; i++)
@@ -320,10 +322,10 @@ namespace Game_Namespace
 			deltaText.setFont(deltaFont);
 			deltaText.setPosition(400, 400);
 
-			playerWonText.setCharacterSize(80);
-			playerWonText.setFont(deltaFont);
-			playerWonText.setPosition(400, 400);
-			playerWonText.setString("You Passed the level!");
+			playerStateText.setCharacterSize(80);
+			playerStateText.setFont(deltaFont);
+			playerStateText.setPosition(400, 400);
+			playerStateText.setString("");
 
 
 			//// HUD
@@ -948,6 +950,19 @@ namespace Game_Namespace
 				if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= zombiesKilledObjetiveLevel1)
 				{
 					playerWon = true;
+					playerLost = false;
+					gameOnPause = true;
+				}
+
+				if (player1.getHp() <= 0)
+				{
+					player1.setIsAlive(false);
+				}
+
+				if (!player1.getIsAlive())
+				{
+					playerLost = true;
+					playerWon = false;
 					gameOnPause = true;
 				}
 				
@@ -965,12 +980,25 @@ namespace Game_Namespace
 				if (playerWon)
 				{
 					buttons[0]->setVisible(false);
-					playerWonText.setFillColor(sf::Color::Green);
-					playerWonText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
+					playerStateText.setFillColor(sf::Color::Green);
+					playerStateText.setString("You Passed the level!");
+					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
 				}
 				else
 				{
-					playerWonText.setFillColor(sf::Color::Transparent);
+					//playerStateText.setFillColor(sf::Color::Transparent);
+				}
+
+				if (playerLost)
+				{
+					buttons[0]->setVisible(false);
+					playerStateText.setFillColor(sf::Color::Red);
+					playerStateText.setString("You died!");
+					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
+				}
+				else
+				{
+					//playerStateText.setFillColor(sf::Color::Transparent);
 				}
 
 			}
@@ -1005,7 +1033,7 @@ namespace Game_Namespace
 
 			// Text
 			_window.draw(deltaText);
-			_window.draw(playerWonText);
+			_window.draw(playerStateText);
 
 			// HUD
 			_window.draw(zombiesKilledText);
