@@ -20,6 +20,7 @@ namespace Game_Namespace
 		_isJumping = false;
 		_isOnGround = false;
 		_isOnWhichGround = -1;
+		_isDead = false;
 	}
 
 	Character::Character(float x, float y, float width, float height, sf::Color color)
@@ -40,6 +41,7 @@ namespace Game_Namespace
 		_isJumping = false;
 		_isOnGround = false;
 		_isOnWhichGround = -1;
+		_isDead = false;
 	}
 
 	Character::~Character()
@@ -292,6 +294,15 @@ namespace Game_Namespace
 	void Character::scale(int x, int y)
 	{
 		_rectangle.scale(x, y);
+	}
+
+	bool Character::getIsDead()
+	{
+		return _isDead;
+	}
+	void Character::setIsDead(bool isDead)
+	{
+		_isDead = isDead;
 	}
 
 }

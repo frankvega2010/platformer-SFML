@@ -30,6 +30,7 @@ namespace Game_Namespace
 		bool _flipRight;
 		bool _isJumping;
 		bool _isOnGround;
+		bool _isDead;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -81,6 +82,8 @@ namespace Game_Namespace
 		void setIsOnWhichGround(int isOnWhichGround);
 		void setOrigin(int x, int y);
 		void scale(int x, int y);
+		bool getIsDead();
+		void setIsDead(bool isDead);
 		sf::RectangleShape getRectangle();
 		sf::RectangleShape getPlayerDetection();
 	};

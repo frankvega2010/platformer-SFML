@@ -109,6 +109,7 @@ namespace Game_Namespace
 
 	static sf::Text deltaText;
 	static sf::Text LivesEnemies[maxEnemiesLevelTutorial];
+	static sf::Text zombiesKilledText;
 
 	// Characters
 	
@@ -338,7 +339,10 @@ namespace Game_Namespace
 				LivesEnemies[i].setFillColor(sf::Color::Transparent);
 			}
 
-			
+			zombiesKilledText.setCharacterSize(80);
+			zombiesKilledText.setFont(deltaFont);
+			zombiesKilledText.setPosition(500, 200);
+			zombiesKilledText.setFillColor(sf::Color::White);
 
 			crosshairTest.setRadius(30);
 			crosshairTest.setOutlineThickness(5);
@@ -646,6 +650,15 @@ namespace Game_Namespace
 					LivesEnemies[i].setFillColor(sf::Color::Transparent);
 					enemy.setSize(0, 0);
 					enemy.setPlayerDetectionSize(0, 0);
+					enemy.setIsAlive(true);
+					enemy.setHp(100);
+					enemy.setIsDead(true);
+				}
+
+				if (enemy.getIsDead())
+				{
+					zombiesKilled++;
+					enemy.setIsDead(false);
 				}
 			}
 		}
@@ -732,6 +745,9 @@ namespace Game_Namespace
 			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1232, view.getCenter().y - 700));
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
 			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			zombiesKilledText.setPosition(sf::Vector2f(view.getCenter().x + 300, view.getCenter().y - 800));
+
+			zombiesKilledText.setString("Zombies Killed: " + toString(zombiesKilled));
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
@@ -948,6 +964,7 @@ namespace Game_Namespace
 			_window.draw(deltaText);
 
 			// HUD
+			_window.draw(zombiesKilledText);
 			_window.draw(crosshairTest);
 			_window.draw(lifeBar);
 			_window.draw(lifeHUDRectangle);
