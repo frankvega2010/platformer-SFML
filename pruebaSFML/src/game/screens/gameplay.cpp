@@ -83,6 +83,9 @@ namespace Game_Namespace
 	static const sf::Time pistolFireRate = sf::seconds(0.5f);
 	static thor::CallbackTimer timerPistolFireRate;
 
+	static const sf::Time footstepInitialTime = sf::seconds(0.49f);
+	static thor::CallbackTimer footstepTimer;
+
 	//Textures & Animations
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
@@ -96,6 +99,12 @@ namespace Game_Namespace
 
 	static sf::SoundBuffer pistolshoot;
 	static sf::Sound pistolGunShoot;
+
+	static sf::SoundBuffer footstep;
+	static sf::Sound playerFootStep;
+
+	static sf::SoundBuffer jump;
+	static sf::Sound playerJumpSound;
 
 	// Gun Rotation Variable
 
@@ -373,6 +382,14 @@ namespace Game_Namespace
 			pistolGunShoot.setBuffer(pistolshoot);
 			pistolGunShoot.setVolume(globalSoundVolume);
 
+			footstep.loadFromFile("res/assets/sounds/footstep.wav");
+			playerFootStep.setBuffer(footstep);
+			playerFootStep.setVolume(globalSoundVolume);
+
+			jump.loadFromFile("res/assets/sounds/jump.wav");
+			playerJumpSound.setBuffer(jump);
+			playerJumpSound.setVolume(globalSoundVolume);
+
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
@@ -403,6 +420,12 @@ namespace Game_Namespace
 				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
 				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
 
+				if (!footstepTimer.isRunning())
+				{
+					footstepTimer.reset(footstepInitialTime);
+					footstepTimer.start();
+					playerFootStep.play();
+				}
 
 				cameraLeft = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
@@ -413,6 +436,12 @@ namespace Game_Namespace
 				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
 				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
 
+				if (!footstepTimer.isRunning())
+				{
+					footstepTimer.reset(footstepInitialTime);
+					footstepTimer.start();
+					playerFootStep.play();
+				}
 
 				cameraRight = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
@@ -443,6 +472,7 @@ namespace Game_Namespace
 					player1.setIsJumping(true);
 					player1.setGravity(false);
 					player1.StartTimerJump();
+					playerJumpSound.play();
 				}
 			}
 			else
@@ -808,6 +838,7 @@ namespace Game_Namespace
 			{
 				if (character.isTimerJumpRunning())
 				{
+					playerFootStep.stop();
 					cameraDown = false;
 					character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
 				}
@@ -966,6 +997,14 @@ namespace Game_Namespace
 					gameOnPause = true;
 				}
 				
+
+				//Audio
+
+				if (footstepTimer.isExpired())
+				{
+					footstepTimer.reset(footstepInitialTime);
+				}
+
 					//if (player1.getRectangle().getGlobalBounds().intersects(enemy.getPlayerDetection().getGlobalBounds()))
 				
 			}
