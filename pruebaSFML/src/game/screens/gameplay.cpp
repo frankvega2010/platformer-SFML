@@ -33,6 +33,8 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	////---------------------------------------------------------
 
 	// Camera Settings
@@ -99,7 +101,6 @@ namespace Game_Namespace
 	static sf::Font deltaFont;
 
 	static sf::Text deltaText;
-	static sf::Text Lives;
 	static sf::Text LivesEnemy;
 
 	// Characters
@@ -115,6 +116,13 @@ namespace Game_Namespace
 	//static sf::RectangleShape enemyPlayerDetection;
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
+
+	//HUD
+	static sf::Texture lifeHUD;
+	static sf::RectangleShape lifeHUDRectangle;
+	static sf::RectangleShape lifeBar;
+	static sf::Texture weaponHUD;
+	static sf::RectangleShape weaponHUDRectangle;
 
 	static bool gameOnPause;
 
@@ -178,7 +186,8 @@ namespace Game_Namespace
 				gui.add(buttons[i]);
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
-				buttons[i]->setTextSize(40);// 240 100
+				buttons[i]->setInheritedFont(fontButtons);
+				buttons[i]->setTextSize(50);// 240 100
 
 				buttons[i]->setPosition(400, 270 + maxDistance);
 
@@ -322,9 +331,20 @@ namespace Game_Namespace
 
 			//// HUD
 
-			Lives.setCharacterSize(80);
-			Lives.setFont(deltaFont);
-			Lives.setPosition(200, 1400);
+			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
+			lifeHUDRectangle.setFillColor(sf::Color::White);
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
+			lifeHUDRectangle.setSize({ 600, 250 });
+			lifeHUDRectangle.setTexture(&lifeHUD);
+			lifeBar.setFillColor(sf::Color::Red);
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
+			lifeBar.setSize({ 450, 78 });
+
+			weaponHUD.loadFromFile("res/assets/textures/weaponHUD.png");
+			weaponHUDRectangle.setFillColor(sf::Color::White);
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			weaponHUDRectangle.setSize({ 500, 250 });
+			weaponHUDRectangle.setTexture(&weaponHUD);
 
 			LivesEnemy.setCharacterSize(80);
 			LivesEnemy.setFont(deltaFont);
@@ -349,11 +369,12 @@ namespace Game_Namespace
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
+			pauseButton->setInheritedFont(fontButtons);
 			pauseButton->setSize(50, 50);
-			pauseButton->setTextSize(30);// 240 100
+			pauseButton->setTextSize(40);// 240 100
 
 			pauseButton->setPosition(940, 10);
-			pauseButton->setText("||");
+			pauseButton->setText("II");
 			pauseButton->connect("Pressed", signalGoToPause);
 
 		}
@@ -517,6 +538,7 @@ namespace Game_Namespace
 					{
 						timer.start();
 						player1.setHp(player1.getHp() - 25);
+						lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
@@ -717,8 +739,9 @@ namespace Game_Namespace
 		{
 			deltaText.setString(toString(deltaTime));
 
-			Lives.setString("Player HP: " + toString(player1.getHp()));
-			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1232, view.getCenter().y - 700));
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 
 			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
 			LivesEnemy.setPosition(sf::Vector2f(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y - 100));
@@ -909,11 +932,12 @@ namespace Game_Namespace
 
 			// HUD
 			_window.draw(crosshairTest);
-			_window.draw(Lives);
+			_window.draw(lifeBar);
+			_window.draw(lifeHUDRectangle);
+			_window.draw(weaponHUDRectangle);
 			_window.draw(LivesEnemy);
 			//_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
-			_window.draw(gunLimit);
 			_window.draw(gun);
 		}
 
