@@ -7,7 +7,6 @@ namespace Game_Namespace
 {
 	enum menuOptions {
 		buttonPlay = 10,
-		buttonControls,
 		buttonSettings,
 		buttonCredits,
 		buttonResume,

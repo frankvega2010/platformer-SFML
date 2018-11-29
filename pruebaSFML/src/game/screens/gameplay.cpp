@@ -269,11 +269,11 @@ namespace Game_Namespace
 				int i = 0;
 				for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
 				{
-					rectangles[i].setPosition(sf::Vector2f(it->attribute("x").as_int(),
-						it->attribute("y").as_int()));
+					rectangles[i].setPosition(sf::Vector2f(static_cast<float>(it->attribute("x").as_int()),
+						static_cast<float>(it->attribute("y").as_int())));
 
-					rectangles[i].setSize(sf::Vector2f(it->attribute("width").as_int(),
-						it->attribute("height").as_int()));
+					rectangles[i].setSize(sf::Vector2f(static_cast<float>(it->attribute("width").as_int()),
+						static_cast<float>(it->attribute("height").as_int())));
 
 					rectangles[i].setFillColor(sf::Color::Transparent);
 					i++;
@@ -286,11 +286,11 @@ namespace Game_Namespace
 				int j = 0;
 				for (pugi::xml_node_iterator it = object2.begin(); it != object2.end(); ++it)
 				{
-					rectangles2[j].setPosition(sf::Vector2f(it->attribute("x").as_int(),
-						it->attribute("y").as_int()));
+					rectangles2[j].setPosition(sf::Vector2f(static_cast<float>(it->attribute("x").as_int()),
+						static_cast<float>(it->attribute("y").as_int())));
 
-					rectangles2[j].setSize(sf::Vector2f(it->attribute("width").as_int(),
-						it->attribute("height").as_int()));
+					rectangles2[j].setSize(sf::Vector2f(static_cast<float>(it->attribute("width").as_int()),
+						static_cast<float>(it->attribute("height").as_int())));
 
 					rectangles2[j].setFillColor(sf::Color::Transparent);
 					j++;
@@ -342,7 +342,7 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
-				enemies[i].setPosition(5200 + increaseEnemyDistance, 1500);
+				enemies[i].setPosition(static_cast<float>(5200 + increaseEnemyDistance), 1500.f);
 				enemies[i].setSize(100, 180);
 				enemies[i].setColor(sf::Color::White);
 				enemies[i].setIsAlive(true);
@@ -462,29 +462,29 @@ namespace Game_Namespace
 
 			pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
 			pistolGunShoot.setBuffer(pistolshoot);
-			pistolGunShoot.setVolume(globalSoundVolume);
+			pistolGunShoot.setVolume(static_cast<float>(globalSoundVolume));
 
 			footstep.loadFromFile("res/assets/sounds/footstep.wav");
 			playerFootStep.setBuffer(footstep);
-			playerFootStep.setVolume(globalSoundVolume);
+			playerFootStep.setVolume(static_cast<float>(globalSoundVolume));
 
 			jump.loadFromFile("res/assets/sounds/jump.wav");
 			playerJumpSound.setBuffer(jump);
-			playerJumpSound.setVolume(globalSoundVolume);
+			playerJumpSound.setVolume(static_cast<float>(globalSoundVolume));
 
 
 			
 			soundAttack.loadFromFile("res/assets/sounds/zombie_attack.wav");
 			zombieAttack.setBuffer(soundAttack);
-			zombieAttack.setVolume(globalSoundVolume);
+			zombieAttack.setVolume(static_cast<float>(globalSoundVolume));
 
 			soundDeath.loadFromFile("res/assets/sounds/zombie_death.wav");
 			zombieDeath.setBuffer(soundDeath);
-			zombieDeath.setVolume(globalSoundVolume);
+			zombieDeath.setVolume(static_cast<float>(globalSoundVolume));
 
 			soundAlert.loadFromFile("res/assets/sounds/zombie_alert.wav");
 			zombieAlert.setBuffer(soundAlert);
-			zombieAlert.setVolume(globalSoundVolume);
+			zombieAlert.setVolume(static_cast<float>(globalSoundVolume));
 
 			// GUI
 
@@ -818,7 +818,7 @@ namespace Game_Namespace
 						if (enemy.getFlipRight())
 						{
 							zombieAlert.play();
-							enemy.setOrigin(enemy.getRectangle().getGlobalBounds().width, 0);
+							enemy.setOrigin(static_cast<int>(enemy.getRectangle().getGlobalBounds().width), 0);
 							enemy.scale(-1, 1);
 						}
 						enemy.setMove(-300 * deltaTime.asSeconds(), 0);
@@ -928,7 +928,7 @@ namespace Game_Namespace
 			{
 				if (player1.getFlipLeft())
 				{
-					player1.setOrigin(player1.getRectangle().getGlobalBounds().width, 0);
+					player1.setOrigin(static_cast<int>(player1.getRectangle().getGlobalBounds().width), 0);
 					player1.scale(-1, 1);
 					gun.setOrigin({ -20,40 }); // -20 0
 					gun.scale(1, -1);

@@ -15,7 +15,6 @@
 #include "Screens/gameover.h"
 #include "Screens/settings.h"
 #include "Screens/credits.h"
-#include "Screens/controls.h"
 #include "setup/screens.h"
 
 //#include "raylib.h"
@@ -26,7 +25,6 @@ namespace Game_Namespace
 	{
 		Play = 1,
 		Menu,
-		Controls,
 		GameOver,
 		Quit,
 		Credits,

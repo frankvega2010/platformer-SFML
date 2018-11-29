@@ -15,8 +15,6 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
-	static tgui::Button::Ptr controlsButton;
-
 	static tgui::Slider::Ptr sliderMusic;
 
 	static tgui::Label::Ptr labelMusicVolume;
@@ -40,12 +38,6 @@ namespace Game_Namespace
 		static void signalGoToMenu()
 		{
 			Game::setButtonOption(buttonMenu);
-			Screens::setHasScreenFinished(true);
-		}
-
-		static void signalGoToControls()
-		{
-			Game::setButtonOption(buttonControls);
 			Screens::setHasScreenFinished(true);
 		}
 
@@ -189,16 +181,6 @@ namespace Game_Namespace
 			sliderSound->setValue(globalSoundVolume);
 			gui.add(sliderSound);
 
-			controlsButton = tgui::Button::create();
-			gui.add(controlsButton);
-			controlsButton->setRenderer(blackTheme.getRenderer("Button"));
-			controlsButton->setSize(250, 110);
-			controlsButton->setTextSize(40);// 240 100
-			controlsButton->setInheritedFont(fontButtons);
-			controlsButton->setPosition(530, 780);
-			controlsButton->setText("Controls");
-			controlsButton->connect("Pressed", signalGoToControls);
-
 			setHasScreenFinished(false);
 		}
 
@@ -229,7 +211,6 @@ namespace Game_Namespace
 			sliderMusic->setVisible(false);
 			labelSoundVolume->setVisible(false);
 			sliderSound->setVisible(false);
-			controlsButton->setVisible(false);
 		}
 
 		bool SettingsScreen::finish()

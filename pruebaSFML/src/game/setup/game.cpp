@@ -7,7 +7,6 @@
 #include "Screens/gameover.h"
 #include "Screens/settings.h"
 #include "Screens/credits.h"
-#include "Screens/controls.h"
 #include "setup/screens.h"
 
 
@@ -17,7 +16,6 @@ using namespace GameOver_Section;
 using namespace Menu_Section;
 using namespace Settings_Section;
 using namespace Credits_Section;
-using namespace Controls_Section;
 
 namespace Game_Namespace
 {
@@ -206,7 +204,6 @@ namespace Game_Namespace
 
 		gameScreens[Menu] = new MenuScreen();
 		gameScreens[Play] = new GameplayScreen();
-		gameScreens[Controls] = new ControlsScreen();
 		gameScreens[Settings] = new SettingsScreen();
 		gameScreens[GameOver] = new GameOverScreen();
 		gameScreens[Credits] = new CreditsScreen();
@@ -241,36 +238,36 @@ namespace Game_Namespace
 					StopMusicStream(pong_menu_song);
 #endif
 					levelNumber = 1;
-					_gameScreen= Play;
+					_gameScreen = Play;
 					gameScreens[Play]->init();
 					break;
 				}
 				case buttonSettings:
 				{
-					_gameScreen= Settings;
+					_gameScreen = Settings;
 					gameScreens[Settings]->init();
 					break;
 				}
 				case buttonCredits:
 				{
-					_gameScreen= Credits;
+					_gameScreen = Credits;
 					gameScreens[Credits]->init();
 					break;
 				}
 				case buttonTutorial:
 				{
 					levelNumber = 0;
-					_gameScreen= Play;
+					_gameScreen = Play;
 					gameScreens[Play]->init();
 					break;
 				}
 				case buttonQuit:
 				{
-					#ifdef AUDIO
-										StopMusicStream(pong_menu_song);
-					#endif
-										//event->type = sf::Event::Closed;
-					//_gameScreen = 0;
+#ifdef AUDIO
+					StopMusicStream(pong_menu_song);
+#endif
+					//event->type = sf::Event::Closed;
+//_gameScreen = 0;
 					gameON = false;
 					return;
 					break;
@@ -288,12 +285,6 @@ namespace Game_Namespace
 				gameScreens[Settings]->deInit();
 				switch (_buttonOption)
 				{
-				case buttonControls:
-				{
-					_gameScreen = Controls;
-					gameScreens[Controls]->init();
-					break;
-				}
 				case buttonMenu:
 				{
 					_gameScreen = Menu;
@@ -320,14 +311,14 @@ namespace Game_Namespace
 					PlayMusicStream(pong_menu_song);
 #endif
 
-					_gameScreen= Menu;
+					_gameScreen = Menu;
 					gameScreens[Menu]->init();
 					break;
 				}
 				case buttonRestart:
 				{
 					//gameScreens[Play]->restart();
-					_gameScreen= Play;
+					_gameScreen = Play;
 					gameScreens[Play]->init();
 					break;
 				}
@@ -366,7 +357,7 @@ namespace Game_Namespace
 				}
 				case buttonGameOver:
 				{
-					_gameScreen= GameOver;
+					_gameScreen = GameOver;
 					gameScreens[GameOver]->init();
 					break;
 				}
@@ -382,32 +373,12 @@ namespace Game_Namespace
 			if (gameScreens[Credits]->finish())
 			{
 				gameScreens[Credits]->deInit();
-				_gameScreen= Menu;
+				_gameScreen = Menu;
 				gameScreens[Menu]->init();
 			}
 		}
 		break;
-		case Controls:
-		{
-			gameScreens[Controls]->update();
-
-			if (gameScreens[Controls]->finish())
-			{
-				gameScreens[Controls]->deInit();
-				switch (_buttonOption)
-				{
-				case buttonSettings:
-				{
-					_gameScreen = Settings;
-					gameScreens[Settings]->init();
-					break;
-				}
-				}
-			}
 		}
-		break;
-		}
-
 		
 	}
 
