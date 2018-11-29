@@ -734,6 +734,10 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
+				if (enemies[i].getHp() <= 0)
+				{
+					enemies[i].setHp(0);
+				}
 				LivesEnemies[i].setString("Enemy HP: " + toString(enemies[i].getHp()));
 				LivesEnemies[i].setPosition(sf::Vector2f(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y - 100));
 			}
