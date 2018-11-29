@@ -1,0 +1,7 @@
+Fuente titulos : https://www.dafont.com/es/stamp-act.font?l[]=10&l[]=1&text=Patient+Zero
+
+Fuente texto: https://www.dafont.com/es/times-new-yorker.font?l[]=10&l[]=1&text=settings
+
+Fuente texto secundario : https://www.dafont.com/es/roman-new-times.font?l[]=10&l[]=1&text=Hello+there
+
+Crosshair image : https://www.kenney.nl/assets/crosshair-pack

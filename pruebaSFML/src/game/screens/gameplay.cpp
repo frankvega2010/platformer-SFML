@@ -23,6 +23,8 @@ namespace Game_Namespace
 
 	static tgui::Button::Ptr pauseButton;
 
+	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
+
 	static const int maxButtons = 3;
 
 	sf::Font font2;
@@ -75,6 +77,14 @@ namespace Game_Namespace
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
 	static sf::Texture playerHands;
+
+	//HUD
+	static sf::Texture lifeHUD;
+	static sf::RectangleShape lifeHUDRectangle;
+	static sf::RectangleShape lifeBar;
+	static sf::Texture weaponHUD;
+	static sf::RectangleShape weaponHUDRectangle;
+
 	static SpriteAnimation zombie;
 	static SpriteAnimation animation;
 	static SpriteAnimation pistolAnimation;
@@ -100,7 +110,7 @@ namespace Game_Namespace
 	static sf::Font deltaFont;
 
 	static sf::Text deltaText;
-	static sf::Text Lives;
+
 	static sf::Text LivesEnemy;
 
 	// Characters
@@ -180,7 +190,7 @@ namespace Game_Namespace
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
 				buttons[i]->setTextSize(40);// 240 100
-
+				buttons[i]->setInheritedFont(fontButtons);
 				buttons[i]->setPosition(400, 270 + maxDistance);
 
 				maxDistance = maxDistance + 130;
@@ -303,10 +313,6 @@ namespace Game_Namespace
 
 			//// HUD
 
-			Lives.setCharacterSize(80);
-			Lives.setFont(deltaFont);
-			Lives.setPosition(200, 1400);
-
 			LivesEnemy.setCharacterSize(80);
 			LivesEnemy.setFont(deltaFont);
 			LivesEnemy.setPosition(50, 1400);
@@ -318,6 +324,21 @@ namespace Game_Namespace
 			crosshairTest.setOutlineColor(sf::Color::Red);
 			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
 
+			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
+			lifeHUDRectangle.setFillColor(sf::Color::White);
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
+			lifeHUDRectangle.setSize({ 600, 250 });
+			lifeHUDRectangle.setTexture(&lifeHUD);
+			lifeBar.setFillColor(sf::Color::Red);
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
+			lifeBar.setSize({ 450, 78 });
+
+			weaponHUD.loadFromFile("res/assets/textures/weaponHUD.png");
+			weaponHUDRectangle.setFillColor(sf::Color::White);
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-700, view.getCenter().y - 800));
+			weaponHUDRectangle.setSize({ 500, 250 });
+			weaponHUDRectangle.setTexture(&weaponHUD);
+
 			//// Game Mechanics
 			gravitySpeed = 800;
 
@@ -327,14 +348,16 @@ namespace Game_Namespace
 			pistolGunShoot.setBuffer(pistolshoot);
 			pistolGunShoot.setVolume(globalSoundVolume);
 
+			//PAUSE
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
 			pauseButton->setSize(50, 50);
+			pauseButton->setInheritedFont(fontButtons);
 			pauseButton->setTextSize(30);// 240 100
 
 			pauseButton->setPosition(940,10);
-			pauseButton->setText("||");
+			pauseButton->setText("II");
 			pauseButton->connect("Pressed", signalGoToPause);
 			
 		}
@@ -498,6 +521,7 @@ namespace Game_Namespace
 					{
 						timer.start();
 						player1.setHp(player1.getHp() - 25);
+						lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
@@ -693,8 +717,10 @@ namespace Game_Namespace
 		{
 			deltaText.setString(toString(deltaTime));
 
-			Lives.setString("Player HP: " + toString(player1.getHp()));
-			Lives.setPosition(sf::Vector2f(view.getCenter().x, view.getCenter().y - 800));
+
+			lifeBar.setPosition(sf::Vector2f(view.getCenter().x-1232, view.getCenter().y - 700));
+			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x-1300, view.getCenter().y - 800));
+			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 
 			LivesEnemy.setString("Enemy HP: " + toString(enemyTest.getHp()));
 			LivesEnemy.setPosition(sf::Vector2f(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y - 100));
@@ -884,7 +910,9 @@ namespace Game_Namespace
 
 			// HUD
 			_window.draw(crosshairTest);
-			_window.draw(Lives);
+			_window.draw(lifeBar);
+			_window.draw(lifeHUDRectangle);
+			_window.draw(weaponHUDRectangle);
 			_window.draw(LivesEnemy);
 			_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
