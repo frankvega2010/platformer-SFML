@@ -54,6 +54,10 @@ namespace Game_Namespace
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
 
+	// Victory Condition
+
+	static int zombiesKilled = 0;
+
 	// Gravity
 
 	static int gravityValue = -1;
@@ -110,7 +114,6 @@ namespace Game_Namespace
 	
 
 	static Character player1;
-	/*static Character enemyTest;*/
 
 	static Character enemies[maxEnemiesLevelTutorial];
 
@@ -578,37 +581,47 @@ namespace Game_Namespace
 
 				if (player1.getRectangle().getPosition().x > enemy.getPlayerDetection().getPosition().x + enemy.getPlayerDetection().getGlobalBounds().width / 2)
 				{
-					if (enemy.getFlipLeft())
+					if (enemy.getIsAlive())
 					{
-						enemy.setOrigin( 0, 0 );
-						enemy.scale(-1, 1);
+						if (enemy.getFlipLeft())
+						{
+							enemy.setOrigin(0, 0);
+							enemy.scale(-1, 1);
+						}
+						enemy.setMove(300 * deltaTime.asSeconds(), 0);
+						animation.Update(3, deltaTime.asSeconds());
+						enemy.setFlipLeft(false);
+						enemy.setFlipRight(true);
 					}
-					enemy.setMove(300 * deltaTime.asSeconds(), 0);
-					animation.Update(3, deltaTime.asSeconds());
-					enemy.setFlipLeft(false);
-					enemy.setFlipRight(true);
+					
 
 				}
 				else if (player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width < enemy.getPlayerDetection().getPosition().x + enemy.getPlayerDetection().getGlobalBounds().width / 2)
 				{
-					if (enemy.getFlipRight())
+					if (enemy.getIsAlive())
 					{
-						enemy.setOrigin(enemy.getRectangle().getGlobalBounds().width, 0 );
-						enemy.scale(-1, 1);
+						if (enemy.getFlipRight())
+						{
+							enemy.setOrigin(enemy.getRectangle().getGlobalBounds().width, 0);
+							enemy.scale(-1, 1);
+						}
+						enemy.setMove(-300 * deltaTime.asSeconds(), 0);
+						animation.Update(3, deltaTime.asSeconds());
+						enemy.setFlipRight(false);
+						enemy.setFlipLeft(true);
 					}
-					enemy.setMove(-300 * deltaTime.asSeconds(), 0);
-					animation.Update(3, deltaTime.asSeconds());
-					enemy.setFlipRight(false);
-					enemy.setFlipLeft(true);
-
+					
 				}
 
 				isCrosshairOnTarget(enemy,i);
 			}
 			else
 			{
-				enemy.getRectangle().move(0, 0);
-				animation.Update(2, deltaTime.asSeconds());
+				if (enemy.getIsAlive())
+				{
+					enemy.getRectangle().move(0, 0);
+					animation.Update(2, deltaTime.asSeconds());
+				}
 				crosshairTest.setOutlineColor(sf::Color::Red);
 			}
 		}
@@ -722,7 +735,7 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
-				if (enemies[i].getHp() <= 0)
+				if (enemies[i].getHp() < 0)
 				{
 					enemies[i].setHp(0);
 				}
