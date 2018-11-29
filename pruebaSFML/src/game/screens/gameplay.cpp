@@ -21,15 +21,25 @@ namespace Game_Namespace
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
+	static pugi::xml_document doc2;
+
+	static pugi::xml_parse_result result2 = doc2.load_file("res/assets/tiles/level1.tmx");
+
+	static pugi::xml_node object2 = doc2.child("map").child("objectgroup");
+
+	static pugi::xml_node_iterator someObjects2 = object2.begin();
+
+	static tmx::TileMap map2("res/assets/tiles/level1.tmx");
+
+	const int maxColisionsBoxes2 = 33;
+
+	static sf::RectangleShape rectangles2[maxColisionsBoxes2];
+
+	//Pause
+
 	static tgui::Button::Ptr pauseButton;
 
 	static const int maxButtons = 3;
-
-	sf::Font font2;
-
-	sf::Text pauseTitle;
-
-	sf::Text pauseText;
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
@@ -234,20 +244,39 @@ namespace Game_Namespace
 			//// World Entities
 
 			//Tilemap
-
-			int i = 0;
-			for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
+			if (levelNumber==0)
 			{
-				rectangles[i].setPosition(sf::Vector2f(it->attribute("x").as_int(),
-					it->attribute("y").as_int()));
+				int i = 0;
+				for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
+				{
+					rectangles[i].setPosition(sf::Vector2f(it->attribute("x").as_int(),
+						it->attribute("y").as_int()));
 
-				rectangles[i].setSize(sf::Vector2f(it->attribute("width").as_int(),
-					it->attribute("height").as_int()));
+					rectangles[i].setSize(sf::Vector2f(it->attribute("width").as_int(),
+						it->attribute("height").as_int()));
 
-				rectangles[i].setFillColor(sf::Color::Transparent);
-				i++;
+					rectangles[i].setFillColor(sf::Color::Transparent);
+					i++;
+				}
+				i = 0;
 			}
-			i = 0;
+
+			if (levelNumber == 1)
+			{
+				int j = 0;
+				for (pugi::xml_node_iterator it = object2.begin(); it != object2.end(); ++it)
+				{
+					rectangles2[j].setPosition(sf::Vector2f(it->attribute("x").as_int(),
+						it->attribute("y").as_int()));
+
+					rectangles2[j].setSize(sf::Vector2f(it->attribute("width").as_int(),
+						it->attribute("height").as_int()));
+
+					rectangles2[j].setFillColor(sf::Color::Transparent);
+					j++;
+				}
+				j = 0;
+			}
 
 			// Player 1
 			playerTexture.loadFromFile("res/assets/textures/playersprite.png");
@@ -386,9 +415,19 @@ namespace Game_Namespace
 
 			// Exit
 
-			Exit.setPosition(900, 1000);
-			Exit.setSize(sf::Vector2f(100, 200));
-			Exit.setFillColor(sf::Color::Blue);
+			if (levelNumber==0)
+			{
+				Exit.setPosition(900, 1000);
+				Exit.setSize(sf::Vector2f(100, 200));
+				Exit.setFillColor(sf::Color::Blue);
+			}
+			if (levelNumber==1)
+			{
+				Exit.setPosition(11750, 1400);
+				Exit.setSize(sf::Vector2f(100, 200));
+				Exit.setFillColor(sf::Color::Transparent);
+			}
+			
 			//player1.setPosition(200, 1400);
 			//player1.setSize(100, 150);
 			//player1.setColor(sf::Color::White);
@@ -469,46 +508,94 @@ namespace Game_Namespace
 
 		static void CheckCollisionWithTiles(Character& Character, int i)
 		{
-			if (Character.getRectangle().getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
+			if (levelNumber==0)
 			{
-				if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles[i].getPosition().x &&
-					Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
+				if (Character.getRectangle().getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
 				{
-					Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
-				}
+					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles[i].getPosition().x &&
+						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
+					{
+						Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
+					}
 
-				else if (Character.getRectangle().getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
-					Character.getRectangle().getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
-					)
-				{
-					Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
-				}
+					else if (Character.getRectangle().getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
+						Character.getRectangle().getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
+						)
+					{
+						Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
+					}
 
-				else if (Character.getRectangle().getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-					Character.getRectangle().getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
-				{
-					Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
-				}
+					else if (Character.getRectangle().getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
+						Character.getRectangle().getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
+					{
+						Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
+					}
 
-				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles[i].getPosition().y &&
-					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
-				{
-					if (Character.getIsPlayer()) player1.setIsOnGround(true);
-					cameraDown = false;
-					Character.setGravity(false);
-					Character.setIsOnWhichGround(i);
-					Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
+					else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles[i].getPosition().y &&
+						Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
+					{
+						if (Character.getIsPlayer()) player1.setIsOnGround(true);
+						cameraDown = false;
+						Character.setGravity(false);
+						Character.setIsOnWhichGround(i);
+						Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
+					}
+					else
+					{
+						player1.setIsOnGround(false);
+						player1.setGravity(true);
+					}
 				}
 				else
 				{
-					player1.setIsOnGround(false);
-					player1.setGravity(true);
+					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
 				}
 			}
-			else
+			if (levelNumber == 1)
 			{
-				if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+				if (Character.getRectangle().getGlobalBounds().intersects(rectangles2[i].getGlobalBounds()))
+				{
+					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles2[i].getPosition().x &&
+						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles2[i].getPosition().x + 10) // + 10
+					{
+						Character.setPosition(rectangles2[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
+					}
+
+					else if (Character.getRectangle().getPosition().x < rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width &&
+						Character.getRectangle().getPosition().x > rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width - 10 // - 10
+						)
+					{
+						Character.setPosition(rectangles2[i].getPosition().x + (rectangles2[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
+					}
+
+					else if (Character.getRectangle().getPosition().y < rectangles2[i].getPosition().y + rectangles2[i].getGlobalBounds().height &&
+						Character.getRectangle().getPosition().y > rectangles2[i].getPosition().y + rectangles2[i].getGlobalBounds().height - 20) // - 20
+					{
+						Character.setPosition(Character.getRectangle().getPosition().x, rectangles2[i].getPosition().y + (rectangles2[i].getGlobalBounds().height));
+					}
+
+					else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles2[i].getPosition().y &&
+						Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles2[i].getPosition().y + 20) // + 20
+					{
+						if (Character.getIsPlayer()) player1.setIsOnGround(true);
+						cameraDown = false;
+						Character.setGravity(false);
+						Character.setIsOnWhichGround(i);
+						Character.setPosition(Character.getRectangle().getPosition().x, rectangles2[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
+					}
+					else
+					{
+						player1.setIsOnGround(false);
+						player1.setGravity(true);
+					}
+				}
+				else
+				{
+					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+				}
 			}
+			
+			
 		}
 
 		static void GunRotation()
@@ -1009,11 +1096,23 @@ namespace Game_Namespace
 		void GameplayScreen::draw()
 		{
 			// Draw Tilemap with its collision objects
-			for (int i = 0; i < maxColisionsBoxes; i++)
+			if (levelNumber==0)
 			{
-				_window.draw(rectangles[i]);
+				for (int i = 0; i < maxColisionsBoxes; i++)
+				{
+					_window.draw(rectangles[i]);
+				}
+				_window.draw(map);
 			}
-			_window.draw(map);
+			if (levelNumber == 1)
+			{
+				for (int i = 0; i < maxColisionsBoxes; i++)
+				{
+					_window.draw(rectangles2[i]);
+				}
+				_window.draw(map2);
+			}
+			
 
 			_window.draw(Exit);
 			////---------------------

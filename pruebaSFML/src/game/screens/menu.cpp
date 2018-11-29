@@ -85,10 +85,10 @@ namespace Game_Namespace
 			Screens::setHasScreenFinished(true);
 		}
 
-		static void signalGoToControls()
+		static void signalGoToTutorial()
 		{
-			/*Game::setButtonOption(buttonControls);
-			Screens::setHasScreenFinished(true);*/
+			Game::setButtonOption(buttonTutorial);
+			Screens::setHasScreenFinished(true);
 		}
 
 		void MenuScreen::init()
@@ -162,7 +162,7 @@ namespace Game_Namespace
 			menuSubTitle2.setString("Version 0.1");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
-			buttons[1]->connect("Pressed", signalGoToControls);
+			buttons[1]->connect("Pressed", signalGoToTutorial);
 			buttons[2]->connect("Pressed", signalGoToSettings);
 			buttons[3]->connect("Pressed", signalGoToCredits);
 			buttons[4]->connect("Pressed", signalQuitGame);

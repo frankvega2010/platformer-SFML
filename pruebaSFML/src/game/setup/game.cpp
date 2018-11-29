@@ -29,6 +29,7 @@ namespace Game_Namespace
 
 	int globalSoundVolume;
 	int globalMusicVolume;
+	int levelNumber;
 	int Game::_buttonOption = 0;
 	float Game::_defaultFontSize = 0;
 	float Game::_defaultFontSizeGameplayScore = 0;
@@ -239,6 +240,7 @@ namespace Game_Namespace
 #ifdef AUDIO
 					StopMusicStream(pong_menu_song);
 #endif
+					levelNumber = 1;
 					_gameScreen= Play;
 					gameScreens[Play]->init();
 					break;
@@ -255,10 +257,11 @@ namespace Game_Namespace
 					gameScreens[Credits]->init();
 					break;
 				}
-				case buttonControls:
+				case buttonTutorial:
 				{
-					_gameScreen= Controls;
-					gameScreens[Controls]->init();
+					levelNumber = 0;
+					_gameScreen= Play;
+					gameScreens[Play]->init();
 					break;
 				}
 				case buttonQuit:
