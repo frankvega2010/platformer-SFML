@@ -73,9 +73,14 @@ namespace Game_Namespace
 
 	//Textures & Animations
 	static sf::Texture playerTexture;
+	static sf::Texture zombieTexture;
 	static sf::Texture playerHands;
+	static SpriteAnimation zombie;
 	static SpriteAnimation animation;
 	static SpriteAnimation pistolAnimation;
+
+	static bool zombieFlipLeft = false;
+	static bool zombieFlipRight = false;
 
 	// Audio
 
@@ -226,7 +231,6 @@ namespace Game_Namespace
 			playerTexture.setSmooth(true);
 			playerTexture.setRepeated(false);
 
-			//playerHands.loadFromFile("res/assets/textures/hands.png");
 			playerHands.loadFromFile("res/assets/textures/pistol.png");
 			playerHands.setSmooth(true);
 			playerHands.setRepeated(false);
@@ -262,9 +266,13 @@ namespace Game_Namespace
 
 			// Enemy 1
 
+			zombieTexture.loadFromFile("res/assets/textures/zombie.png");
+			zombieTexture.setSmooth(true);
+			zombieTexture.setRepeated(false);
+
 			enemyTest.setPosition(200, 1000);
 			enemyTest.setSize(100, 180);
-			enemyTest.setColor(sf::Color::Yellow);
+			enemyTest.setColor(sf::Color::White);
 			enemyTest.setIsAlive(true);
 			enemyTest.setSpeed(500, 1400);
 			enemyTest.setHp(100);
@@ -274,9 +282,15 @@ namespace Game_Namespace
 			enemyRectangle.setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
 			enemyRectangle.setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
 
+			enemyRectangle.setTexture(&zombieTexture);
+			zombie.SetAnimation(&zombieTexture, sf::Vector2u(9, 5), 0.1f);
+
 			enemyPlayerDetection.setPosition(enemyRectangle.getPosition().x - 200, enemyRectangle.getPosition().y);
 			enemyPlayerDetection.setSize(sf::Vector2f(1800.0f, 540));
-			enemyPlayerDetection.setFillColor({ 150,0,0,150 });
+			//enemyPlayerDetection.setFillColor({ 150,0,0,150 });
+			enemyPlayerDetection.setFillColor(sf::Color::Transparent);
+
+
 			//enemyPlayerDetection.setFillColor(sf::Color::Transparent);
 			 
 			//// Text
@@ -477,7 +491,7 @@ namespace Game_Namespace
 		{
 			if (playerRectangle.getGlobalBounds().intersects(enemyRectangle.getGlobalBounds()))
 			{
-				enemyRectangle.setFillColor(sf::Color::Cyan);
+				//enemyRectangle.setFillColor(sf::Color::Cyan);
 				if (enemy.getCurrentlyTouchingPlayer())
 				{
 					if (!(timer.isRunning()))
@@ -487,10 +501,11 @@ namespace Game_Namespace
 					}
 				}
 				enemy.setCurrentlyTouchingPlayer(false);
+				zombie.Update(0, deltaTime.asSeconds());
 			}
 			else
 			{
-				enemyRectangle.setFillColor(sf::Color::Yellow);
+				//enemyRectangle.setFillColor(sf::Color::Yellow);
 				enemy.setCurrentlyTouchingPlayer(true);
 			}
 		}
@@ -533,13 +548,32 @@ namespace Game_Namespace
 		{
 			if (playerRectangle.getGlobalBounds().intersects(enemyPlayerDetection.getGlobalBounds()))
 			{
+
 				if (playerRectangle.getPosition().x > enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
 				{
+					if (zombieFlipLeft)
+					{
+						enemyRectangle.setOrigin({ 0, 0 });
+						enemyRectangle.scale(-1, 1);
+					}
 					enemyRectangle.move(300 * deltaTime.asSeconds(), 0);
+					zombie.Update(3, deltaTime.asSeconds());
+					zombieFlipLeft = false;
+					zombieFlipRight = true;
+					
 				}
 				else if (playerRectangle.getPosition().x + playerRectangle.getGlobalBounds().width < enemyPlayerDetection.getPosition().x + enemyPlayerDetection.getGlobalBounds().width / 2)
 				{
+					if (zombieFlipRight)
+					{
+						enemyRectangle.setOrigin({ enemyRectangle.getGlobalBounds().width, 0 });
+						enemyRectangle.scale(-1, 1);
+					}
 					enemyRectangle.move(-300 * deltaTime.asSeconds(), 0);
+					zombie.Update(3, deltaTime.asSeconds());
+					zombieFlipRight = false;
+					zombieFlipLeft = true;
+					
 				}
 
 				isCrosshairOnTarget(enemyTest, enemyRectangle);
@@ -547,6 +581,8 @@ namespace Game_Namespace
 			else
 			{
 				enemyRectangle.move(0, 0);
+				zombie.Update(2, deltaTime.asSeconds());
+				//zombie.SetSingleFrame(sf::Vector2u(0, 1));
 				crosshairTest.setOutlineColor(sf::Color::Red);
 			}
 		}
@@ -566,9 +602,13 @@ namespace Game_Namespace
 			}
 			else
 			{
-				LivesEnemy.setFillColor(sf::Color::Transparent);
-				enemyRectangle.setSize(sf::Vector2f(0, 0));
-				PlayerDetection.setSize(sf::Vector2f(0, 0));
+				if (zombie.UpdateOnce(1, deltaTime.asSeconds()))
+				{
+					LivesEnemy.setFillColor(sf::Color::Transparent);
+					enemyRectangle.setSize(sf::Vector2f(0, 0));
+					PlayerDetection.setSize(sf::Vector2f(0, 0));
+				}
+				//zombie.UpdateOnce(1, deltaTime.asSeconds());
 			}
 		}
 
@@ -769,6 +809,7 @@ namespace Game_Namespace
 				//animation.Update(0, deltaTime.asSeconds());
 				playerRectangle.setTextureRect(animation.uvRect);
 				gun.setTextureRect(pistolAnimation.uvRect);
+				enemyRectangle.setTextureRect(zombie.uvRect);
 
 				//Invincibility Frames
 				CheckInvincibilityFrames(timerInvincibility);
