@@ -267,7 +267,7 @@ namespace Game_Namespace
 
 			gun.setFillColor(sf::Color::White);
 			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
-			gun.setSize({ 140,90 }); // 100 60
+			gun.setSize({ 140,90 });
 			gun.setTexture(&playerHands);
 			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.05f);
 
@@ -300,25 +300,6 @@ namespace Game_Namespace
 				increaseEnemyDistance = increaseEnemyDistance + 800;
 			}
 			increaseEnemyDistance = 0;
-
-			/*enemyTest.setPosition(200, 1000);
-			enemyTest.setSize(100, 180);
-			enemyTest.setColor(sf::Color::White);
-			enemyTest.setIsAlive(true);
-			enemyTest.setSpeed(500, 1400);
-			enemyTest.setHp(100);
-			enemyTest.setCurrentlyTouchingPlayer(true);
-
-			enemyTest.getRectangle().setFillColor(enemyTest.getColor());
-			enemyTest.getRectangle().setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
-			enemyTest.getRectangle().setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
-
-			enemyTest.setTexture(zombieTexture);
-			zombie.SetAnimation(&zombieTexture, sf::Vector2u(9, 5), 0.1f);
-
-			enemyTest.setPlayerDetectionPosition(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y);
-			enemyTest.setPlayerDetectionSize(1800.0f, 540);
-			enemyTest.setPlayerDetectionColor({ 150,0,0,150 });*/
 
 
 			//// Text
@@ -531,17 +512,20 @@ namespace Game_Namespace
 		{
 			if (player1.getRectangle().getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
-				if (enemy.getCurrentlyTouchingPlayer())
+				if (enemy.getIsAlive())
 				{
-					if (!(timer.isRunning()))
+					if (enemy.getCurrentlyTouchingPlayer())
 					{
-						timer.start();
-						player1.setHp(player1.getHp() - 25);
-						lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
+						if (!(timer.isRunning()))
+						{
+							timer.start();
+							player1.setHp(player1.getHp() - 25);
+							lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
+						}
 					}
+					enemy.setCurrentlyTouchingPlayer(false);
+					animation.Update(0, deltaTime.asSeconds());
 				}
-				enemy.setCurrentlyTouchingPlayer(false);
-				animation.Update(0, deltaTime.asSeconds());
 			}
 			else
 			{
@@ -553,25 +537,29 @@ namespace Game_Namespace
 		{
 			if (crosshairTest.getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
-				LivesEnemies[i].setFillColor(sf::Color::White);
-
-				player1.setCanShoot(true);
-				if (player1.getCanShoot())
+				if (enemy.getIsAlive())
 				{
+					LivesEnemies[i].setFillColor(sf::Color::White);
 					crosshairTest.setOutlineColor(sf::Color::Green);
-					if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-					{
 
-						if (!timerPistolFireRate.isRunning())
-						{
-							pistolGunShoot.play();
-							timerPistolFireRate.start();
-							enemy.setHp(enemy.getHp() - 25);
-							enemy.setPosition(enemy.getPosition().x - 30, enemy.getPosition().y);
-						}
-					}
-					else
+					player1.setCanShoot(true);
+					if (player1.getCanShoot())
 					{
+						
+						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+						{
+
+							if (!timerPistolFireRate.isRunning())
+							{
+								pistolGunShoot.play();
+								timerPistolFireRate.start();
+								enemy.setHp(enemy.getHp() - 25);
+								enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y);
+							}
+						}
+						else
+						{
+						}
 					}
 				}
 			}
@@ -864,11 +852,11 @@ namespace Game_Namespace
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 800, enemies[i].getRectangle().getPosition().y - 190);
 
-					CanEnemyHearPlayer(enemies[i],zombiesAnimation[i],i);
-
 					PlayerEnemyCollision(enemies[i], timerInvincibility, zombiesAnimation[i]);
 
 					CheckEnemyHP(enemies[i], zombiesAnimation[i],i);
+
+					CanEnemyHearPlayer(enemies[i], zombiesAnimation[i], i);
 				}
 
 				// gravity
