@@ -40,6 +40,7 @@ namespace Game_Namespace
 	// Consts
 
 	static const int maxEnemiesLevelTutorial = 5;
+	static const int maxTutorialTexts = 6;
 
 	// Camera Settings
 
@@ -106,6 +107,14 @@ namespace Game_Namespace
 	static sf::SoundBuffer jump;
 	static sf::Sound playerJumpSound;
 
+	static sf::SoundBuffer soundAttack;
+	static sf::SoundBuffer soundAlert;
+	static sf::SoundBuffer soundDeath;
+
+	static sf::Sound zombieAttack;
+	static sf::Sound zombieAlert;
+	static sf::Sound zombieDeath;
+
 	// Gun Rotation Variable
 
 	static sf::Vector2f v1;
@@ -118,11 +127,12 @@ namespace Game_Namespace
 	// Text
 	static sf::Font deltaFont;
 
-	static sf::Text deltaText;
 	static sf::Text LivesEnemies[maxEnemiesLevelTutorial];
 	static sf::Text zombiesKilledText;
 
 	static sf::Text playerStateText;
+
+	static sf::Text tutorialText[maxTutorialTexts];
 
 	// Characters
 	
@@ -302,7 +312,7 @@ namespace Game_Namespace
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
-				enemies[i].setPosition(400 + increaseEnemyDistance, 700);
+				enemies[i].setPosition(5200 + increaseEnemyDistance, 1500);
 				enemies[i].setSize(100, 180);
 				enemies[i].setColor(sf::Color::White);
 				enemies[i].setIsAlive(true);
@@ -318,7 +328,7 @@ namespace Game_Namespace
 				enemies[i].setPlayerDetectionSize(1800.0f, 540);
 				enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
-				increaseEnemyDistance = increaseEnemyDistance + 800;
+				increaseEnemyDistance = increaseEnemyDistance + 100;
 			}
 			increaseEnemyDistance = 0;
 
@@ -326,15 +336,49 @@ namespace Game_Namespace
 			//// Text
 
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
+			font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
 
-			deltaText.setCharacterSize(30);
-			deltaText.setFont(deltaFont);
-			deltaText.setPosition(400, 400);
 
 			playerStateText.setCharacterSize(80);
 			playerStateText.setFont(deltaFont);
 			playerStateText.setPosition(400, 400);
 			playerStateText.setString("");
+
+			tutorialText[0].setCharacterSize(50);
+			tutorialText[0].setFont(font2);
+			tutorialText[0].setPosition(200, 1600);
+			tutorialText[0].setFillColor(sf::Color::Black);
+			tutorialText[0].setString("Press W and D to move horizontally");
+
+			tutorialText[1].setCharacterSize(50);
+			tutorialText[1].setFont(font2);
+			tutorialText[1].setPosition(200, 1700);
+			tutorialText[1].setFillColor(sf::Color::Black);
+			tutorialText[1].setString("Press SPACEBAR to jump, go to the next room!");
+
+			tutorialText[2].setCharacterSize(50);
+			tutorialText[2].setFont(font2);
+			tutorialText[2].setPosition(3525, 1700);
+			tutorialText[2].setFillColor(sf::Color::Black);
+			tutorialText[2].setString("Aim with the mouse cursor and shoot with Left Mouse Button");
+
+			tutorialText[3].setCharacterSize(50);
+			tutorialText[3].setFont(font2);
+			tutorialText[3].setPosition(3525, 1900);
+			tutorialText[3].setFillColor(sf::Color::Black);
+			tutorialText[3].setString("You will be able to shoot once your crosshair is in the enemy position");
+
+			tutorialText[4].setCharacterSize(50);
+			tutorialText[4].setFont(font2);
+			tutorialText[4].setPosition(2500, 1200);
+			tutorialText[4].setFillColor(sf::Color::Black);
+			tutorialText[4].setString("Once you have killed enough zombies,the exit will be unlocked!");
+
+			tutorialText[5].setCharacterSize(50);
+			tutorialText[5].setFont(font2);
+			tutorialText[5].setPosition(1300, 1100);
+			tutorialText[5].setFillColor(sf::Color::Black);
+			tutorialText[5].setString("Go to the blue rectangle to exit the tutorial!");
 
 
 			//// HUD
@@ -389,6 +433,22 @@ namespace Game_Namespace
 			jump.loadFromFile("res/assets/sounds/jump.wav");
 			playerJumpSound.setBuffer(jump);
 			playerJumpSound.setVolume(globalSoundVolume);
+
+
+			
+			soundAttack.loadFromFile("res/assets/sounds/zombie_attack.wav");
+			zombieAttack.setBuffer(soundAttack);
+			zombieAttack.setVolume(globalSoundVolume);
+
+			soundDeath.loadFromFile("res/assets/sounds/zombie_death.wav");
+			zombieDeath.setBuffer(soundDeath);
+			zombieDeath.setVolume(globalSoundVolume);
+
+			soundAlert.loadFromFile("res/assets/sounds/zombie_alert.wav");
+			zombieAlert.setBuffer(soundAlert);
+			zombieAlert.setVolume(globalSoundVolume);
+
+			// GUI
 
 			pauseButton = tgui::Button::create();
 			gui.add(pauseButton);
@@ -579,6 +639,7 @@ namespace Game_Namespace
 						if (!(timer.isRunning()))
 						{
 							timer.start();
+							zombieAttack.play();
 							player1.setHp(player1.getHp() - 25);
 							lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 						}
@@ -642,6 +703,7 @@ namespace Game_Namespace
 					{
 						if (enemy.getFlipLeft())
 						{
+							zombieAlert.play();
 							enemy.setOrigin(0, 0);
 							enemy.scale(-1, 1);
 						}
@@ -659,6 +721,7 @@ namespace Game_Namespace
 					{
 						if (enemy.getFlipRight())
 						{
+							zombieAlert.play();
 							enemy.setOrigin(enemy.getRectangle().getGlobalBounds().width, 0);
 							enemy.scale(-1, 1);
 						}
@@ -700,6 +763,7 @@ namespace Game_Namespace
 			{
 				if (animation.UpdateOnce(1, deltaTime.asSeconds()))
 				{
+					zombieDeath.play();
 					LivesEnemies[i].setFillColor(sf::Color::Transparent);
 					enemy.setSize(0, 0);
 					enemy.setPlayerDetectionSize(0, 0);
@@ -793,7 +857,6 @@ namespace Game_Namespace
 
 		static void HUDUpdate()
 		{
-			deltaText.setString(toString(deltaTime));
 
 			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1232, view.getCenter().y - 700));
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
@@ -1071,8 +1134,12 @@ namespace Game_Namespace
 			////---------------------
 
 			// Text
-			_window.draw(deltaText);
+			for (int i = 0; i < maxTutorialTexts; i++)
+			{
+				_window.draw(tutorialText[i]);
+			}
 			_window.draw(playerStateText);
+			
 
 			// HUD
 			_window.draw(zombiesKilledText);
