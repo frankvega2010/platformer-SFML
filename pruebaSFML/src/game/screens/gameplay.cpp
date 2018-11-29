@@ -111,9 +111,6 @@ namespace Game_Namespace
 	// Shapes
 
 	static sf::CircleShape crosshairTest;
-	//static sf::RectangleShape playerRectangle;
-	//static sf::RectangleShape enemyTest.getRectangle();
-	//static sf::RectangleShape enemyPlayerDetection;
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
 
@@ -243,7 +240,6 @@ namespace Game_Namespace
 			playerHands.setSmooth(true);
 			playerHands.setRepeated(false);
 
-			//player1.loadTexture("res/assets/textures/playersprite.png");
 			player1.setIsPlayer(true);
 			player1.setPosition(200, 1800);
 			player1.setSize(100, 150);
@@ -251,24 +247,9 @@ namespace Game_Namespace
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 2100);
 			player1.setHp(100);
-			//player1.setTexture();
-			//player1.setAnimation(sf::Vector2u(9, 3), 0.1f);
-			//player1.getRectangle().setTexture(&playerTexture);
+
 			player1.setTexture(playerTexture);
 			playerAnimation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
-
-			/*player1.getRectangle().setFillColor(sf::Color::Red);
-			player1.getRectangle().setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
-			player1.getRectangle().setSize(static_cast<sf::Vector2f>(player1.getSize()));*/
-
-			//player1.getRectangle().setFillColor(player1.getColor());
-			//player1.getRectangle().setPosition(static_cast<sf::Vector2f>(player1.getPosition()));
-			//player1.getRectangle().setSize(static_cast<sf::Vector2f>(player1.getSize()));
-			//player1.getRectangle().setTexture(&player1.getTexture());
-			//player1.set
-			//player1.getRectangle().setTexture(&playerTexture);
-			//animation.SetAnimation()
-			//animation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
 
 			// Player Gun
 
@@ -302,7 +283,6 @@ namespace Game_Namespace
 			enemyTest.getRectangle().setPosition(static_cast<sf::Vector2f>(enemyTest.getPosition()));
 			enemyTest.getRectangle().setSize(static_cast<sf::Vector2f>(enemyTest.getSize()));
 
-			//enemyTest.getRectangle().setTexture(&zombieTexture);
 			enemyTest.setTexture(zombieTexture);
 			zombie.SetAnimation(&zombieTexture, sf::Vector2u(9, 5), 0.1f);
 
@@ -310,16 +290,6 @@ namespace Game_Namespace
 			enemyTest.setPlayerDetectionSize(1800.0f, 540);
 			enemyTest.setPlayerDetectionColor({ 150,0,0,150 });
 
-
-			////enemyTest.getPlayerDetection().setPosition(enemyTest.getRectangle().getPosition().x - 200, enemyTest.getRectangle().getPosition().y);
-			////enemyTest.getPlayerDetection().setSize(sf::Vector2f(1800.0f, 540));
-
-			//enemyPlayerDetection.setFillColor({ 150,0,0,150 });
-
-			////enemyTest.getPlayerDetection().setFillColor(sf::Color::Transparent);
-
-
-			//enemyPlayerDetection.setFillColor(sf::Color::Transparent);
 
 			//// Text
 
@@ -415,7 +385,6 @@ namespace Game_Namespace
 			else
 			{
 				player1.setMove(0, 0);
-				//
 				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
 				else playerAnimation.SetSingleFrame(sf::Vector2u(0, 0));
 			}
@@ -425,10 +394,8 @@ namespace Game_Namespace
 				if (!(player1.getIsJumping()) && player1.getIsOnGround())
 				{
 					player1.setIsOnGround(false);
-					//isOnGround = false;
 					player1.setIsJumping(true);
 					player1.setGravity(false);
-					//gravitySpeed = 0;
 					player1.StartTimerJump();
 				}
 			}
@@ -480,7 +447,7 @@ namespace Game_Namespace
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles[i].getPosition().y &&
 					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
 				{
-					if (Character.getIsPlayer()) player1.setIsOnGround(true); //isOnGround = true;
+					if (Character.getIsPlayer()) player1.setIsOnGround(true);
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
@@ -488,7 +455,7 @@ namespace Game_Namespace
 				}
 				else
 				{
-					player1.setIsOnGround(false); //isOnGround = true;
+					player1.setIsOnGround(false);
 					player1.setGravity(true);
 				}
 			}
@@ -502,9 +469,7 @@ namespace Game_Namespace
 		{
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
-			//if(player1.getFlipRight()) gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
-
-			//if (player1.getFlipLeft()) gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 30,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
+			
 
 			v1.x = 0;
 			v1.y = 0.0f - gun.getPosition().y;
@@ -531,7 +496,6 @@ namespace Game_Namespace
 		{
 			if (player1.getRectangle().getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
-				//enemyTest.getRectangle().setFillColor(sf::Color::Cyan);
 				if (enemy.getCurrentlyTouchingPlayer())
 				{
 					if (!(timer.isRunning()))
@@ -546,7 +510,6 @@ namespace Game_Namespace
 			}
 			else
 			{
-				//enemyTest.getRectangle().setFillColor(sf::Color::Yellow);
 				enemy.setCurrentlyTouchingPlayer(true);
 			}
 		}
@@ -601,8 +564,6 @@ namespace Game_Namespace
 					zombie.Update(3, deltaTime.asSeconds());
 					enemy.setFlipLeft(false);
 					enemy.setFlipRight(true);
-					//zombieFlipLeft = false;
-					//zombieFlipRight = true;
 
 				}
 				else if (player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width < enemy.getPlayerDetection().getPosition().x + enemy.getPlayerDetection().getGlobalBounds().width / 2)
@@ -617,9 +578,6 @@ namespace Game_Namespace
 					enemy.setFlipRight(false);
 					enemy.setFlipLeft(true);
 
-					//zombieFlipRight = false;
-					//zombieFlipLeft = true;
-
 				}
 
 				isCrosshairOnTarget(enemyTest);
@@ -628,7 +586,6 @@ namespace Game_Namespace
 			{
 				enemy.getRectangle().move(0, 0);
 				zombie.Update(2, deltaTime.asSeconds());
-				//zombie.SetSingleFrame(sf::Vector2u(0, 1));
 				crosshairTest.setOutlineColor(sf::Color::Red);
 			}
 		}
@@ -654,7 +611,6 @@ namespace Game_Namespace
 					enemy.setSize(0, 0);
 					enemy.setPlayerDetectionSize(0, 0);
 				}
-				//zombie.UpdateOnce(1, deltaTime.asSeconds());
 			}
 		}
 
@@ -710,7 +666,6 @@ namespace Game_Namespace
 			{
 				if (player1.getFlipLeft())
 				{
-					//animation.setCurrentImageX(9);
 					player1.setOrigin(player1.getRectangle().getGlobalBounds().width, 0);
 					player1.scale(-1, 1);
 					gun.setOrigin({ -20,40 }); // -20 0
@@ -724,7 +679,6 @@ namespace Game_Namespace
 
 				if (player1.getFlipRight())
 				{
-					//animation.setCurrentImageX(9);
 					player1.setOrigin(0, 0 );
 					player1.scale(-1, 1);
 					gun.setOrigin({ -20, 40 });
@@ -853,7 +807,6 @@ namespace Game_Namespace
 					player1.setGravity(true);
 				}
 
-				//animation.Update(0, deltaTime.asSeconds());
 				player1.setTextureRect(playerAnimation.uvRect);
 				gun.setTextureRect(pistolAnimation.uvRect);
 				enemyTest.setTextureRect(zombie.uvRect);
@@ -866,9 +819,8 @@ namespace Game_Namespace
 				CheckEnemyGravity(enemyTest);
 
 				// Jump
-				CheckCharacterJump(player1); // Check rectangle here
+				CheckCharacterJump(player1);
 
-											 // CheckWeaponsFireRate(pistol); // WIP function
 				CheckWeaponsFireRate(timerPistolFireRate);
 
 
@@ -936,7 +888,6 @@ namespace Game_Namespace
 			_window.draw(lifeHUDRectangle);
 			_window.draw(weaponHUDRectangle);
 			_window.draw(LivesEnemy);
-			//_window.draw(enemyPlayerDetection);
 			_window.draw(crosshairTest);
 			_window.draw(gun);
 		}
