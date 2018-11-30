@@ -312,13 +312,13 @@ namespace Game_Namespace
 			if (levelNumber == 0)
 			{
 				player1.setPosition(200, 1400);
-				player1.setGravity(true);
+				player1.setGravity(false);
 			}
 
 			if (levelNumber == 1)
 			{
-				player1.setPosition(200, 1100);
-				player1.setGravity(true);
+				player1.setPosition(200, 1000);
+				player1.setGravity(false);
 			}
 
 			player1.setIsPlayer(true);
@@ -575,10 +575,6 @@ namespace Game_Namespace
 				Exit.setSize(sf::Vector2f(100, 200));
 				Exit.setFillColor(sf::Color::Blue);
 			}
-			
-			//player1.setPosition(200, 1400);
-			//player1.setSize(100, 150);
-			//player1.setColor(sf::Color::White);
 
 		}
 
@@ -615,17 +611,6 @@ namespace Game_Namespace
 
 				cameraRight = false;
 				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			{
-
-				cameraUp = false;
-				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()));
-			}
-			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			{
-				cameraDown = false;
-				player1.setMove(0, (player1.getSpeed().y * deltaTime.asSeconds()*(-1)));
 			}
 			else
 			{
@@ -1231,7 +1216,7 @@ namespace Game_Namespace
 				// Checks for collisions
 				for (int i = 0; i < maxColisionsBoxes; i++)
 				{
-					CheckCollisionWithTiles(player1, i); // Check rectangle here
+					CheckCollisionWithTiles(player1, i);
 					for (int f = 0; f < maxEnemiesLevel1; f++)
 					{
 						CheckCollisionWithTiles(enemies[f], i);
@@ -1269,10 +1254,6 @@ namespace Game_Namespace
 					playerStateText.setString("You Passed the level!");
 					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
 				}
-				else
-				{
-					//playerStateText.setFillColor(sf::Color::Transparent);
-				}
 
 				if (playerLost)
 				{
@@ -1280,10 +1261,6 @@ namespace Game_Namespace
 					playerStateText.setFillColor(sf::Color::Red);
 					playerStateText.setString("You died!");
 					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
-				}
-				else
-				{
-					//playerStateText.setFillColor(sf::Color::Transparent);
 				}
 
 			}
