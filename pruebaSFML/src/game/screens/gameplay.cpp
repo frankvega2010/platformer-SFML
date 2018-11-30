@@ -1168,6 +1168,7 @@ namespace Game_Namespace
 		{
 			if (!gameOnPause)
 			{
+				_window.setMouseCursorVisible(false);
 				/////// Setting the pause buttons OFF
 				for (int i = 0; i < maxButtons; i++)
 				{
@@ -1260,6 +1261,8 @@ namespace Game_Namespace
 			}
 			else if (gameOnPause)
 			{
+				_window.setMouseCursorVisible(true);
+
 				//Setting the pause buttons ON
 				for (int i = 0; i < maxButtons; i++)
 				{
