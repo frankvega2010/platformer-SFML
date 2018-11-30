@@ -142,6 +142,7 @@ namespace Game_Namespace
 	static sf::Text zombiesKilledText;
 
 	static sf::Text playerStateText;
+	static sf::Text bulletsText;
 
 	static sf::Text tutorialText[maxTutorialTexts];
 
@@ -165,6 +166,8 @@ namespace Game_Namespace
 	static sf::RectangleShape lifeBar;
 	static sf::Texture weaponHUD;
 	static sf::RectangleShape weaponHUDRectangle;
+	static sf::Texture pistolTexture;
+	static sf::RectangleShape pistolRectangle;
 
 	static bool gameOnPause;
 
@@ -308,7 +311,7 @@ namespace Game_Namespace
 			playerHands.setRepeated(false);
 
 			player1.setIsPlayer(true);
-			player1.setPosition(200, 1400);
+			player1.setPosition(200, 1200);
 			player1.setSize(100, 150);
 			player1.setColor(sf::Color::White);
 			player1.setIsAlive(true);
@@ -364,13 +367,11 @@ namespace Game_Namespace
 
 
 			//// Text
+			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
+			font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
 
 			if (levelNumber==0)
 			{
-				deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
-				font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
-
-
 				playerStateText.setCharacterSize(80);
 				playerStateText.setFont(deltaFont);
 				playerStateText.setPosition(400, 400);
@@ -421,6 +422,12 @@ namespace Game_Namespace
 
 			//// HUD
 
+			bulletsText.setCharacterSize(150);
+			bulletsText.setFont(font2);
+			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 700));
+			bulletsText.setFillColor(sf::Color::Red);
+			bulletsText.setString("-");
+
 			lifeHUD.loadFromFile("res/assets/textures/lifebar.png");
 			lifeHUDRectangle.setFillColor(sf::Color::White);
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
@@ -435,6 +442,12 @@ namespace Game_Namespace
 			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 			weaponHUDRectangle.setSize({ 500, 250 });
 			weaponHUDRectangle.setTexture(&weaponHUD);
+
+			pistolTexture.loadFromFile("res/assets/textures/hands.png");
+			pistolRectangle.setFillColor(sf::Color::White);
+			pistolRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			pistolRectangle.setSize({ 170, 90 });
+			pistolRectangle.setTexture(&pistolTexture);
 
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
@@ -957,7 +970,9 @@ namespace Game_Namespace
 			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1232, view.getCenter().y - 700));
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
 			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 450, view.getCenter().y - 700));
 			zombiesKilledText.setPosition(sf::Vector2f(view.getCenter().x + 300, view.getCenter().y - 800));
+			pistolRectangle.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
 
 			zombiesKilledText.setString("Zombies Killed: " + toString(zombiesKilled));
 
@@ -1258,13 +1273,17 @@ namespace Game_Namespace
 			_window.draw(lifeBar);
 			_window.draw(lifeHUDRectangle);
 			_window.draw(weaponHUDRectangle);
+			_window.draw(pistolRectangle);
+			
 			for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 			{
 				_window.draw(LivesEnemies[i]);
 			}
 			_window.draw(crosshairTest);
 			_window.draw(gun);
+			_window.draw(bulletsText);
 		}
+
 
 		void GameplayScreen::deInit()
 		{
