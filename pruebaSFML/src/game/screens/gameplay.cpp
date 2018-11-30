@@ -1109,6 +1109,55 @@ namespace Game_Namespace
 			}
 		}
 
+
+		static void CheckWinCondition()
+		{
+			if (levelNumber == 0)
+			{
+				if (zombiesKilled >= 3)
+				{
+					zombiesKilledText.setFillColor(sf::Color::Green);
+				}
+
+				if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= 3)
+				{
+					playerWon = true;
+					playerLost = false;
+					gameOnPause = true;
+				}
+			}
+
+			if (levelNumber == 1)
+			{
+				if (zombiesKilled >= 10)
+				{
+					zombiesKilledText.setFillColor(sf::Color::Green);
+				}
+
+				if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= zombiesKilledObjetiveLevel1)
+				{
+					playerWon = true;
+					playerLost = false;
+					gameOnPause = true;
+				}
+			}
+		}
+
+		static void CheckLossCondition()
+		{
+			if (player1.getHp() <= 0)
+			{
+				player1.setIsAlive(false);
+			}
+
+			if (!player1.getIsAlive())
+			{
+				playerLost = true;
+				playerWon = false;
+				gameOnPause = true;
+			}
+		}
+
 		//-------END Gameplay Functions
 
 		void GameplayScreen::update()
@@ -1191,57 +1240,18 @@ namespace Game_Namespace
 
 				GunRotation();
 
-				if (levelNumber == 0)
-				{
-					if (zombiesKilled >= 3)
-					{
-						zombiesKilledText.setFillColor(sf::Color::Green);
-					}
 
-					if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= 3)
-					{
-						playerWon = true;
-						playerLost = false;
-						gameOnPause = true;
-					}
-				}
-
-				if (levelNumber == 1)
-				{
-					if (zombiesKilled >= 10)
-					{
-						zombiesKilledText.setFillColor(sf::Color::Green);
-					}
-
-					if (player1.getRectangle().getGlobalBounds().intersects(Exit.getGlobalBounds()) && zombiesKilled >= zombiesKilledObjetiveLevel1)
-					{
-						playerWon = true;
-						playerLost = false;
-						gameOnPause = true;
-					}
-				}
-
-				if (player1.getHp() <= 0)
-				{
-					player1.setIsAlive(false);
-				}
-
-				if (!player1.getIsAlive())
-				{
-					playerLost = true;
-					playerWon = false;
-					gameOnPause = true;
-				}
+				// Check Winning Condition
+				CheckWinCondition();
 				
+				// Check Losing Condition
+				CheckLossCondition();
 
 				//Audio
-
 				if (footstepTimer.isExpired())
 				{
 					footstepTimer.reset(footstepInitialTime);
 				}
-
-					//if (player1.getRectangle().getGlobalBounds().intersects(enemy.getPlayerDetection().getGlobalBounds()))
 				
 			}
 			else if (gameOnPause)
