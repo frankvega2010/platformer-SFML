@@ -17,7 +17,6 @@
 #include "Screens/credits.h"
 #include "setup/screens.h"
 
-//#include "raylib.h"
 
 namespace Game_Namespace
 {
@@ -32,11 +31,8 @@ namespace Game_Namespace
 		MaxGameScreens
 	};
 
-	//extern sf::RenderWindow window;
 	extern sf::RenderWindow _window;
 	extern tgui::Gui gui;
-	//extern sf::View windowView;
-	//extern sf::View windowView2;
 
 	class Game 
 	{
@@ -82,8 +78,6 @@ namespace Game_Namespace
 		void execute();
 	};
 
-	
-
 	extern bool isScreenFinished;
 
 	extern int selectOption;
@@ -95,17 +89,7 @@ namespace Game_Namespace
 	extern int globalMusicVolume;
 	extern int levelNumber;
 	extern sf::Music menuSong;
-
-	//extern Sound pong_hit_wall;
-	//extern Sound pong_hit_player;
-	//extern Sound pong_player_scored;
-	//extern Sound pong_match_end;
-	//extern Sound pong_select_menu;
-	//extern Sound pong_select_option1;
-	//extern Sound pong_select_option2;
-
-	//extern Music pong_menu_song;
-
-	//void Execute();
+	extern sf::Texture background;
+	extern sf::Sprite backgroundSprite;
 }
 #endif // GAME_H

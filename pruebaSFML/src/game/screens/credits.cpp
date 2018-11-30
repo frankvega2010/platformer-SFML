@@ -1,8 +1,5 @@
 #include "credits.h"
 
-//#include "raylib.h"
-
-
 namespace Game_Namespace
 {
 	static const int maxButtons = 1;
@@ -177,6 +174,7 @@ namespace Game_Namespace
 
 		void CreditsScreen::draw()
 		{
+			_window.draw(backgroundSprite);
 			for (int i = 0; i < maxCreditsTexts; i++)
 			{
 				_window.draw(creditsText[i]);

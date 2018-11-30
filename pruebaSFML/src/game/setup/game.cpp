@@ -19,7 +19,6 @@ using namespace Credits_Section;
 
 namespace Game_Namespace
 {
-	//sf::Context context;
 
 	static bool gameON = true;
 
@@ -41,12 +40,8 @@ namespace Game_Namespace
 	int Game::_defaultStyle = 0;
 
 	Screens* gameScreens[MaxGameScreens];
-	//std::vector<Screens> gameScreens{MaxGameScreens};
 
 	sf::RenderWindow _window;
-
-	//sf::View windowView(sf::FloatRect(0, 0, 1280, 800));
-	//sf::View windowView2(sf::FloatRect(0, 0, 800, 600));
 
 	tgui::Gui gui{ _window };
 
@@ -54,6 +49,8 @@ namespace Game_Namespace
 	sf::Time deltaTime;
 	sf::Music menuSong;
 
+	sf::Texture background;
+	sf::Sprite backgroundSprite;
 
 
 	Game::Game()
@@ -181,20 +178,13 @@ namespace Game_Namespace
 
 	void Game::init()
 	{
+		background.loadFromFile("res/assets/textures/background.png");
+		backgroundSprite.setTexture(background);
+
 		_window.setActive();
 	
 		globalSoundVolume = 40;
 		globalMusicVolume = 40;
-		
-		//std::cout << _window.getView().getSize().x;
-
-		//button.is
-
-		//windowView.setViewport(sf::FloatRect(0,0,1280,800));
-		//windowView.setCenter(sf::Vector2f(0, 0));
-		//windowView.setSize(sf::Vector2f(0,0));
-		
-		//windowView = _renderService.getLetterboxView(interfaceView, windowWidth, windowHeight);
 		
 
 		for (int i = 0; i < MaxGameScreens; i++)
@@ -224,7 +214,6 @@ namespace Game_Namespace
 		{
 		case Menu:
 		{
-			//UpdateMenuScreen();
 			gameScreens[Menu]->update();
 
 			if (gameScreens[Menu]->finish())
@@ -234,9 +223,6 @@ namespace Game_Namespace
 				{
 				case buttonPlay:
 				{
-#ifdef AUDIO
-					StopMusicStream(pong_menu_song);
-#endif
 					levelNumber = 1;
 					_gameScreen = Play;
 					gameScreens[Play]->init();
@@ -263,11 +249,6 @@ namespace Game_Namespace
 				}
 				case buttonQuit:
 				{
-#ifdef AUDIO
-					StopMusicStream(pong_menu_song);
-#endif
-					//event->type = sf::Event::Closed;
-//_gameScreen = 0;
 					gameON = false;
 					return;
 					break;
@@ -307,9 +288,6 @@ namespace Game_Namespace
 				{
 				case buttonMenu:
 				{
-#ifdef AUDIO
-					PlayMusicStream(pong_menu_song);
-#endif
 
 					_gameScreen = Menu;
 					gameScreens[Menu]->init();
@@ -317,7 +295,6 @@ namespace Game_Namespace
 				}
 				case buttonRestart:
 				{
-					//gameScreens[Play]->restart();
 					_gameScreen = Play;
 					gameScreens[Play]->init();
 					break;
@@ -331,7 +308,6 @@ namespace Game_Namespace
 		{
 			menuSong.stop();
 			gameScreens[Play]->update();
-			//UpdateGameplayScreen();
 
 			if (gameScreens[Play]->finish())
 			{
@@ -340,9 +316,6 @@ namespace Game_Namespace
 				{
 				case buttonMenu:
 				{
-#ifdef AUDIO
-					PlayMusicStream(pong_menu_song);
-#endif
 
 					_gameScreen = Menu;
 					gameScreens[Menu]->init();
@@ -350,7 +323,6 @@ namespace Game_Namespace
 				}
 				case buttonRestart:
 				{
-					//gameScreens[Play]->restart();
 					_gameScreen = Play;
 					gameScreens[Play]->init();
 					break;
@@ -385,8 +357,6 @@ namespace Game_Namespace
 	void Game::draw()
 	{
 		_window.clear(sf::Color::Black);
-		//
-		//_window->clear(sf::Color::Black);
 
 		gameScreens[_gameScreen]->draw();
 
@@ -394,7 +364,6 @@ namespace Game_Namespace
 		gui.draw();
 		
 		_window.display();
-		//_window.display();
 	}
 
 	void Game::deInit()
@@ -418,7 +387,7 @@ namespace Game_Namespace
 				if (event.type == sf::Event::Closed)
 					_window.close();
 
-				gui.handleEvent(event); // Pass the event to the widgets
+				gui.handleEvent(event);
 			}
 
 			update();

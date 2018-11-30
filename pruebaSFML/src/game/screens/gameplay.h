@@ -1,6 +1,6 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
-//#include <sstream>
+
 #include <iostream>
 #include "Setup\game.h"
 #include "setup/screens.h"
@@ -11,8 +11,6 @@
 #include "Thor/Animations.hpp"
 #include "Thor/Time.hpp"
 #include "SpriteAnimation.h"
-//#include "SFML/Mouse.hpp"
-//#include "raylib.h"
 
 namespace Game_Namespace
 {

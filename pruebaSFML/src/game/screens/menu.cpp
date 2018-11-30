@@ -24,21 +24,13 @@ namespace Game_Namespace
 	static sf::Font fontSubtitle;
 
 	static sf::Text menuTitle;
-	static sf::Text menuSubTitle1;
 	static sf::Text menuSubTitle2;
 
 	static sf::Text menuText;
 
-	sf::RectangleShape testS;
-
-	//thor::Timer timertest;
-
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	static tgui::Button::Ptr buttons[maxButtons];
-
-	//static tgui::Button::Ptr button = tgui::Button::create();
-
 	
 
 	namespace Menu_Section
@@ -93,10 +85,6 @@ namespace Game_Namespace
 
 		void MenuScreen::init()
 		{
-			//_window.setView(windowView);
-			testS.setPosition(0, 0);
-			testS.setSize(sf::Vector2f(1280,800));
-			testS.setFillColor(sf::Color::Red);
 
 			int maxDistance = 0;
 			int maxDistance2 = 0;
@@ -106,16 +94,16 @@ namespace Game_Namespace
 				gui.add(buttons[i]);
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
-				buttons[i]->setTextSize(60);// 240 100
+				buttons[i]->setTextSize(60);
 				buttons[i]->setInheritedFont(fontButtons);
 
 				if (i < 3)
 				{
-					buttons[i]->setPosition(120 + maxDistance, Game::getScreenHeight() / 2); // (Game::getScreenWidth()/2 + 10 - 260)
+					buttons[i]->setPosition(120 + maxDistance, Game::getScreenHeight() / 2);
 				}
 				else
 				{
-					buttons[i]->setPosition(180 + maxDistance2, Game::getScreenHeight() / 2 + 200); // (Game::getScreenWidth()/2 + 10 - 260)
+					buttons[i]->setPosition(180 + maxDistance2, Game::getScreenHeight() / 2 + 200);
 					maxDistance2 = maxDistance2 + 350;
 				}
 				
@@ -134,10 +122,7 @@ namespace Game_Namespace
 			{
 				cout << "could not load font file" << endl;// error...
 			}
-			//if (!fontButtons.getFont("res/assets/fonts/DSnet Stamped.ttf"))
-			//{
-			//	cout << "could not load font file" << endl;// error...
-			//}
+
 			if (!fontSubtitle.loadFromFile("res/assets/fonts/Roman_New_Times.otf"))
 			{
 				cout << "could not load font file" << endl;// error...
@@ -146,19 +131,13 @@ namespace Game_Namespace
 			menuTitle.setFont(fontTitle);
 			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 1.8f));
 			menuTitle.setFillColor(sf::Color::Red);
-			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 400.f), 50.f);
+			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 500.f), 150.f);
 			menuTitle.setString("Patient Zero");
-
-			menuSubTitle1.setFont(fontSubtitle);
-			menuSubTitle1.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
-			menuSubTitle1.setFillColor(sf::Color::Red);
-			menuSubTitle1.setPosition(menuTitle.getPosition().x + 300, 140);
-			menuSubTitle1.setString("");
 
 			menuSubTitle2.setFont(fontSubtitle);
 			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle2.setFillColor(sf::Color::Red);
-			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 180);
+			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 250);
 			menuSubTitle2.setString("Version 1.0");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
@@ -167,26 +146,11 @@ namespace Game_Namespace
 			buttons[3]->connect("Pressed", signalGoToCredits);
 			buttons[4]->connect("Pressed", signalQuitGame);
 
-			//sf::Time initialTime = sf::seconds(10);
-			//timertest.reset(initialTime);
-			//timertest.start();
 			setHasScreenFinished(false);
 		}
 
 		void MenuScreen::input()
 		{
-			/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				if (!(Game::getIsKeyPressed()))
-				{
-					Game::setButtonOption(buttonPlay);
-					Screens::setHasScreenFinished(true);
-				}
-			}
-			else
-			{
-				Game::setIsKeyPressed(false);
-			}*/
 		}
 
 		void MenuScreen::update()
@@ -199,14 +163,9 @@ namespace Game_Namespace
 
 		void MenuScreen::draw()
 		{
-
-
-			
+			_window.draw(backgroundSprite);
 			_window.draw(menuTitle);
-			_window.draw(menuSubTitle1);
-			_window.draw(menuSubTitle2);
-			//_window.draw(testS);
-			
+			_window.draw(menuSubTitle2);		
 		}
 
 		void MenuScreen::deInit()
