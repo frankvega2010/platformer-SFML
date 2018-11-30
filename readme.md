@@ -1,6 +1,7 @@
-# Patient Zero [WIP]
+![alt text](https://github.com/frankvega2010/platformer-SFML/blob/master/pruebaSFML/res/raw/logo/logo1.png)
+# Patient Zero
 ## A Platformer shooter game made with SFML Library by Franco Vega and Mariano Martinez.
-### Current Version : 0.1
+### Current Version : 1.0
 #
 ## Introduction
 
