@@ -1,4 +1,4 @@
-## v?.? [2018-11-29]
+## v1.0 [2018-11-29]
 ### Added
 - Player's hand moves and rotates depending on mouse position.
 - Sprite Animations.
