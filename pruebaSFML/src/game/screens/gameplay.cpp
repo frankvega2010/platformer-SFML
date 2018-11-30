@@ -773,7 +773,7 @@ namespace Game_Namespace
 				if (enemy.getIsAlive())
 				{
 					LivesEnemies[i].setFillColor(sf::Color::White);
-					crosshairTest.setFillColor(sf::Color::Green);
+					crosshairTest.setFillColor(sf::Color::Red);
 
 					player1.setCanShoot(true);
 					if (player1.getCanShoot())
