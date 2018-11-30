@@ -4,6 +4,10 @@
 - Sprite Animations.
 - New GUI.
 - New HUD.
+- Tutorial and First Level Added.
+- Victory & Loss Condition.
+- Music.
+- Sound Effects.
 
 
 ## v0.1 [2018-11-25]
@@ -25,9 +29,6 @@
 
 ### [Unreleased]
 - Multiple Levels.
-- Victory & Loss Condition.
 - 3 Weapons.
 - Limited Ammunition.
 - 2 Types of enemies.
-- Music.
-- Sound Effects.
