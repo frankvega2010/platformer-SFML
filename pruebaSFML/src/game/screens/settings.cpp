@@ -101,17 +101,6 @@ namespace Game_Namespace
 			}
 		}
 
-		//static void signalToggleFullscreen()
-		//{
-		//	//_window.
-		//	//_window.setPosition(sf::Vector2i(0,0));
-		//	if (Game::getDefaultStyle() == sf::Style::Default) Game::setDefaultStyle(sf::Style::Fullscreen);
-		//	else if (Game::getDefaultStyle() == sf::Style::Fullscreen)Game::setDefaultStyle(sf::Style::Default);
-		//	_window.create(sf::VideoMode(Game::getScreenWidth(), Game::getScreenHeight()), "SFML Template", Game::getDefaultStyle());
-		//	//_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
-		//	//_window.create();
-		//}
-
 		void SettingsScreen::init()
 		{
 			int maxDistance = 0;
@@ -121,7 +110,7 @@ namespace Game_Namespace
 				gui.add(buttons[i]);
 				buttons[i]->setRenderer(blackTheme.getRenderer("Button"));
 				buttons[i]->setSize(240, 100);
-				buttons[i]->setTextSize(40);// 240 100
+				buttons[i]->setTextSize(40);
 				buttons[i]->setInheritedFont(fontButtons);
 				buttons[i]->setPosition(50 , 70 + maxDistance);
 
@@ -135,7 +124,6 @@ namespace Game_Namespace
 			buttons[3]->setText("1440x900");
 			buttons[4]->setText("1600x900");
 			buttons[5]->setText("1920x1080");
-			//buttons[6]->setText("Fullscreen");
 			buttons[6]->setText("Menu");
 
 			buttons[0]->connect("Pressed", signalChangeTo800x600);
@@ -144,7 +132,6 @@ namespace Game_Namespace
 			buttons[3]->connect("Pressed", signalChangeTo1440x900);
 			buttons[4]->connect("Pressed", signalChangeTo1600x900);
 			buttons[5]->connect("Pressed", signalChangeTo1920x1080);
-			//buttons[6]->connect("Pressed", signalToggleFullscreen);
 			buttons[6]->connect("Pressed", signalGoToMenu);
 
 			labelMusicVolume = tgui::Label::create();

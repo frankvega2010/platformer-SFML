@@ -19,11 +19,6 @@ namespace Game_Namespace
 			void deInit();
 			bool finish();
 		};
-
-		/*void UpdateCreditsScreen();
-		void InitCreditsScreen();
-		bool FinishCreditsScreen();
-		void DrawCredits();*/
 	}
 }
 #endif // CREDITS_H

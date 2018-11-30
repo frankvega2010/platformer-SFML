@@ -72,9 +72,6 @@ namespace Game_Namespace
 		currentImage.y = row;
 		totalTime += deltaTime;
 
-		//currentImage.x = 3;
-		//currentImage.x = 0;
-
 		if (totalTime >= switchTime)
 		{
 			totalTime -= switchTime;

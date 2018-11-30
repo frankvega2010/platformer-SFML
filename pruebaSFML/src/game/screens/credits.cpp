@@ -1,8 +1,5 @@
 #include "credits.h"
 
-//#include "raylib.h"
-
-
 namespace Game_Namespace
 {
 	static const int maxButtons = 2;
@@ -49,7 +46,6 @@ namespace Game_Namespace
 			buttons[0]->setText("More");
 			buttons[1]->setText("Menu");
 
-			//buttons[0]->connect("Pressed", signalChangeTo800x600);
 			buttons[1]->connect("Pressed", signalGoToMenu);
 
 			setHasScreenFinished(false);

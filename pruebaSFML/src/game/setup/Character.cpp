@@ -51,14 +51,11 @@ namespace Game_Namespace
 
 	void Character::setPosition(float x, float y)
 	{
-		//_position = { x,y };
 		_rectangle.setPosition(sf::Vector2f(x, y));
-
 	}
 
 	sf::Vector2f Character::getPosition()
 	{
-		//return _position;
 		return _rectangle.getPosition();
 	}
 
@@ -84,18 +81,16 @@ namespace Game_Namespace
 
 	void Character::setMove(float x, float y)
 	{
-		//_move = { x,y };
 		_rectangle.move(x, y);
 	}
 
 	sf::Vector2f Character::getMove()
 	{
-		return _move; // It doesnt need to have a get I think.
+		return _move;
 	}
 
 	void Character::setSize(float width, float height)
 	{
-		//_size = { width,height };
 		_rectangle.setSize(sf::Vector2f(width, height));
 	}
 
@@ -116,7 +111,6 @@ namespace Game_Namespace
 
 	void Character::setColor(sf::Color color)
 	{
-		//_color = color;
 		_rectangle.setFillColor(color);
 	}
 

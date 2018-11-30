@@ -6,7 +6,6 @@
 
 namespace Game_Namespace
 {
-	//const int buttonMenu = 12; // arreglr
 	namespace GameOver_Section
 	{
 		class GameOverScreen :public Screens
