@@ -159,7 +159,7 @@ namespace Game_Namespace
 			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle2.setFillColor(sf::Color::Red);
 			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 180);
-			menuSubTitle2.setString("Version 0.1");
+			menuSubTitle2.setString("Version 1.0");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
 			buttons[1]->connect("Pressed", signalGoToTutorial);
