@@ -433,12 +433,14 @@ namespace Game_Namespace
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
 			font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
 
+			playerStateText.setCharacterSize(80);
+			playerStateText.setFont(deltaFont);
+			playerStateText.setPosition(400, 400);
+			playerStateText.setString("");
+
 			if (levelNumber==0)
 			{
-				playerStateText.setCharacterSize(80);
-				playerStateText.setFont(deltaFont);
-				playerStateText.setPosition(400, 400);
-				playerStateText.setString("");
+				
 
 				tutorialText[0].setCharacterSize(50);
 				tutorialText[0].setFont(font2);
@@ -1274,7 +1276,7 @@ namespace Game_Namespace
 					buttons[0]->setVisible(false);
 					playerStateText.setFillColor(sf::Color::Green);
 					playerStateText.setString("You Passed the level!");
-					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
+					playerStateText.setPosition(sf::Vector2f(view.getCenter().x - 300, view.getCenter().y - 600));
 				}
 
 				if (playerLost)
@@ -1282,7 +1284,7 @@ namespace Game_Namespace
 					buttons[0]->setVisible(false);
 					playerStateText.setFillColor(sf::Color::Red);
 					playerStateText.setString("You died!");
-					playerStateText.setPosition(sf::Vector2f(view.getCenter().x + 200, view.getCenter().y - 600));
+					playerStateText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 600));
 				}
 
 			}
