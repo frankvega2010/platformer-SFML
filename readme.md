@@ -24,14 +24,11 @@ Some features may be missing for the release of the version 1.0, but we will inc
 
 A virus has spread all over the city and you are one of the current survivors of the apocalypse. With the help of your gun, you will have to through waves of zombies in order to escape the city and reach a safe zone!
 
-## Screenshots
-
-Work in Progress
-
-
 ## Download
 
-Work in Progress
+Itchio Link: https://frankvega.itch.io/patient-zero
+
+Github Link: https://github.com/frankvega2010/platformer-SFML/releases/tag/v1.0
 
 ## Bio (Franco Vega)
 
