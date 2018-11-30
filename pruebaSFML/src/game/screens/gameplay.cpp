@@ -155,6 +155,7 @@ namespace Game_Namespace
 
 	// Shapes
 
+	static sf::Texture crosshairTexture;
 	static sf::CircleShape crosshairTest;
 	static sf::RectangleShape gun;
 	static sf::CircleShape gunLimit;
@@ -462,11 +463,13 @@ namespace Game_Namespace
 			zombiesKilledText.setPosition(500, 200);
 			zombiesKilledText.setFillColor(sf::Color::White);
 
+			crosshairTexture.loadFromFile("res/assets/textures/crosshair.png");
 			crosshairTest.setRadius(30);
-			crosshairTest.setOutlineThickness(5);
-			crosshairTest.setFillColor(sf::Color::Transparent);
-			crosshairTest.setOutlineColor(sf::Color::Red);
+			crosshairTest.setOutlineThickness(1);
+			crosshairTest.setFillColor(sf::Color::Red);
+			crosshairTest.setOutlineColor(sf::Color::Transparent);
 			crosshairTest.setPosition(static_cast<sf::Vector2f>(worldPos));
+			crosshairTest.setTexture(&crosshairTexture);
 
 			//// Game Mechanics
 			gravitySpeed = 800;
@@ -764,13 +767,13 @@ namespace Game_Namespace
 		}
 
 		static void isCrosshairOnTarget(Character& enemy,int i)
-		{
+		{	
 			if (crosshairTest.getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
 			{
 				if (enemy.getIsAlive())
 				{
 					LivesEnemies[i].setFillColor(sf::Color::White);
-					crosshairTest.setOutlineColor(sf::Color::Green);
+					crosshairTest.setFillColor(sf::Color::Green);
 
 					player1.setCanShoot(true);
 					if (player1.getCanShoot())
@@ -796,7 +799,7 @@ namespace Game_Namespace
 			else
 			{
 				LivesEnemies[i].setFillColor(sf::Color::Transparent);
-				crosshairTest.setOutlineColor(sf::Color::Red);
+				crosshairTest.setFillColor(sf::Color::Red);
 				player1.setCanShoot(false);
 			}
 		}
@@ -851,7 +854,7 @@ namespace Game_Namespace
 					enemy.getRectangle().move(0, 0);
 					animation.Update(2, deltaTime.asSeconds());
 				}
-				crosshairTest.setOutlineColor(sf::Color::Red);
+				crosshairTest.setFillColor(sf::Color::Red);
 			}
 		}
 
