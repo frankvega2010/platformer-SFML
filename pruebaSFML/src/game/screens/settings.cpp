@@ -198,7 +198,7 @@ namespace Game_Namespace
 
 		void SettingsScreen::draw()
 		{
-
+			_window.draw(backgroundSprite);
 		}
 
 		void SettingsScreen::deInit()

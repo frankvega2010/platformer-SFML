@@ -54,6 +54,8 @@ namespace Game_Namespace
 	sf::Time deltaTime;
 	sf::Music menuSong;
 
+	sf::Texture background;
+	sf::Sprite backgroundSprite;
 
 
 	Game::Game()
@@ -181,6 +183,9 @@ namespace Game_Namespace
 
 	void Game::init()
 	{
+		background.loadFromFile("res/assets/textures/background.png");
+		backgroundSprite.setTexture(background);
+
 		_window.setActive();
 	
 		globalSoundVolume = 40;

@@ -24,7 +24,6 @@ namespace Game_Namespace
 	static sf::Font fontSubtitle;
 
 	static sf::Text menuTitle;
-	static sf::Text menuSubTitle1;
 	static sf::Text menuSubTitle2;
 
 	static sf::Text menuText;
@@ -36,6 +35,8 @@ namespace Game_Namespace
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	static tgui::Button::Ptr buttons[maxButtons];
+
+	
 
 	//static tgui::Button::Ptr button = tgui::Button::create();
 
@@ -94,6 +95,9 @@ namespace Game_Namespace
 		void MenuScreen::init()
 		{
 			//_window.setView(windowView);
+			
+
+
 			testS.setPosition(0, 0);
 			testS.setSize(sf::Vector2f(1280,800));
 			testS.setFillColor(sf::Color::Red);
@@ -146,19 +150,13 @@ namespace Game_Namespace
 			menuTitle.setFont(fontTitle);
 			menuTitle.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() * 1.8f));
 			menuTitle.setFillColor(sf::Color::Red);
-			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 400.f), 50.f);
+			menuTitle.setPosition((Game::getScreenWidth() / 2.f - 500.f), 150.f);
 			menuTitle.setString("Patient Zero");
-
-			menuSubTitle1.setFont(fontSubtitle);
-			menuSubTitle1.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
-			menuSubTitle1.setFillColor(sf::Color::Red);
-			menuSubTitle1.setPosition(menuTitle.getPosition().x + 300, 140);
-			menuSubTitle1.setString("");
 
 			menuSubTitle2.setFont(fontSubtitle);
 			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle2.setFillColor(sf::Color::Red);
-			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 180);
+			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 250);
 			menuSubTitle2.setString("Version 0.1");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
@@ -199,14 +197,9 @@ namespace Game_Namespace
 
 		void MenuScreen::draw()
 		{
-
-
-			
+			_window.draw(backgroundSprite);
 			_window.draw(menuTitle);
-			_window.draw(menuSubTitle1);
-			_window.draw(menuSubTitle2);
-			//_window.draw(testS);
-			
+			_window.draw(menuSubTitle2);		
 		}
 
 		void MenuScreen::deInit()

@@ -68,7 +68,7 @@ namespace Game_Namespace
 
 		void CreditsScreen::draw()
 		{
-
+			_window.draw(backgroundSprite);
 		}
 
 		void CreditsScreen::deInit()
