@@ -584,15 +584,15 @@ namespace Game_Namespace
 
 			if (levelNumber==0)
 			{
-				Exit.setPosition(900, 1000);
+				Exit.setPosition(900, 1100);
 				Exit.setSize(sf::Vector2f(100, 200));
-				Exit.setFillColor(sf::Color::Blue);
+				Exit.setFillColor({ 0,0,110,100 });
 			}
 			if (levelNumber==1)
 			{
 				Exit.setPosition(11750, 1400);
 				Exit.setSize(sf::Vector2f(100, 200));
-				Exit.setFillColor(sf::Color::Blue);
+				Exit.setFillColor({ 0,0,110,100 });
 			}
 
 		}
