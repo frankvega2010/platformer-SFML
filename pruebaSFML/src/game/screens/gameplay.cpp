@@ -707,8 +707,8 @@ namespace Game_Namespace
 					}
 					else
 					{
-						player1.setIsOnGround(false);
-						player1.setGravity(true);
+						if (Character.getIsPlayer()) player1.setIsOnGround(false);
+						Character.setGravity(true);
 					}
 				}
 				else
@@ -750,8 +750,8 @@ namespace Game_Namespace
 					}
 					else
 					{
-						player1.setIsOnGround(false);
-						player1.setGravity(true);
+						if (Character.getIsPlayer()) player1.setIsOnGround(false);
+						Character.setGravity(true);
 					}
 				}
 				else
