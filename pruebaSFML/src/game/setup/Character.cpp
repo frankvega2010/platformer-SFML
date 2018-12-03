@@ -25,6 +25,8 @@ namespace Game_Namespace
 		_moveRight = true;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
+		_isOnWhichCharacterLeftSide = -1;
+		_isOnWhichCharacterRightSide = -1;
 	}
 
 	Character::Character(float x, float y, float width, float height, sf::Color color)
@@ -50,6 +52,8 @@ namespace Game_Namespace
 		_moveRight = true;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
+		_isOnWhichCharacterLeftSide = -1;
+		_isOnWhichCharacterRightSide = -1;
 	}
 
 	Character::~Character()
@@ -345,6 +349,26 @@ namespace Game_Namespace
 	void Character::setIsOnWhichRightWall(int isOnWhichRightWall)
 	{
 		_isOnWhichRightWall = isOnWhichRightWall;
+	}
+
+	int Character::getIsOnWhichCharacterLeftSide()
+	{
+		return _isOnWhichCharacterLeftSide;
+	}
+
+	void Character::setIsOnWhichCharacterLeftSide(int isOnWhichCharacterLeftSide)
+	{
+		_isOnWhichCharacterLeftSide = isOnWhichCharacterLeftSide;
+	}
+
+	int Character::getIsOnWhichCharacterRightSide()
+	{
+		return _isOnWhichCharacterRightSide;
+	}
+
+	void Character::setIsOnWhichCharacterRightSide(int isOnWhichCharacterRightSide)
+	{
+		_isOnWhichCharacterRightSide = isOnWhichCharacterRightSide;
 	}
 
 }

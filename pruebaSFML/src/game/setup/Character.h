@@ -23,6 +23,8 @@ namespace Game_Namespace
 		int _isOnWhichGround;
 		int _isOnWhichLeftWall;
 		int _isOnWhichRightWall;
+		int _isOnWhichCharacterLeftSide;
+		int _isOnWhichCharacterRightSide;
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
@@ -96,6 +98,10 @@ namespace Game_Namespace
 		void setIsOnWhichLeftWall(int isOnWhichLeftWall);
 		int getIsOnWhichRightWall();
 		void setIsOnWhichRightWall(int isOnWhichRightWall);
+		int getIsOnWhichCharacterLeftSide();
+		void setIsOnWhichCharacterLeftSide(int isOnWhichCharacterLeftSide);
+		int getIsOnWhichCharacterRightSide();
+		void setIsOnWhichCharacterRightSide(int isOnWhichCharacterRightSide);
 		sf::RectangleShape getRectangle();
 		sf::RectangleShape getPlayerDetection();
 	};

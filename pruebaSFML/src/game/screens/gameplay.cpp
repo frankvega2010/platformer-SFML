@@ -797,7 +797,9 @@ namespace Game_Namespace
 						if (enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width > enemies[i].getRectangle().getPosition().x &&
 							enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width < enemies[i].getRectangle().getPosition().x + 10) // + 10
 						{
-							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x - (enemies[iFromEnemy].getRectangle().getGlobalBounds().width), enemies[iFromEnemy].getRectangle().getPosition().y);
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x - (enemies[iFromEnemy].getRectangle().getGlobalBounds().width) + 1, enemies[iFromEnemy].getRectangle().getPosition().y); // change 1 to WallGlitchFix.
+							enemies[iFromEnemy].setMoveRight(false);
+							enemies[iFromEnemy].setIsOnWhichCharacterLeftSide(i);
 						}
 
 
@@ -805,7 +807,9 @@ namespace Game_Namespace
 							enemies[iFromEnemy].getRectangle().getPosition().x > enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width - 10 // - 10
 							)
 						{
-							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x + (enemies[i].getRectangle().getGlobalBounds().width), enemies[iFromEnemy].getRectangle().getPosition().y);
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x + (enemies[i].getRectangle().getGlobalBounds().width) - 1, enemies[iFromEnemy].getRectangle().getPosition().y); // change 1 to WallGlitchFix.
+							enemies[iFromEnemy].setMoveLeft(false);
+							enemies[iFromEnemy].setIsOnWhichCharacterRightSide(i);
 						}
 
 
@@ -821,6 +825,11 @@ namespace Game_Namespace
 						{
 							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y - (enemies[iFromEnemy].getRectangle().getGlobalBounds().height) );
 						}
+					}
+					else
+					{
+						if (enemies[iFromEnemy].getIsOnWhichCharacterRightSide() == i) enemies[iFromEnemy].setMoveLeft(true);
+						if (enemies[iFromEnemy].getIsOnWhichCharacterLeftSide() == i) enemies[iFromEnemy].setMoveRight(true);
 					}
 				}
 			}
