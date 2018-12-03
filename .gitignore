@@ -12,3 +12,6 @@
 #vs folder
 **/.vs
 
+**.db
+**.opendb
+
