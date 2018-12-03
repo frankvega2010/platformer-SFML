@@ -1321,14 +1321,31 @@ namespace Game_Namespace
 				CheckPlayerFlipSprite();
 
 				// Checks for collisions
-				for (int i = 0; i < maxColisionsBoxes; i++)
+
+				if (levelNumber == 0)
 				{
-					CheckCollisionWithTiles(player1, i);
-					for (int f = 0; f < maxEnemiesLevel1; f++)
+					for (int i = 0; i < maxColisionsBoxes; i++)
 					{
-						CheckCollisionWithTiles(enemies[f], i);
-					}	
+						CheckCollisionWithTiles(player1, i);
+						for (int f = 0; f < maxEnemiesLevel1; f++)
+						{
+							CheckCollisionWithTiles(enemies[f], i);
+						}
+					}
 				}
+				
+				if (levelNumber == 1)
+				{
+					for (int i = 0; i < maxColisionsBoxes2; i++)
+					{
+						CheckCollisionWithTiles(player1, i);
+						for (int f = 0; f < maxEnemiesLevel1; f++)
+						{
+							CheckCollisionWithTiles(enemies[f], i);
+						}
+					}
+				}
+				
 
 				GunRotation();
 
