@@ -763,6 +763,46 @@ namespace Game_Namespace
 			
 		}
 
+		static void CheckCollisionBetweenEnemies(int iFromEnemy)
+		{
+			for (int i = 0; i < maxEnemiesLevel1; i++)
+			{
+				if (i != iFromEnemy)
+				{
+					if (enemies[iFromEnemy].getRectangle().getGlobalBounds().intersects(enemies[i].getRectangle().getGlobalBounds()))
+					{
+						if (enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width > enemies[i].getRectangle().getPosition().x &&
+							enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width < enemies[i].getRectangle().getPosition().x + 10) // + 10
+						{
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x - (enemies[iFromEnemy].getRectangle().getGlobalBounds().width), enemies[iFromEnemy].getRectangle().getPosition().y);
+						}
+
+
+						if (enemies[iFromEnemy].getRectangle().getPosition().x < enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width &&
+							enemies[iFromEnemy].getRectangle().getPosition().x > enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width - 10 // - 10
+							)
+						{
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x + (enemies[i].getRectangle().getGlobalBounds().width), enemies[iFromEnemy].getRectangle().getPosition().y);
+						}
+
+
+						if (enemies[iFromEnemy].getRectangle().getPosition().y < enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height &&
+							enemies[iFromEnemy].getRectangle().getPosition().y > enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height - 20) // - 20
+						{
+							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y + (enemies[i].getRectangle().getGlobalBounds().height));
+						}
+
+
+						if (enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height > enemies[i].getRectangle().getPosition().y &&
+							enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height < enemies[i].getRectangle().getPosition().y + 20) // + 20
+						{
+							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y - (enemies[iFromEnemy].getRectangle().getGlobalBounds().height) );
+						}
+					}
+				}
+			}
+		}
+
 		static void GunRotation()
 		{
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
@@ -1217,6 +1257,8 @@ namespace Game_Namespace
 					CheckEnemyHP(enemies[i], zombiesAnimation[i],i);
 
 					CanEnemyHearPlayer(enemies[i], zombiesAnimation[i], i);
+
+					CheckCollisionBetweenEnemies(i);
 				}
 
 				// gravity
