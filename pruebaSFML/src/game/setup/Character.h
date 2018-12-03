@@ -21,6 +21,8 @@ namespace Game_Namespace
 		sf::RectangleShape _rectanglePlayerDetection;
 		int _hp;
 		int _isOnWhichGround;
+		int _isOnWhichLeftWall;
+		int _isOnWhichRightWall;
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
@@ -31,6 +33,8 @@ namespace Game_Namespace
 		bool _isJumping;
 		bool _isOnGround;
 		bool _isDead;
+		bool _moveLeft;
+		bool _moveRight;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -84,6 +88,14 @@ namespace Game_Namespace
 		void scale(int x, int y);
 		bool getIsDead();
 		void setIsDead(bool isDead);
+		bool getMoveRight();
+		void setMoveRight(bool moveRight);
+		bool getMoveLeft();
+		void setMoveLeft(bool moveLeft);
+		int getIsOnWhichLeftWall();
+		void setIsOnWhichLeftWall(int isOnWhichLeftWall);
+		int getIsOnWhichRightWall();
+		void setIsOnWhichRightWall(int isOnWhichRightWall);
 		sf::RectangleShape getRectangle();
 		sf::RectangleShape getPlayerDetection();
 	};

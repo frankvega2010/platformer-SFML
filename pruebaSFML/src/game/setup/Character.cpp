@@ -21,6 +21,10 @@ namespace Game_Namespace
 		_isOnGround = false;
 		_isOnWhichGround = -1;
 		_isDead = false;
+		_moveLeft = true;
+		_moveRight = true;
+		_isOnWhichLeftWall = -1;
+		_isOnWhichRightWall = -1;
 	}
 
 	Character::Character(float x, float y, float width, float height, sf::Color color)
@@ -42,6 +46,10 @@ namespace Game_Namespace
 		_isOnGround = false;
 		_isOnWhichGround = -1;
 		_isDead = false;
+		_moveLeft = true;
+		_moveRight = true;
+		_isOnWhichLeftWall = -1;
+		_isOnWhichRightWall = -1;
 	}
 
 	Character::~Character()
@@ -297,6 +305,46 @@ namespace Game_Namespace
 	void Character::setIsDead(bool isDead)
 	{
 		_isDead = isDead;
+	}
+
+	bool Character::getMoveRight()
+	{
+		return _moveRight;
+	}
+
+	void Character::setMoveRight(bool moveRight)
+	{
+		_moveRight = moveRight;
+	}
+
+	bool Character::getMoveLeft()
+	{
+		return _moveLeft;
+	}
+
+	void Character::setMoveLeft(bool moveLeft)
+	{
+		_moveLeft = moveLeft;
+	}
+
+	int Character::getIsOnWhichLeftWall()
+	{
+		return _isOnWhichLeftWall;
+	}
+
+	void Character::setIsOnWhichLeftWall(int isOnWhichLeftWall)
+	{
+		_isOnWhichLeftWall = isOnWhichLeftWall;
+	}
+
+	int Character::getIsOnWhichRightWall()
+	{
+		return _isOnWhichRightWall;
+	}
+
+	void Character::setIsOnWhichRightWall(int isOnWhichRightWall)
+	{
+		_isOnWhichRightWall = isOnWhichRightWall;
 	}
 
 }

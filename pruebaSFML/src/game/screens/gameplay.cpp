@@ -601,35 +601,41 @@ namespace Game_Namespace
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
-				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
-				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
-
-				if (!footstepTimer.isRunning())
+				if (player1.getMoveRight())
 				{
-					footstepTimer.reset(footstepInitialTime);
-					footstepTimer.start();
-					playerFootStep.play();
-				}
+					if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
+					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
+					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
 
-				cameraLeft = false;
-				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
+					if (!footstepTimer.isRunning())
+					{
+						footstepTimer.reset(footstepInitialTime);
+						footstepTimer.start();
+						playerFootStep.play();
+					}
+
+					cameraLeft = false;
+					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
+				}		
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
-				else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
-				else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
-
-				if (!footstepTimer.isRunning())
+				if (player1.getMoveLeft())
 				{
-					footstepTimer.reset(footstepInitialTime);
-					footstepTimer.start();
-					playerFootStep.play();
-				}
+					if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
+					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
+					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
 
-				cameraRight = false;
-				player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
+					if (!footstepTimer.isRunning())
+					{
+						footstepTimer.reset(footstepInitialTime);
+						footstepTimer.start();
+						playerFootStep.play();
+					}
+
+					cameraRight = false;
+					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
+				}
 			}
 			else
 			{
@@ -680,14 +686,18 @@ namespace Game_Namespace
 					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles[i].getPosition().x &&
 						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
 					{
-						Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
+						Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
+						Character.setMoveRight(false);
+						Character.setIsOnWhichLeftWall(i);
 					}
 
 					else if (Character.getRectangle().getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
 						Character.getRectangle().getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
 						)
 					{
-						Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
+						Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
+						Character.setMoveLeft(false);
+						Character.setIsOnWhichRightWall(i);
 					}
 
 					else if (Character.getRectangle().getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
@@ -709,11 +719,16 @@ namespace Game_Namespace
 					{
 						if (Character.getIsPlayer()) player1.setIsOnGround(false);
 						Character.setGravity(true);
+						Character.setMoveRight(true);
+						Character.setMoveLeft(true);
 					}
 				}
 				else
 				{
 					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+					if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
+					if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
+					
 				}
 			}
 			if (levelNumber == 1)
@@ -723,14 +738,18 @@ namespace Game_Namespace
 					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles2[i].getPosition().x &&
 						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles2[i].getPosition().x + 10) // + 10
 					{
-						Character.setPosition(rectangles2[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width), Character.getRectangle().getPosition().y);
+						Character.setPosition(rectangles2[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
+						Character.setMoveRight(false);
+						Character.setIsOnWhichLeftWall(i);
 					}
 
 					else if (Character.getRectangle().getPosition().x < rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width &&
 						Character.getRectangle().getPosition().x > rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width - 10 // - 10
 						)
 					{
-						Character.setPosition(rectangles2[i].getPosition().x + (rectangles2[i].getGlobalBounds().width), Character.getRectangle().getPosition().y);
+						Character.setPosition(rectangles2[i].getPosition().x + (rectangles2[i].getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
+						Character.setMoveLeft(false);
+						Character.setIsOnWhichRightWall(i);
 					}
 
 					else if (Character.getRectangle().getPosition().y < rectangles2[i].getPosition().y + rectangles2[i].getGlobalBounds().height &&
@@ -752,11 +771,15 @@ namespace Game_Namespace
 					{
 						if (Character.getIsPlayer()) player1.setIsOnGround(false);
 						Character.setGravity(true);
+						Character.setMoveRight(true);
+						Character.setMoveLeft(true);
 					}
 				}
 				else
 				{
 					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+					if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
+					if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
 				}
 			}
 			
@@ -909,8 +932,13 @@ namespace Game_Namespace
 							enemy.setOrigin(0, 0);
 							enemy.scale(-1, 1);
 						}
-						enemy.setMove(300 * deltaTime.asSeconds(), 0);
-						animation.Update(3, deltaTime.asSeconds());
+
+						if (enemy.getMoveRight())
+						{
+							enemy.setMove(300 * deltaTime.asSeconds(), 0);
+							animation.Update(3, deltaTime.asSeconds());
+						}
+
 						enemy.setFlipLeft(false);
 						enemy.setFlipRight(true);
 					}
@@ -927,8 +955,14 @@ namespace Game_Namespace
 							enemy.setOrigin(static_cast<int>(enemy.getRectangle().getGlobalBounds().width), 0);
 							enemy.scale(-1, 1);
 						}
-						enemy.setMove(-300 * deltaTime.asSeconds(), 0);
-						animation.Update(3, deltaTime.asSeconds());
+
+						if (enemy.getMoveLeft())
+						{
+							enemy.setMove(-300 * deltaTime.asSeconds(), 0);
+							animation.Update(3, deltaTime.asSeconds());
+						}
+
+						
 						enemy.setFlipRight(false);
 						enemy.setFlipLeft(true);
 					}
