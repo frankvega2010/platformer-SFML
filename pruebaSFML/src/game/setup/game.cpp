@@ -203,13 +203,13 @@ namespace Game_Namespace
 
 		menuSong.openFromFile("res/assets/music/menuSong.wav");
 		menuSong.setLoop(true);
-		menuSong.setVolume(globalMusicVolume);
+		menuSong.setVolume(static_cast<float>(globalMusicVolume));
 		menuSong.play();
 	}
 
 	void Game::update()
 	{
-		menuSong.setVolume(globalMusicVolume);
+		menuSong.setVolume(static_cast<float>(globalMusicVolume));
 		switch (_gameScreen)
 		{
 		case Menu:

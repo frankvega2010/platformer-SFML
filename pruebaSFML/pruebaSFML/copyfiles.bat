@@ -1,8 +1,8 @@
 @echo off
 echo Duplicador de Archivos para el .exe by Franco Vega
 
-set targetdir=%1
-set solutiondir=%2
+set targetdir=%~1
+set solutiondir=%~2
 set config=%3
 
 echo Copiando librerias dinamicas

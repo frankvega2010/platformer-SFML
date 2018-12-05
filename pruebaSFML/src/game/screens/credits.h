@@ -1,7 +1,8 @@
 #ifndef CREDITS_H
 #define CREDITS_H
-#include "Setup/game.h"
+
 #include "setup/screens.h"
+
 namespace Game_Namespace
 {
 	namespace Credits_Section

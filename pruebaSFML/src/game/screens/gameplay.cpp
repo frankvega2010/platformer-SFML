@@ -327,7 +327,7 @@ namespace Game_Namespace
 
 				for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 				{
-					enemies[i].setPosition(5200 + increaseEnemyDistance, 1500);
+					enemies[i].setPosition(5200.f + static_cast<float>(increaseEnemyDistance), 1500.f);
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
@@ -351,13 +351,13 @@ namespace Game_Namespace
 			{
 				for (int i = 0; i < maxEnemiesLevel1; i++)
 				{
-					if (i < 3) enemies[i].setPosition(300 + increaseEnemyDistance, 100);
-					else if (i < 6)enemies[i].setPosition(2300 + increaseEnemyDistance, 400);
-					else if (i < 9)enemies[i].setPosition(4300 + increaseEnemyDistance, 400);
-					else if (i < 12)enemies[i].setPosition(6300 + increaseEnemyDistance, 600);
-					else if (i < 15)enemies[i].setPosition(9300 + increaseEnemyDistance, 600);
-					else if (i < 18)enemies[i].setPosition(5300 + increaseEnemyDistance, 600);
-					else if (i < maxEnemiesLevel1)enemies[i].setPosition(3300 + increaseEnemyDistance, 600);
+					if (i < 3) enemies[i].setPosition(300.f + static_cast<float>(increaseEnemyDistance), 100.f);
+					else if (i < 6)enemies[i].setPosition(2300.f + static_cast<float>(increaseEnemyDistance), 400.f);
+					else if (i < 9)enemies[i].setPosition(4300.f + static_cast<float>(increaseEnemyDistance), 400.f);
+					else if (i < 12)enemies[i].setPosition(6300.f + static_cast<float>(increaseEnemyDistance), 600.f);
+					else if (i < 15)enemies[i].setPosition(9300.f + static_cast<float>(increaseEnemyDistance), 600.f);
+					else if (i < 18)enemies[i].setPosition(5300.f + static_cast<float>(increaseEnemyDistance), 600.f);
+					else if (i < maxEnemiesLevel1)enemies[i].setPosition(3300.f + static_cast<float>(increaseEnemyDistance), 600.f);
 					
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
