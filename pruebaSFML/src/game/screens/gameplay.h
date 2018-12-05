@@ -5,9 +5,9 @@
 #include "Setup\game.h"
 #include "setup/screens.h"
 #include "setup/character.h"
+#include "setup/level.h"
 #include "STP/TMXLoader.hpp"
-#include "pugixml.hpp"
-#include "pugiconfig.hpp"
+
 #include "Thor/Animations.hpp"
 #include "Thor/Time.hpp"
 #include "SpriteAnimation.h"

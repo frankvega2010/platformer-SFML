@@ -5,35 +5,14 @@
 namespace Game_Namespace
 {
 	////------------ Tilemap Settings
-	static pugi::xml_document doc;
-
-	static pugi::xml_parse_result result = doc.load_file("res/assets/tiles/firerange.tmx");
-
-	static pugi::xml_node object = doc.child("map").child("objectgroup");
-
-	static pugi::xml_node_iterator someObjects = object.begin();
 
 	static tmx::TileMap map("res/assets/tiles/firerange.tmx");
-
-	const int maxColisionsBoxes = 30;
-
-	static sf::RectangleShape rectangles[maxColisionsBoxes];
-
-	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
-
-	static pugi::xml_document doc2;
-
-	static pugi::xml_parse_result result2 = doc2.load_file("res/assets/tiles/level1.tmx");
-
-	static pugi::xml_node object2 = doc2.child("map").child("objectgroup");
-
-	static pugi::xml_node_iterator someObjects2 = object2.begin();
-
 	static tmx::TileMap map2("res/assets/tiles/level1.tmx");
 
-	const int maxColisionsBoxes2 = 33;
+	const int maxLevels = 2;
+	level levels[maxLevels];
 
-	static sf::RectangleShape rectangles2[maxColisionsBoxes2];
+	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	//Pause
 
@@ -270,39 +249,12 @@ namespace Game_Namespace
 			//// World Entities
 
 			//Tilemap
-			if (levelNumber==0)
-			{
-				int i = 0;
-				for (pugi::xml_node_iterator it = object.begin(); it != object.end(); ++it)
-				{
-					rectangles[i].setPosition(sf::Vector2f(static_cast<float>(it->attribute("x").as_int()),
-						static_cast<float>(it->attribute("y").as_int())));
 
-					rectangles[i].setSize(sf::Vector2f(static_cast<float>(it->attribute("width").as_int()),
-						static_cast<float>(it->attribute("height").as_int())));
+			levels[0].setResultPath("res/assets/tiles/firerange.tmx");
+			levels[0].setRectangles(30);
 
-					rectangles[i].setFillColor(sf::Color::Transparent);
-					i++;
-				}
-				i = 0;
-			}
-
-			if (levelNumber == 1)
-			{
-				int j = 0;
-				for (pugi::xml_node_iterator it = object2.begin(); it != object2.end(); ++it)
-				{
-					rectangles2[j].setPosition(sf::Vector2f(static_cast<float>(it->attribute("x").as_int()),
-						static_cast<float>(it->attribute("y").as_int())));
-
-					rectangles2[j].setSize(sf::Vector2f(static_cast<float>(it->attribute("width").as_int()),
-						static_cast<float>(it->attribute("height").as_int())));
-
-					rectangles2[j].setFillColor(sf::Color::Transparent);
-					j++;
-				}
-				j = 0;
-			}
+			levels[1].setResultPath("res/assets/tiles/level1.tmx");
+			levels[1].setRectangles(33);
 
 			// Player 1
 			playerTexture.loadFromFile("res/assets/textures/playersprite.png");
@@ -679,111 +631,55 @@ namespace Game_Namespace
 
 		static void CheckCollisionWithTiles(Character& Character, int i)
 		{
-			if (levelNumber==0)
+			if (Character.getRectangle().getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 			{
-				if (Character.getRectangle().getGlobalBounds().intersects(rectangles[i].getGlobalBounds()))
+				if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > levels[levelNumber].getRectangles(i).getPosition().x &&
+					Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < levels[levelNumber].getRectangles(i).getPosition().x + 10) // + 10
 				{
-					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles[i].getPosition().x &&
-						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles[i].getPosition().x + 10) // + 10
-					{
-						Character.setPosition(rectangles[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
-						Character.setMoveRight(false);
-						Character.setIsOnWhichLeftWall(i);
-					}
+					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
+					Character.setMoveRight(false);
+					Character.setIsOnWhichLeftWall(i);
+				}
 
-					else if (Character.getRectangle().getPosition().x < rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width &&
-						Character.getRectangle().getPosition().x > rectangles[i].getPosition().x + rectangles[i].getGlobalBounds().width - 10 // - 10
-						)
-					{
-						Character.setPosition(rectangles[i].getPosition().x + (rectangles[i].getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
-						Character.setMoveLeft(false);
-						Character.setIsOnWhichRightWall(i);
-					}
+				else if (Character.getRectangle().getPosition().x < levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width &&
+					Character.getRectangle().getPosition().x > levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width - 10 // - 10
+					)
+				{
+					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x + (levels[levelNumber].getRectangles(i).getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
+					Character.setMoveLeft(false);
+					Character.setIsOnWhichRightWall(i);
+				}
 
-					else if (Character.getRectangle().getPosition().y < rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height &&
-						Character.getRectangle().getPosition().y > rectangles[i].getPosition().y + rectangles[i].getGlobalBounds().height - 20) // - 20
-					{
-						Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y + (rectangles[i].getGlobalBounds().height));
-					}
+				else if (Character.getRectangle().getPosition().y < levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height &&
+					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - 20) // - 20
+				{
+					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
+				}
 
-					else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles[i].getPosition().y &&
-						Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles[i].getPosition().y + 20) // + 20
-					{
-						if (Character.getIsPlayer()) player1.setIsOnGround(true);
-						cameraDown = false;
-						Character.setGravity(false);
-						Character.setIsOnWhichGround(i);
-						Character.setPosition(Character.getRectangle().getPosition().x, rectangles[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
-					}
-					else
-					{
-						if (Character.getIsPlayer()) player1.setIsOnGround(false);
-						Character.setGravity(true);
-						Character.setMoveRight(true);
-						Character.setMoveLeft(true);
-					}
+				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
+					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + 20) // + 20
+				{
+					if (Character.getIsPlayer()) player1.setIsOnGround(true);
+					cameraDown = false;
+					Character.setGravity(false);
+					Character.setIsOnWhichGround(i);
+					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
 				}
 				else
 				{
-					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
-					if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
-					if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
-					
+					if (Character.getIsPlayer()) player1.setIsOnGround(false);
+					Character.setGravity(true);
+					Character.setMoveRight(true);
+					Character.setMoveLeft(true);
 				}
 			}
-			if (levelNumber == 1)
+			else
 			{
-				if (Character.getRectangle().getGlobalBounds().intersects(rectangles2[i].getGlobalBounds()))
-				{
-					if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > rectangles2[i].getPosition().x &&
-						Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < rectangles2[i].getPosition().x + 10) // + 10
-					{
-						Character.setPosition(rectangles2[i].getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
-						Character.setMoveRight(false);
-						Character.setIsOnWhichLeftWall(i);
-					}
+				if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+				if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
+				if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
 
-					else if (Character.getRectangle().getPosition().x < rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width &&
-						Character.getRectangle().getPosition().x > rectangles2[i].getPosition().x + rectangles2[i].getGlobalBounds().width - 10 // - 10
-						)
-					{
-						Character.setPosition(rectangles2[i].getPosition().x + (rectangles2[i].getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
-						Character.setMoveLeft(false);
-						Character.setIsOnWhichRightWall(i);
-					}
-
-					else if (Character.getRectangle().getPosition().y < rectangles2[i].getPosition().y + rectangles2[i].getGlobalBounds().height &&
-						Character.getRectangle().getPosition().y > rectangles2[i].getPosition().y + rectangles2[i].getGlobalBounds().height - 20) // - 20
-					{
-						Character.setPosition(Character.getRectangle().getPosition().x, rectangles2[i].getPosition().y + (rectangles2[i].getGlobalBounds().height));
-					}
-
-					else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > rectangles2[i].getPosition().y &&
-						Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < rectangles2[i].getPosition().y + 20) // + 20
-					{
-						if (Character.getIsPlayer()) player1.setIsOnGround(true);
-						cameraDown = false;
-						Character.setGravity(false);
-						Character.setIsOnWhichGround(i);
-						Character.setPosition(Character.getRectangle().getPosition().x, rectangles2[i].getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
-					}
-					else
-					{
-						if (Character.getIsPlayer()) player1.setIsOnGround(false);
-						Character.setGravity(true);
-						Character.setMoveRight(true);
-						Character.setMoveLeft(true);
-					}
-				}
-				else
-				{
-					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
-					if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
-					if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
-				}
 			}
-			
-			
 		}
 
 		static void CheckCollisionBetweenEnemies(int iFromEnemy)
@@ -1324,7 +1220,7 @@ namespace Game_Namespace
 
 				if (levelNumber == 0)
 				{
-					for (int i = 0; i < maxColisionsBoxes; i++)
+					for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 					{
 						CheckCollisionWithTiles(player1, i);
 						for (int f = 0; f < maxEnemiesLevel1; f++)
@@ -1336,7 +1232,7 @@ namespace Game_Namespace
 				
 				if (levelNumber == 1)
 				{
-					for (int i = 0; i < maxColisionsBoxes2; i++)
+					for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 					{
 						CheckCollisionWithTiles(player1, i);
 						for (int f = 0; f < maxEnemiesLevel1; f++)
@@ -1399,17 +1295,17 @@ namespace Game_Namespace
 			// Draw Tilemap with its collision objects
 			if (levelNumber == 0)
 			{
-				for (int i = 0; i < maxColisionsBoxes; i++)
+				for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 				{
-					_window.draw(rectangles[i]);
+					_window.draw(levels[levelNumber].getRectangles(i));
 				}
 				_window.draw(map);
 			}
 			if (levelNumber == 1)
 			{
-				for (int i = 0; i < maxColisionsBoxes; i++)
+				for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 				{
-					_window.draw(rectangles2[i]);
+					_window.draw(levels[levelNumber].getRectangles(i));
 				}
 				_window.draw(map2);
 			}
