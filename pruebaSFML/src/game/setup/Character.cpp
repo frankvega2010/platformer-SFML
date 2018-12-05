@@ -23,10 +23,12 @@ namespace Game_Namespace
 		_isDead = false;
 		_moveLeft = true;
 		_moveRight = true;
+		_moveUp = true;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
 		_isOnWhichCharacterLeftSide = -1;
 		_isOnWhichCharacterRightSide = -1;
+		_isOnWhichCeiling = -1;
 	}
 
 	Character::Character(float x, float y, float width, float height, sf::Color color)
@@ -50,10 +52,12 @@ namespace Game_Namespace
 		_isDead = false;
 		_moveLeft = true;
 		_moveRight = true;
+		_moveUp = true;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
 		_isOnWhichCharacterLeftSide = -1;
 		_isOnWhichCharacterRightSide = -1;
+		_isOnWhichCeiling = -1;
 	}
 
 	Character::~Character()
@@ -257,6 +261,13 @@ namespace Game_Namespace
 		_timerJump.start();
 	}
 
+	void Character::StopTimerJump()
+	{
+		_timerJump.stop();
+		_isJumping = false;
+		_gravity = true;
+	}
+
 	void Character::setResetTimerJump(sf::Time initialTime)
 	{
 		_timerJump.reset(initialTime);
@@ -371,4 +382,23 @@ namespace Game_Namespace
 		_isOnWhichCharacterRightSide = isOnWhichCharacterRightSide;
 	}
 
+	int Character::getIsOnWhichCeiling()
+	{
+		return _isOnWhichCeiling;
+	}
+
+	void Character::setIsOnWhichCeiling(int isOnWhichCeiling)
+	{
+		_isOnWhichCeiling = isOnWhichCeiling;
+	}
+
+	bool Character::getMoveUp()
+	{
+		return _moveUp;
+	}
+
+	void Character::setMoveUp(bool moveUp)
+	{
+		_moveUp = moveUp;
+	}
 }

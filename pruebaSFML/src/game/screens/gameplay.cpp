@@ -655,6 +655,9 @@ namespace Game_Namespace
 					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - rectangleCollisionLimitY)
 				{
 					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
+					Character.setMoveUp(false);
+					Character.setIsOnWhichCeiling(i);
+					if (Character.getIsPlayer()) player1.StopTimerJump();
 				}
 
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
@@ -672,6 +675,7 @@ namespace Game_Namespace
 					Character.setGravity(true);
 					Character.setMoveRight(true);
 					Character.setMoveLeft(true);
+					Character.setMoveUp(true);
 				}
 			}
 			else
@@ -679,6 +683,7 @@ namespace Game_Namespace
 				if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
 				if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
 				if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
+				if (Character.getIsOnWhichCeiling() == i) Character.setMoveUp(true);
 
 			}
 		}
@@ -1047,7 +1052,8 @@ namespace Game_Namespace
 				{
 					playerFootStep.stop();
 					cameraDown = false;
-					character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
+					if(character.getMoveUp()) character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
+					
 				}
 
 				if (character.isTimerJumpExpired())

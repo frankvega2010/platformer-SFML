@@ -21,6 +21,7 @@ namespace Game_Namespace
 		int _isOnWhichGround;
 		int _isOnWhichLeftWall;
 		int _isOnWhichRightWall;
+		int _isOnWhichCeiling;
 		int _isOnWhichCharacterLeftSide;
 		int _isOnWhichCharacterRightSide;
 		bool _alive;
@@ -35,6 +36,7 @@ namespace Game_Namespace
 		bool _isDead;
 		bool _moveLeft;
 		bool _moveRight;
+		bool _moveUp;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -79,11 +81,14 @@ namespace Game_Namespace
 		bool getIsOnGround();
 		void setIsOnGround(bool isOnGround);
 		void StartTimerJump();
+		void StopTimerJump();
 		void setResetTimerJump(sf::Time initialTime);
 		bool isTimerJumpExpired();
 		bool isTimerJumpRunning();
 		int getIsOnWhichGround();
 		void setIsOnWhichGround(int isOnWhichGround);
+		int getIsOnWhichCeiling();
+		void setIsOnWhichCeiling(int isOnWhichCeiling);
 		void setOrigin(int x, int y);
 		void scale(int x, int y);
 		bool getIsDead();
@@ -92,6 +97,8 @@ namespace Game_Namespace
 		void setMoveRight(bool moveRight);
 		bool getMoveLeft();
 		void setMoveLeft(bool moveLeft);
+		bool getMoveUp();
+		void setMoveUp(bool moveUp);
 		int getIsOnWhichLeftWall();
 		void setIsOnWhichLeftWall(int isOnWhichLeftWall);
 		int getIsOnWhichRightWall();
