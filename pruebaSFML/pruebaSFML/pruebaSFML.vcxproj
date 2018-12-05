@@ -95,7 +95,7 @@
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;thor-d.lib;tgui-d.lib;STP-d.lib;zlibd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)copyfiles.bat "$(TargetDir)" "$(SolutionDir)" "1"</Command>
+      <Command>"$(ProjectDir)copyfiles.bat" "$(TargetDir)" "$(SolutionDir)" "1"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -125,7 +125,7 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>$(ProjectDir)copyfiles.bat "$(TargetDir)" "$(SolutionDir)" "2"</Command>
+      <Command>"$(ProjectDir)copyfiles.bat" "$(TargetDir)" "$(SolutionDir)" "2"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
