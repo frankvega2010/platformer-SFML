@@ -21,6 +21,7 @@ namespace Game_Namespace
 		sf::RectangleShape _rectangles[maxRectanglesPerLevel];
 		sf::RectangleShape _rectangleTest;
 		char _resultPath;
+		int _enemyKillObjetive;
 	public:
 		level();
 		~level();
@@ -29,6 +30,8 @@ namespace Game_Namespace
 		sf::RectangleShape getRectangles(int i);
 		sf::RectangleShape getRectangleTest();
 		int getRectanglesInLevel();
+		void setEnemyKillObjetive(int enemyKillObjetive);
+		int getEnemyKillObjetive();
 	};
 }
 

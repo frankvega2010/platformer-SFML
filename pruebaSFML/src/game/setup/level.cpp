@@ -21,6 +21,7 @@ namespace Game_Namespace
 		_object = _doc.child("map").child("objectgroup");;
 		_someObjects = _object.begin();
 		_RectanglesInLevel = RectanglesInLevel;
+		_enemyKillObjetive = 0;
 		
 		int i = 0;
 		for (pugi::xml_node_iterator it = _object.begin(); it != _object.end(); ++it)
@@ -51,5 +52,15 @@ namespace Game_Namespace
 	int level::getRectanglesInLevel()
 	{
 		return _RectanglesInLevel;
+	}
+
+	void level::setEnemyKillObjetive(int enemyKillObjetive)
+	{
+		_enemyKillObjetive = enemyKillObjetive;
+	}
+
+	int level::getEnemyKillObjetive()
+	{
+		return _enemyKillObjetive;
 	}
 }
