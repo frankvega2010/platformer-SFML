@@ -1,6 +1,5 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
-#include "game.h"
 #include "setup/screens.h"
 namespace Game_Namespace
 {

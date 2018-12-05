@@ -1,22 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-
-//#include <iostream>
-
-
 #include "SFML/Audio.hpp"
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "TGUI/TGUI.hpp"
-
-#include "Screens/gameplay.h"
-#include "Screens/menu.h"
-#include "Screens/gameover.h"
-#include "Screens/settings.h"
-#include "Screens/credits.h"
-#include "setup/screens.h"
-
 
 namespace Game_Namespace
 {

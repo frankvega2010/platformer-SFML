@@ -1,8 +1,7 @@
 #include "settings.h"
 
-//#include "raylib.h"
-#include "Setup/Game.h"
 #include "Screens/gameplay.h"
+#include "Screens/menu.h"
 
 using namespace Game_Namespace;
 using namespace Gameplay_Section;
@@ -148,7 +147,7 @@ namespace Game_Namespace
 			sliderMusic->setMaximum(100);
 			sliderMusic->setPosition(500, 310);
 			sliderMusic->setSize(350, 30);
-			sliderMusic->setValue(globalMusicVolume);
+			sliderMusic->setValue(static_cast<float>(globalMusicVolume));
 			gui.add(sliderMusic);
 
 			labelSoundVolume = tgui::Label::create();
@@ -165,7 +164,7 @@ namespace Game_Namespace
 			sliderSound->setMaximum(100);
 			sliderSound->setPosition(500, 670);
 			sliderSound->setSize(350, 30);
-			sliderSound->setValue(globalSoundVolume);
+			sliderSound->setValue(static_cast<float>(globalSoundVolume));
 			gui.add(sliderSound);
 
 			setHasScreenFinished(false);
@@ -178,8 +177,8 @@ namespace Game_Namespace
 
 		void SettingsScreen::update()
 		{
-			globalMusicVolume = sliderMusic->getValue();
-			globalSoundVolume=sliderSound->getValue();
+			globalMusicVolume = static_cast<int>(sliderMusic->getValue());
+			globalSoundVolume=static_cast<int>(sliderSound->getValue());
 			input();
 		}
 

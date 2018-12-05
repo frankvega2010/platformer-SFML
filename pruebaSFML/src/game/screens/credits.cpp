@@ -1,5 +1,7 @@
 #include "credits.h"
 
+#include "Setup/game.h"
+
 namespace Game_Namespace
 {
 	static const int maxButtons = 1;

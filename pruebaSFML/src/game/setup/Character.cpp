@@ -294,12 +294,12 @@ namespace Game_Namespace
 
 	void Character::setOrigin(int x, int y)
 	{
-		_rectangle.setOrigin(x, y);
+		_rectangle.setOrigin(static_cast<float>(x), static_cast<float>(y));
 	}
 
 	void Character::scale(int x, int y)
 	{
-		_rectangle.scale(x, y);
+		_rectangle.scale(static_cast<float>(x), static_cast<float>(y));
 	}
 
 	bool Character::getIsDead()
