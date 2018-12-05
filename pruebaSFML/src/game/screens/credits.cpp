@@ -17,15 +17,15 @@ namespace Game_Namespace
 
 	static sf::Text creditsText[maxCreditsTexts];
 
-	static const int titleTextSize = 40;
+	static unsigned int titleTextSize = 40;
 
-	static const int subtitleTextSize1 = 30;
+	static unsigned int subtitleTextSize1 = 30;
 
-	static const int subtitleTextSize2 = 20;
+	static unsigned int subtitleTextSize2 = 20;
 
-	static const int posTextX1 = 150;
+	static float posTextX1 = 150;
 
-	static const int posTextX2 = 180;
+	static float posTextX2 = 180;
 
 	namespace Credits_Section
 	{
