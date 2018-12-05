@@ -10,6 +10,10 @@ namespace Game_Namespace
 {
 	static const int maxButtons = 7;
 
+	static const int guiXPosition = 500;
+
+	static const int guiTextSize = 50;
+
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
 	static tgui::Button::Ptr buttons[maxButtons];
@@ -136,8 +140,8 @@ namespace Game_Namespace
 			labelMusicVolume = tgui::Label::create();
 			labelMusicVolume->setRenderer(blackTheme.getRenderer("Label"));
 			labelMusicVolume->setText("Music Volume");
-			labelMusicVolume->setPosition(500, 210);
-			labelMusicVolume->setTextSize(50);
+			labelMusicVolume->setPosition(guiXPosition, 210);
+			labelMusicVolume->setTextSize(guiTextSize);
 			labelMusicVolume->setInheritedFont(fontButtons);
 			gui.add(labelMusicVolume);
 
@@ -145,7 +149,7 @@ namespace Game_Namespace
 			sliderMusic->setRenderer(blackTheme.getRenderer("Slider"));
 			sliderMusic->setMinimum(0);
 			sliderMusic->setMaximum(100);
-			sliderMusic->setPosition(500, 310);
+			sliderMusic->setPosition(guiXPosition, 310);
 			sliderMusic->setSize(350, 30);
 			sliderMusic->setValue(static_cast<float>(globalMusicVolume));
 			gui.add(sliderMusic);
@@ -153,8 +157,8 @@ namespace Game_Namespace
 			labelSoundVolume = tgui::Label::create();
 			labelSoundVolume->setRenderer(blackTheme.getRenderer("Label"));
 			labelSoundVolume->setText("Sound Volume");
-			labelSoundVolume->setPosition(500, 570);
-			labelSoundVolume->setTextSize(50);
+			labelSoundVolume->setPosition(guiXPosition, 570);
+			labelSoundVolume->setTextSize(guiTextSize);
 			labelSoundVolume->setInheritedFont(fontButtons);
 			gui.add(labelSoundVolume);
 
@@ -162,7 +166,7 @@ namespace Game_Namespace
 			sliderSound->setRenderer(blackTheme.getRenderer("Slider"));
 			sliderSound->setMinimum(0);
 			sliderSound->setMaximum(100);
-			sliderSound->setPosition(500, 670);
+			sliderSound->setPosition(guiXPosition, 670);
 			sliderSound->setSize(350, 30);
 			sliderSound->setValue(static_cast<float>(globalSoundVolume));
 			gui.add(sliderSound);

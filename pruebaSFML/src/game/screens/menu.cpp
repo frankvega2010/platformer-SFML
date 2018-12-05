@@ -12,7 +12,6 @@
 
 using namespace Game_Namespace;
 using namespace std;
-//using namespace string;
 using namespace thor::Shapes;
 
 namespace Game_Namespace

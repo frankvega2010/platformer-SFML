@@ -31,6 +31,20 @@ namespace Game_Namespace
 	static const int maxEnemiesLevelTutorial = 5;
 	static const int maxEnemiesLevel1 = 20;
 	static const int maxTutorialTexts = 6;
+	static const int enemySpeed = 300;
+
+	static const int defaultHP = 100;
+
+	static const int tutorialFontSize = 50;
+	static const sf::Color tutorialColor = sf::Color::Black;
+
+	static const int HUDdefaultFontSize = 80;
+
+	static const sf::Color transparentBlue = { 0,0,110,100 };
+
+	static const int rectangleCollisionLimitX = 10;
+	static const int rectangleCollisionLimitY = 20;
+	static const int GravityAndWallFix = 1;
 
 	// Camera Settings
 
@@ -284,7 +298,7 @@ namespace Game_Namespace
 			player1.setColor(sf::Color::White);
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 2100);
-			player1.setHp(100);
+			player1.setHp(defaultHP);
 
 			player1.setTexture(playerTexture);
 			playerAnimation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
@@ -318,7 +332,7 @@ namespace Game_Namespace
 				enemies[i].setColor(sf::Color::Transparent);
 				enemies[i].setIsAlive(true);
 				enemies[i].setSpeed(0, 0);
-				enemies[i].setHp(100);
+				enemies[i].setHp(defaultHP);
 				enemies[i].setCurrentlyTouchingPlayer(false);
 				enemies[i].setFlipLeft(false);
 				enemies[i].setFlipRight(false);
@@ -338,7 +352,7 @@ namespace Game_Namespace
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
 					enemies[i].setSpeed(500, 1400);
-					enemies[i].setHp(100);
+					enemies[i].setHp(defaultHP);
 					enemies[i].setCurrentlyTouchingPlayer(true);
 					enemies[i].setFlipLeft(true);
 					enemies[i].setFlipRight(true);
@@ -369,7 +383,7 @@ namespace Game_Namespace
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
 					enemies[i].setSpeed(500, 1400);
-					enemies[i].setHp(100);
+					enemies[i].setHp(defaultHP);
 					enemies[i].setCurrentlyTouchingPlayer(true);
 					enemies[i].setFlipLeft(true);
 					enemies[i].setFlipRight(true);
@@ -391,47 +405,47 @@ namespace Game_Namespace
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
 			font2.loadFromFile("res/assets/fonts/times_new_yorker.ttf");
 
-			playerStateText.setCharacterSize(80);
+			playerStateText.setCharacterSize(HUDdefaultFontSize);
 			playerStateText.setFont(deltaFont);
 			playerStateText.setPosition(400, 400);
 			playerStateText.setString("");
 
 			if (levelNumber==0)
 			{
-				tutorialText[0].setCharacterSize(50);
+				tutorialText[0].setCharacterSize(tutorialFontSize);
 				tutorialText[0].setFont(font2);
 				tutorialText[0].setPosition(200, 1600);
-				tutorialText[0].setFillColor(sf::Color::Black);
+				tutorialText[0].setFillColor(tutorialColor);
 				tutorialText[0].setString("Press W and D to move horizontally");
 
-				tutorialText[1].setCharacterSize(50);
+				tutorialText[1].setCharacterSize(tutorialFontSize);
 				tutorialText[1].setFont(font2);
 				tutorialText[1].setPosition(200, 1700);
-				tutorialText[1].setFillColor(sf::Color::Black);
+				tutorialText[1].setFillColor(tutorialColor);
 				tutorialText[1].setString("Press SPACEBAR to jump, go to the next room!");
 
-				tutorialText[2].setCharacterSize(50);
+				tutorialText[2].setCharacterSize(tutorialFontSize);
 				tutorialText[2].setFont(font2);
 				tutorialText[2].setPosition(3525, 1700);
-				tutorialText[2].setFillColor(sf::Color::Black);
+				tutorialText[2].setFillColor(tutorialColor);
 				tutorialText[2].setString("Aim with the mouse cursor and shoot with Left Mouse Button");
 
-				tutorialText[3].setCharacterSize(50);
+				tutorialText[3].setCharacterSize(tutorialFontSize);
 				tutorialText[3].setFont(font2);
 				tutorialText[3].setPosition(3525, 1900);
-				tutorialText[3].setFillColor(sf::Color::Black);
+				tutorialText[3].setFillColor(tutorialColor);
 				tutorialText[3].setString("You will be able to shoot once your crosshair is in the enemy position");
 
-				tutorialText[4].setCharacterSize(50);
+				tutorialText[4].setCharacterSize(tutorialFontSize);
 				tutorialText[4].setFont(font2);
 				tutorialText[4].setPosition(2500, 1200);
-				tutorialText[4].setFillColor(sf::Color::Black);
+				tutorialText[4].setFillColor(tutorialColor);
 				tutorialText[4].setString("Once you have killed enough zombies,the exit will be unlocked!");
 
-				tutorialText[5].setCharacterSize(50);
+				tutorialText[5].setCharacterSize(tutorialFontSize);
 				tutorialText[5].setFont(font2);
 				tutorialText[5].setPosition(1300, 1100);
-				tutorialText[5].setFillColor(sf::Color::Black);
+				tutorialText[5].setFillColor(tutorialColor);
 				tutorialText[5].setString("Go to the blue rectangle to exit the tutorial!");
 			}
 			
@@ -469,13 +483,13 @@ namespace Game_Namespace
 			
 			for (int i = 0; i < maxEnemiesLevel1; i++)
 			{
-				LivesEnemies[i].setCharacterSize(80);
+				LivesEnemies[i].setCharacterSize(HUDdefaultFontSize);
 				LivesEnemies[i].setFont(deltaFont);
 				LivesEnemies[i].setPosition(50, 1400);
 				LivesEnemies[i].setFillColor(sf::Color::Transparent);
 			}
 
-			zombiesKilledText.setCharacterSize(80);
+			zombiesKilledText.setCharacterSize(HUDdefaultFontSize);
 			zombiesKilledText.setFont(deltaFont);
 			zombiesKilledText.setPosition(500, 200);
 			zombiesKilledText.setFillColor(sf::Color::White);
@@ -526,7 +540,7 @@ namespace Game_Namespace
 			pauseButton->setRenderer(blackTheme.getRenderer("Button"));
 			pauseButton->setInheritedFont(fontButtons);
 			pauseButton->setSize(50, 50);
-			pauseButton->setTextSize(40);// 240 100
+			pauseButton->setTextSize(40);
 
 			pauseButton->setPosition(940, 10);
 			pauseButton->setText("II");
@@ -535,7 +549,7 @@ namespace Game_Namespace
 			// Exit
 
 			Exit.setSize(sf::Vector2f(100, 200));
-			Exit.setFillColor({ 0,0,110,100 });
+			Exit.setFillColor(transparentBlue);
 
 			switch (levelNumber)
 			{
@@ -612,20 +626,6 @@ namespace Game_Namespace
 			{
 				Game::setIsKeyPressed(false);
 			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-			{
-				if (!(Game::getIsKeyPressed()))
-				{
-					Game::setButtonOption(buttonGameOver);
-					Screens::setHasScreenFinished(true);
-					Game::setIsKeyPressed(true);
-				}
-			}
-			else
-			{
-				Game::setIsKeyPressed(false);
-			}
 		}
 
 		//------- Gameplay Functions
@@ -635,36 +635,36 @@ namespace Game_Namespace
 			if (Character.getRectangle().getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 			{
 				if (Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width > levels[levelNumber].getRectangles(i).getPosition().x &&
-					Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < levels[levelNumber].getRectangles(i).getPosition().x + 10) // + 10
+					Character.getRectangle().getPosition().x + Character.getRectangle().getGlobalBounds().width < levels[levelNumber].getRectangles(i).getPosition().x + rectangleCollisionLimitX)
 				{
-					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x - (Character.getRectangle().getGlobalBounds().width) + 1, Character.getRectangle().getPosition().y); // + 1 magic number,change 1 to WallGlitchFix.
+					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x - (Character.getRectangle().getGlobalBounds().width) + GravityAndWallFix, Character.getRectangle().getPosition().y);
 					Character.setMoveRight(false);
 					Character.setIsOnWhichLeftWall(i);
 				}
 
 				else if (Character.getRectangle().getPosition().x < levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width &&
-					Character.getRectangle().getPosition().x > levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width - 10 // - 10
+					Character.getRectangle().getPosition().x > levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width - rectangleCollisionLimitX
 					)
 				{
-					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x + (levels[levelNumber].getRectangles(i).getGlobalBounds().width) - 1, Character.getRectangle().getPosition().y); // - 1 magic number,change 1 to WallGlitchFix.
+					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x + (levels[levelNumber].getRectangles(i).getGlobalBounds().width) - GravityAndWallFix, Character.getRectangle().getPosition().y);
 					Character.setMoveLeft(false);
 					Character.setIsOnWhichRightWall(i);
 				}
 
 				else if (Character.getRectangle().getPosition().y < levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height &&
-					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - 20) // - 20
+					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - rectangleCollisionLimitY)
 				{
 					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
 				}
 
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
-					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + 20) // + 20
+					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + rectangleCollisionLimitY)
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true);
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
-					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y - (Character.getRectangle().getGlobalBounds().height) + 1); // + 1 , magic number, change later to "GravityFix"
+					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y - (Character.getRectangle().getGlobalBounds().height) + GravityAndWallFix);
 				}
 				else
 				{
@@ -692,33 +692,33 @@ namespace Game_Namespace
 					if (enemies[iFromEnemy].getRectangle().getGlobalBounds().intersects(enemies[i].getRectangle().getGlobalBounds()))
 					{
 						if (enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width > enemies[i].getRectangle().getPosition().x &&
-							enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width < enemies[i].getRectangle().getPosition().x + 10) // + 10
+							enemies[iFromEnemy].getRectangle().getPosition().x + enemies[iFromEnemy].getRectangle().getGlobalBounds().width < enemies[i].getRectangle().getPosition().x + rectangleCollisionLimitX)
 						{
-							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x - (enemies[iFromEnemy].getRectangle().getGlobalBounds().width) + 1, enemies[iFromEnemy].getRectangle().getPosition().y); // change 1 to WallGlitchFix.
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x - (enemies[iFromEnemy].getRectangle().getGlobalBounds().width) + GravityAndWallFix, enemies[iFromEnemy].getRectangle().getPosition().y);
 							enemies[iFromEnemy].setMoveRight(false);
 							enemies[iFromEnemy].setIsOnWhichCharacterLeftSide(i);
 						}
 
 
 						if (enemies[iFromEnemy].getRectangle().getPosition().x < enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width &&
-							enemies[iFromEnemy].getRectangle().getPosition().x > enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width - 10 // - 10
+							enemies[iFromEnemy].getRectangle().getPosition().x > enemies[i].getRectangle().getPosition().x + enemies[i].getRectangle().getGlobalBounds().width - rectangleCollisionLimitX
 							)
 						{
-							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x + (enemies[i].getRectangle().getGlobalBounds().width) - 1, enemies[iFromEnemy].getRectangle().getPosition().y); // change 1 to WallGlitchFix.
+							enemies[iFromEnemy].setPosition(enemies[i].getRectangle().getPosition().x + (enemies[i].getRectangle().getGlobalBounds().width) - GravityAndWallFix, enemies[iFromEnemy].getRectangle().getPosition().y);
 							enemies[iFromEnemy].setMoveLeft(false);
 							enemies[iFromEnemy].setIsOnWhichCharacterRightSide(i);
 						}
 
 
 						if (enemies[iFromEnemy].getRectangle().getPosition().y < enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height &&
-							enemies[iFromEnemy].getRectangle().getPosition().y > enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height - 20) // - 20
+							enemies[iFromEnemy].getRectangle().getPosition().y > enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height - rectangleCollisionLimitY)
 						{
 							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y + (enemies[i].getRectangle().getGlobalBounds().height));
 						}
 
 
 						if (enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height > enemies[i].getRectangle().getPosition().y &&
-							enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height < enemies[i].getRectangle().getPosition().y + 20) // + 20
+							enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height < enemies[i].getRectangle().getPosition().y + rectangleCollisionLimitY)
 						{
 							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y - (enemies[iFromEnemy].getRectangle().getGlobalBounds().height) );
 						}
@@ -841,7 +841,7 @@ namespace Game_Namespace
 
 						if (enemy.getMoveRight())
 						{
-							enemy.setMove(300 * deltaTime.asSeconds(), 0);
+							enemy.setMove(enemySpeed * deltaTime.asSeconds(), 0);
 							animation.Update(3, deltaTime.asSeconds());
 						}
 
@@ -864,7 +864,7 @@ namespace Game_Namespace
 
 						if (enemy.getMoveLeft())
 						{
-							enemy.setMove(-300 * deltaTime.asSeconds(), 0);
+							enemy.setMove(-(enemySpeed) * deltaTime.asSeconds(), 0);
 							animation.Update(3, deltaTime.asSeconds());
 						}
 
@@ -910,7 +910,7 @@ namespace Game_Namespace
 					enemy.setSize(0, 0);
 					enemy.setPlayerDetectionSize(0, 0);
 					enemy.setIsAlive(true);
-					enemy.setHp(100);
+					enemy.setHp(defaultHP);
 					enemy.setIsDead(true);
 				}
 
@@ -976,7 +976,7 @@ namespace Game_Namespace
 				{
 					player1.setOrigin(static_cast<int>(player1.getRectangle().getGlobalBounds().width), 0);
 					player1.scale(-1, 1);
-					gun.setOrigin({ -20,40 }); // -20 0
+					gun.setOrigin({ -20,40 });
 					gun.scale(1, -1);
 				}
 				player1.setFlipLeft(false);

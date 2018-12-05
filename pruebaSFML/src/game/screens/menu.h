@@ -16,8 +16,6 @@ namespace Game_Namespace
 		buttonQuit
 	};
 
-	//extern tgui::Gui gui;
-
 	namespace Menu_Section
 	{
 		class MenuScreen :public Screens
@@ -33,11 +31,6 @@ namespace Game_Namespace
 			void deInit();
 			bool finish();
 		};
-
-		/*void UpdateMenuScreen();
-		void InitMenuScreen();
-		bool FinishMenuScreen();
-		void DrawMenu();*/
 	}
 }
 #endif // MENU_H
