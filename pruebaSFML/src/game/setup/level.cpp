@@ -1,6 +1,6 @@
 #include "level.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	level::level()
 	{

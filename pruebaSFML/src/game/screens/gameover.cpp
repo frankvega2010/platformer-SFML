@@ -1,6 +1,6 @@
 #include "gameover.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	static const int Restart_Gameplay = 5;
 

@@ -3,7 +3,7 @@
 
 #include "setup/screens.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	enum menuOptions {
 		buttonPlay = 10,

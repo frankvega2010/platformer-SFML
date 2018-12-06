@@ -6,7 +6,7 @@
 #include "pugixml.hpp"
 #include "pugiconfig.hpp"
 
-namespace Game_Namespace
+namespace newgame
 {
 	const int maxRectanglesPerLevel = 60;
 

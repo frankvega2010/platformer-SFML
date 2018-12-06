@@ -10,11 +10,11 @@
 #include <string>
 
 
-using namespace Game_Namespace;
+using namespace newgame;
 using namespace std;
 using namespace thor::Shapes;
 
-namespace Game_Namespace
+namespace newgame
 {
 	static const int maxButtons = 5;
 

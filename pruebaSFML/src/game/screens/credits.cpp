@@ -2,7 +2,7 @@
 
 #include "Setup/game.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	static const int maxButtons = 1;
 	static const int maxCreditsTexts = 28;

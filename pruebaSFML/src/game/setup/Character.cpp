@@ -1,6 +1,6 @@
 #include "Character.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	Character::Character()
 	{

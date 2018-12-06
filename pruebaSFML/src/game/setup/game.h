@@ -6,7 +6,7 @@
 #include "SFML/Window.hpp"
 #include "TGUI/TGUI.hpp"
 
-namespace Game_Namespace
+namespace newgame
 {
 	enum GameScreens
 	{

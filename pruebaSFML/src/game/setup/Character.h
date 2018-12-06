@@ -5,7 +5,7 @@
 #include "Thor/Time.hpp"
 #include "SpriteAnimation.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	class Character
 	{

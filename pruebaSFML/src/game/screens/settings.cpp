@@ -3,10 +3,10 @@
 #include "Screens/gameplay.h"
 #include "Screens/menu.h"
 
-using namespace Game_Namespace;
+using namespace newgame;
 using namespace Gameplay_Section;
 
-namespace Game_Namespace
+namespace newgame
 {
 	static const int maxButtons = 7;
 

@@ -2,7 +2,7 @@
 
 #include "menu.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	////------------ Tilemap Settings
 

@@ -1,7 +1,7 @@
 #ifndef SETTINGS_H
 #define SETTINGS_H
 #include "setup/screens.h"
-namespace Game_Namespace
+namespace newgame
 {
 	namespace Settings_Section
 	{

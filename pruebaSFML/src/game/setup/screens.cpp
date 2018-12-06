@@ -1,6 +1,6 @@
 #include "screens.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	bool Screens::_hasScreenFinished=0;
 

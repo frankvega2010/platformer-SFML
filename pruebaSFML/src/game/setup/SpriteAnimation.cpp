@@ -1,6 +1,6 @@
 #include "SpriteAnimation.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	SpriteAnimation::SpriteAnimation()
 	{

@@ -4,7 +4,7 @@
 #include "Screens/gameplay.h"
 #include "setup/screens.h"
 
-namespace Game_Namespace
+namespace newgame
 {
 	namespace GameOver_Section
 	{

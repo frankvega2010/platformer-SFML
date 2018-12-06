@@ -10,14 +10,14 @@
 #include "setup/screens.h"
 
 
-using namespace Game_Namespace;
+using namespace newgame;
 using namespace Gameplay_Section;
 using namespace GameOver_Section;
 using namespace Menu_Section;
 using namespace Settings_Section;
 using namespace Credits_Section;
 
-namespace Game_Namespace
+namespace newgame
 {
 
 	static bool gameON = true;
