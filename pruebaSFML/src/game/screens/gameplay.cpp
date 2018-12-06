@@ -299,6 +299,7 @@ namespace newgame
 			player1.setIsAlive(true);
 			player1.setSpeed(500, 2100);
 			player1.setHp(defaultHP);
+			player1.setCanShoot(true);
 
 			player1.setTexture(playerTexture);
 			playerAnimation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
@@ -315,7 +316,7 @@ namespace newgame
 			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
 			gun.setSize({ 140,90 });
 			gun.setTexture(&playerHands);
-			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.08f);
+			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.055f);
 
 			// Enemy 1
 
@@ -794,6 +795,22 @@ namespace newgame
 			}
 		}
 
+		static void playerShoot()
+		{
+			if (player1.getCanShoot())
+			{
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+				{
+
+					if (!timerPistolFireRate.isRunning())
+					{
+						pistolGunShoot.play();
+						timerPistolFireRate.start();
+					}
+				}
+			}
+		}
+
 		static void isCrosshairOnTarget(Character& enemy,int i)
 		{	
 			if (crosshairTest.getGlobalBounds().intersects(enemy.getRectangle().getGlobalBounds()))
@@ -803,10 +820,8 @@ namespace newgame
 					LivesEnemies[i].setFillColor(sf::Color::White);
 					crosshairTest.setFillColor(sf::Color::Red);
 
-					player1.setCanShoot(true);
 					if (player1.getCanShoot())
 					{
-						
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
 
@@ -818,17 +833,16 @@ namespace newgame
 								enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 							}
 						}
-						else
-						{
-						}
 					}
 				}
 			}
 			else
 			{
+				
+
 				LivesEnemies[i].setFillColor(sf::Color::Transparent);
 				crosshairTest.setFillColor(sf::Color::Red);
-				player1.setCanShoot(false);
+				//player1.setCanShoot(false);
 			}
 		}
 
@@ -1208,6 +1222,8 @@ namespace newgame
 
 					CheckCollisionBetweenEnemies(i);
 				}
+
+				playerShoot();
 
 				// gravity
 				CheckPlayerGravity();
