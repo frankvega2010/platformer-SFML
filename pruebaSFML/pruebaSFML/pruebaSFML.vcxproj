@@ -148,11 +148,11 @@
     <ClCompile Include="..\src\game\screens\gameplay.cpp" />
     <ClCompile Include="..\src\game\screens\menu.cpp" />
     <ClCompile Include="..\src\game\screens\settings.cpp" />
-    <ClCompile Include="..\src\game\setup\Character.cpp" />
+    <ClCompile Include="..\src\game\setup\character.cpp" />
     <ClCompile Include="..\src\game\setup\game.cpp" />
     <ClCompile Include="..\src\game\setup\level.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
-    <ClCompile Include="..\src\game\setup\SpriteAnimation.cpp" />
+    <ClCompile Include="..\src\game\setup\spriteanimation.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\pugixml\pugixml.cpp" />
   </ItemGroup>
@@ -162,11 +162,11 @@
     <ClInclude Include="..\src\game\screens\gameplay.h" />
     <ClInclude Include="..\src\game\screens\menu.h" />
     <ClInclude Include="..\src\game\screens\settings.h" />
-    <ClInclude Include="..\src\game\setup\Character.h" />
+    <ClInclude Include="..\src\game\setup\character.h" />
     <ClInclude Include="..\src\game\setup\game.h" />
     <ClInclude Include="..\src\game\setup\level.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
-    <ClInclude Include="..\src\game\setup\SpriteAnimation.h" />
+    <ClInclude Include="..\src\game\setup\spriteanimation.h" />
     <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml\pugixml.hpp" />
   </ItemGroup>

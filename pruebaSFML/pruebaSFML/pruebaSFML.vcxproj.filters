@@ -52,13 +52,13 @@
     <ClCompile Include="..\src\pugixml\pugixml.cpp">
       <Filter>Game\pugixml</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game\setup\Character.cpp">
-      <Filter>Game\Setup</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\game\setup\SpriteAnimation.cpp">
-      <Filter>Game\Setup</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\game\setup\level.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\setup\character.cpp">
+      <Filter>Game\Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\setup\spriteanimation.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,13 +90,13 @@
     <ClInclude Include="..\src\pugixml\pugixml.hpp">
       <Filter>Game\pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\setup\Character.h">
-      <Filter>Game\Setup</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\game\setup\SpriteAnimation.h">
-      <Filter>Game\Setup</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\game\setup\level.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\setup\character.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\setup\spriteanimation.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
   </ItemGroup>

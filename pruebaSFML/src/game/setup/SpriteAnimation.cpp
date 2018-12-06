@@ -1,4 +1,4 @@
-#include "SpriteAnimation.h"
+#include "spriteanimation.h"
 
 namespace newgame
 {
