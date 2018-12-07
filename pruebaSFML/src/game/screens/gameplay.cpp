@@ -665,7 +665,6 @@ namespace newgame
 					if (Character.getIsPlayer())
 					{
 						player1.setVelocity({ player1.getVelocity().x,0.0f });
-						player1.setIsJumping(false);
 					}
 					
 				}
