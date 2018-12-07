@@ -660,7 +660,7 @@ namespace newgame
 				}
 
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
-					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + rectangleCollisionLimitY)
+					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height/2) ) // + rectangleCollisionLimitY
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true);
 					if (player1.getIsOnGround())
