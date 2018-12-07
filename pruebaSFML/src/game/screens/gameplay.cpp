@@ -646,7 +646,7 @@ namespace newgame
 				}
 
 				else if (Character.getRectangle().getPosition().y < levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height &&
-					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - rectangleCollisionLimitY)
+					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - (levels[levelNumber].getRectangles(i).getGlobalBounds().height / 2)) // rectangleCollisionLimitY
 				{
 					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
 					Character.setMoveUp(false);
