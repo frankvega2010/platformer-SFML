@@ -280,10 +280,10 @@ namespace newgame
 			switch (levelNumber)
 			{
 			case 0:
-				player1.setPosition(200, 1400);
+				player1.setPosition(200, 1600);
 				break;
 			case 1:
-				player1.setPosition(200, 1000);
+				player1.setPosition(200, 1200);
 				break;
 			default:
 				break;
