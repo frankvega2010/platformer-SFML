@@ -4,6 +4,7 @@
 
 namespace newgame
 {
+	sf::Event event;
 	////------------ Tilemap Settings
 
 	static tmx::TileMap map("res/assets/tiles/firerange.tmx");
@@ -300,6 +301,7 @@ namespace newgame
 
 			player1.setTexture(playerTexture);
 			playerAnimation.SetAnimation(&playerTexture, sf::Vector2u(9, 3), 0.1f);
+			player1.setVelocity({ player1.getVelocity().x,0.0f });
 
 			// Player Gun
 
@@ -620,7 +622,16 @@ namespace newgame
 			{
 				Game::setIsKeyPressed(false);
 			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				signalGoToPause();
+			}
+			else
+				Game::setIsKeyPressed(false);
 		}
+
+		
 
 		//------- Gameplay Functions
 
@@ -1251,7 +1262,6 @@ namespace newgame
 			else if (gameOnPause)
 			{
 				_window.setMouseCursorVisible(true);
-
 				//Setting the pause buttons ON
 				for (int i = 0; i < maxButtons; i++)
 				{
