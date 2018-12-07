@@ -26,6 +26,8 @@ namespace newgame
 		int _isOnWhichCeiling;
 		int _isOnWhichCharacterLeftSide;
 		int _isOnWhichCharacterRightSide;
+		int _isOnWhichCharacterTopSide;
+		int _isOnWhichCharacterDownSide;
 		bool _alive;
 		bool _gravity;
 		bool _isPlayer;
@@ -39,6 +41,7 @@ namespace newgame
 		bool _moveLeft;
 		bool _moveRight;
 		bool _moveUp;
+		bool _moveDown;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -101,6 +104,8 @@ namespace newgame
 		void setMoveLeft(bool moveLeft);
 		bool getMoveUp();
 		void setMoveUp(bool moveUp);
+		bool getMoveDown();
+		void setMoveDown(bool moveDown);
 		int getIsOnWhichLeftWall();
 		void setIsOnWhichLeftWall(int isOnWhichLeftWall);
 		int getIsOnWhichRightWall();
@@ -109,6 +114,10 @@ namespace newgame
 		void setIsOnWhichCharacterLeftSide(int isOnWhichCharacterLeftSide);
 		int getIsOnWhichCharacterRightSide();
 		void setIsOnWhichCharacterRightSide(int isOnWhichCharacterRightSide);
+		int getIsOnWhichCharacterTopSide();
+		void setIsOnWhichCharacterTopSide(int isOnWhichCharacterTopSide);
+		int getIsOnWhichCharacterDownSide();
+		void setIsOnWhichCharacterDownSide(int isOnWhichCharacterDownSide);
 		sf::RectangleShape getRectangle();
 		sf::RectangleShape getPlayerDetection();
 		void updateJump(float deltaTime);

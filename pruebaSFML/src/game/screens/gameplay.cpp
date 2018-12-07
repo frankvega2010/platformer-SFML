@@ -281,10 +281,10 @@ namespace newgame
 			switch (levelNumber)
 			{
 			case 0:
-				player1.setPosition(200, 1400);
+				player1.setPosition(200, 1600);
 				break;
 			case 1:
-				player1.setPosition(200, 1000);
+				player1.setPosition(200, 1200);
 				break;
 			default:
 				break;
@@ -657,7 +657,7 @@ namespace newgame
 				}
 
 				else if (Character.getRectangle().getPosition().y < levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height &&
-					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - rectangleCollisionLimitY)
+					Character.getRectangle().getPosition().y > levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height - (levels[levelNumber].getRectangles(i).getGlobalBounds().height / 2)) // rectangleCollisionLimitY
 				{
 					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
 					Character.setMoveUp(false);
@@ -671,7 +671,7 @@ namespace newgame
 				}
 
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
-					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + rectangleCollisionLimitY)
+					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height/2) ) // + rectangleCollisionLimitY
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true);
 					if (player1.getIsOnGround())
@@ -739,19 +739,29 @@ namespace newgame
 							enemies[iFromEnemy].getRectangle().getPosition().y > enemies[i].getRectangle().getPosition().y + enemies[i].getRectangle().getGlobalBounds().height - rectangleCollisionLimitY)
 						{
 							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y + (enemies[i].getRectangle().getGlobalBounds().height));
+							enemies[iFromEnemy].setMoveUp(false);
+							enemies[iFromEnemy].setIsOnWhichCharacterDownSide(i);
 						}
 
 
 						if (enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height > enemies[i].getRectangle().getPosition().y &&
-							enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height < enemies[i].getRectangle().getPosition().y + rectangleCollisionLimitY)
+							enemies[iFromEnemy].getRectangle().getPosition().y + enemies[iFromEnemy].getRectangle().getGlobalBounds().height < enemies[i].getRectangle().getPosition().y + (enemies[i].getRectangle().getGlobalBounds().height / 2))
 						{
 							enemies[iFromEnemy].setPosition(enemies[iFromEnemy].getRectangle().getPosition().x, enemies[i].getRectangle().getPosition().y - (enemies[iFromEnemy].getRectangle().getGlobalBounds().height) );
+							enemies[iFromEnemy].setGravity(false);
+							enemies[iFromEnemy].setIsOnWhichCharacterTopSide(i);
+						}
+						else
+						{
+							enemies[iFromEnemy].setGravity(true);
 						}
 					}
 					else
 					{
 						if (enemies[iFromEnemy].getIsOnWhichCharacterRightSide() == i) enemies[iFromEnemy].setMoveLeft(true);
 						if (enemies[iFromEnemy].getIsOnWhichCharacterLeftSide() == i) enemies[iFromEnemy].setMoveRight(true);
+						if (enemies[iFromEnemy].getIsOnWhichCharacterTopSide() == i) enemies[iFromEnemy].setGravity(true);
+						if (enemies[iFromEnemy].getIsOnWhichCharacterDownSide() == i) enemies[iFromEnemy].setMoveUp(true);
 					}
 				}
 			}
