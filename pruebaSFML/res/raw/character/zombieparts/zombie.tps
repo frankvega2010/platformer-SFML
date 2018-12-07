@@ -74,7 +74,7 @@
         <key>jpgQuality</key>
         <uint>80</uint>
         <key>pngOptimizationLevel</key>
-        <uint>1</uint>
+        <uint>0</uint>
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
@@ -97,12 +97,12 @@
             <key>width</key>
             <int>1170</int>
             <key>height</key>
-            <int>900</int>
+            <int>1440</int>
         </QSize>
         <key>algorithmSettings</key>
         <struct type="AlgorithmSettings">
             <key>algorithm</key>
-            <enum type="AlgorithmSettings::AlgorithmId">MaxRects</enum>
+            <enum type="AlgorithmSettings::AlgorithmId">Basic</enum>
             <key>freeSizeMode</key>
             <enum type="AlgorithmSettings::AlgorithmFreeSizeMode">Best</enum>
             <key>sizeConstraints</key>
@@ -184,6 +184,15 @@
             <key type="filename">attack/Armature_attack_6.png</key>
             <key type="filename">attack/Armature_attack_7.png</key>
             <key type="filename">attack/Armature_attack_8.png</key>
+            <key type="filename">attack/d0.png</key>
+            <key type="filename">attack/d1.png</key>
+            <key type="filename">attack/d2.png</key>
+            <key type="filename">attack/d3.png</key>
+            <key type="filename">attack/d4.png</key>
+            <key type="filename">attack/d5.png</key>
+            <key type="filename">attack/d6.png</key>
+            <key type="filename">attack/d7.png</key>
+            <key type="filename">attack/d8.png</key>
             <key type="filename">die/Armature_die_0.png</key>
             <key type="filename">die/Armature_die_1.png</key>
             <key type="filename">die/Armature_die_2.png</key>
@@ -193,11 +202,34 @@
             <key type="filename">die/Armature_die_6.png</key>
             <key type="filename">die/Armature_die_7.png</key>
             <key type="filename">die/Armature_die_8.png</key>
+            <key type="filename">die/c0.png</key>
+            <key type="filename">die/c1.png</key>
+            <key type="filename">die/c2.png</key>
+            <key type="filename">die/c3.png</key>
+            <key type="filename">die/c4.png</key>
+            <key type="filename">die/c5.png</key>
+            <key type="filename">die/c6.png</key>
+            <key type="filename">die/c7.png</key>
+            <key type="filename">die/c8.png</key>
             <key type="filename">idle/Armature_idle_0.png</key>
             <key type="filename">idle/Armature_idle_1.png</key>
             <key type="filename">idle/Armature_idle_2.png</key>
             <key type="filename">idle/Armature_idle_3.png</key>
-            <key type="filename">jump.png</key>
+            <key type="filename">idle/b2.png</key>
+            <key type="filename">idle/b3.png</key>
+            <key type="filename">idle/b4.png</key>
+            <key type="filename">idle/b5.png</key>
+            <key type="filename">idle/b6.png</key>
+            <key type="filename">idle/b7.png</key>
+            <key type="filename">idle/b8.png</key>
+            <key type="filename">run/e0.png</key>
+            <key type="filename">run/e2.png</key>
+            <key type="filename">run/e3.png</key>
+            <key type="filename">run/e4.png</key>
+            <key type="filename">run/e5.png</key>
+            <key type="filename">run/e6.png</key>
+            <key type="filename">run/e7.png</key>
+            <key type="filename">run/e8.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -224,6 +256,21 @@
                 <rect>27,42,53,84</rect>
                 <key>scale9Paddings</key>
                 <rect>27,42,53,84</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">idle/b0.png</key>
+            <key type="filename">idle/b1.png</key>
+            <key type="filename">run/e1.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,45,65,89</rect>
+                <key>scale9Paddings</key>
+                <rect>32,45,65,89</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -278,7 +325,6 @@
             <filename>attack/Armature_attack_4.png</filename>
             <filename>attack/Armature_attack_5.png</filename>
             <filename>attack/Armature_attack_6.png</filename>
-            <filename>jump.png</filename>
             <filename>die/Armature_die_8.png</filename>
             <filename>die/Armature_die_0.png</filename>
             <filename>die/Armature_die_1.png</filename>
@@ -288,6 +334,42 @@
             <filename>die/Armature_die_5.png</filename>
             <filename>die/Armature_die_6.png</filename>
             <filename>die/Armature_die_7.png</filename>
+            <filename>idle/b8.png</filename>
+            <filename>idle/b0.png</filename>
+            <filename>idle/b1.png</filename>
+            <filename>idle/b2.png</filename>
+            <filename>idle/b3.png</filename>
+            <filename>idle/b4.png</filename>
+            <filename>idle/b5.png</filename>
+            <filename>idle/b6.png</filename>
+            <filename>idle/b7.png</filename>
+            <filename>run/e8.png</filename>
+            <filename>run/e0.png</filename>
+            <filename>run/e1.png</filename>
+            <filename>run/e2.png</filename>
+            <filename>run/e3.png</filename>
+            <filename>run/e4.png</filename>
+            <filename>run/e5.png</filename>
+            <filename>run/e6.png</filename>
+            <filename>run/e7.png</filename>
+            <filename>die/c8.png</filename>
+            <filename>die/c0.png</filename>
+            <filename>die/c1.png</filename>
+            <filename>die/c2.png</filename>
+            <filename>die/c3.png</filename>
+            <filename>die/c4.png</filename>
+            <filename>die/c5.png</filename>
+            <filename>die/c6.png</filename>
+            <filename>die/c7.png</filename>
+            <filename>attack/d8.png</filename>
+            <filename>attack/d0.png</filename>
+            <filename>attack/d1.png</filename>
+            <filename>attack/d2.png</filename>
+            <filename>attack/d3.png</filename>
+            <filename>attack/d4.png</filename>
+            <filename>attack/d5.png</filename>
+            <filename>attack/d6.png</filename>
+            <filename>attack/d7.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
