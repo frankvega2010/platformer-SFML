@@ -384,6 +384,26 @@ namespace newgame
 		_isOnWhichCharacterRightSide = isOnWhichCharacterRightSide;
 	}
 
+	int Character::getIsOnWhichCharacterTopSide()
+	{
+		return _isOnWhichCharacterTopSide;
+	}
+
+	void Character::setIsOnWhichCharacterTopSide(int isOnWhichCharacterTopSide)
+	{
+		_isOnWhichCharacterTopSide = isOnWhichCharacterTopSide;
+	}
+
+	int Character::getIsOnWhichCharacterDownSide()
+	{
+		return _isOnWhichCharacterDownSide;
+	}
+
+	void Character::setIsOnWhichCharacterDownSide(int isOnWhichCharacterDownSide)
+	{
+		_isOnWhichCharacterDownSide = isOnWhichCharacterDownSide;
+	}
+
 	int Character::getIsOnWhichCeiling()
 	{
 		return _isOnWhichCeiling;
@@ -402,6 +422,16 @@ namespace newgame
 	void Character::setMoveUp(bool moveUp)
 	{
 		_moveUp = moveUp;
+	}
+
+	bool Character::getMoveDown()
+	{
+		return _moveDown;
+	}
+
+	void Character::setMoveDown(bool moveDown)
+	{
+		_moveDown = moveDown;
 	}
 
 	sf::Vector2f Character::getVelocity()
