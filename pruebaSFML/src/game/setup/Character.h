@@ -15,6 +15,8 @@ namespace newgame
 		sf::Color _color;
 		sf::Vector2f _move;
 		sf::Vector2f _speed;
+		sf::Vector2f velocity;
+		float _jumpHeight;
 		sf::RectangleShape _rectangle;
 		sf::RectangleShape _rectanglePlayerDetection;
 		int _hp;
@@ -109,6 +111,9 @@ namespace newgame
 		void setIsOnWhichCharacterRightSide(int isOnWhichCharacterRightSide);
 		sf::RectangleShape getRectangle();
 		sf::RectangleShape getPlayerDetection();
+		void updateJump(float deltaTime);
+		sf::Vector2f getVelocity();
+		void setVelocity(sf::Vector2f vel);
 	};
 }
 

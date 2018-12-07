@@ -46,7 +46,7 @@ namespace newgame
 	tgui::Gui gui{ _window };
 
 	sf::Clock deltaClock;
-	sf::Time deltaTime;
+	float deltaTime;
 	sf::Music menuSong;
 
 	sf::Texture background;
@@ -380,6 +380,11 @@ namespace newgame
 		init();
 		while (_window.isOpen())
 		{
+			deltaTime = deltaClock.restart().asSeconds();
+			if (deltaTime> 1.0f / 20.0f)
+			{
+				deltaTime = 1.0f / 20.0f;
+			}
 			while (_window.pollEvent(event))
 			{
 
@@ -393,7 +398,7 @@ namespace newgame
 			update();
 			if (!(gameON)) _window.close();
 			draw();
-			deltaTime = deltaClock.restart();
+			
 		}
 		deInit();
 	}

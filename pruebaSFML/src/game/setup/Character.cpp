@@ -10,6 +10,7 @@ namespace newgame
 		_color = sf::Color::White;
 		_alive = true;
 		_speed = { 0,0 };
+		_jumpHeight = 1500;
 		_gravity = true;
 		_isPlayer = false;
 		_hp = 0;
@@ -39,6 +40,7 @@ namespace newgame
 		_alive = true;
 		_move = { 0,0 };
 		_speed = { 0,0 };
+		_jumpHeight = 1500;
 		_gravity = true;
 		_isPlayer = false;
 		_hp = 0;
@@ -400,5 +402,29 @@ namespace newgame
 	void Character::setMoveUp(bool moveUp)
 	{
 		_moveUp = moveUp;
+	}
+
+	sf::Vector2f Character::getVelocity()
+	{
+		return velocity;
+	}
+
+	void Character::setVelocity(sf::Vector2f vel)
+	{
+		velocity = vel;
+	}
+
+	void Character::updateJump(float deltaTime)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !_isJumping)
+		{
+			_isOnGround = false;
+			_isJumping = true;
+			velocity.y = -sqrt(2.0f*1781.f*_jumpHeight);
+		}
+
+		velocity.y += 1781.f*deltaTime;
+
+		_rectangle.move(velocity*deltaTime);
 	}
 }

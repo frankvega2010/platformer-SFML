@@ -80,9 +80,6 @@ namespace newgame
 
 	//Timers
 
-	static const sf::Time initialJumpTime = sf::seconds(0.5f);
-	static thor::CallbackTimer timerJump;
-
 	static const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
 	static thor::CallbackTimer timerInvincibility;
 
@@ -571,8 +568,8 @@ namespace newgame
 				if (player1.getMoveRight())
 				{
 					if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
-					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
-					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
+					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkBackward, deltaTime);
+					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkForward, deltaTime);
 
 					if (!footstepTimer.isRunning())
 					{
@@ -582,7 +579,7 @@ namespace newgame
 					}
 
 					cameraLeft = false;
-					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()), 0);
+					player1.setMove((player1.getSpeed().x * deltaTime), 0);
 				}		
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -590,8 +587,8 @@ namespace newgame
 				if (player1.getMoveLeft())
 				{
 					if (!(player1.getIsOnGround())) playerAnimation.SetSingleFrame(sf::Vector2u(0, playerJump));
-					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime.asSeconds());
-					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime.asSeconds());
+					else if (player1.getFlipLeft()) playerAnimation.Update(playerWalkBackward, deltaTime);
+					else if (player1.getFlipRight()) playerAnimation.Update(playerWalkForward, deltaTime);
 
 					if (!footstepTimer.isRunning())
 					{
@@ -601,7 +598,7 @@ namespace newgame
 					}
 
 					cameraRight = false;
-					player1.setMove((player1.getSpeed().x * deltaTime.asSeconds()*(-1)), 0);
+					player1.setMove((player1.getSpeed().x * deltaTime*(-1)), 0);
 				}
 			}
 			else
@@ -615,10 +612,6 @@ namespace newgame
 			{
 				if (!(player1.getIsJumping()) && player1.getIsOnGround())
 				{
-					player1.setIsOnGround(false);
-					player1.setIsJumping(true);
-					player1.setGravity(false);
-					player1.StartTimerJump();
 					playerJumpSound.play();
 				}
 			}
@@ -657,13 +650,28 @@ namespace newgame
 					Character.setPosition(Character.getRectangle().getPosition().x, levels[levelNumber].getRectangles(i).getPosition().y + (levels[levelNumber].getRectangles(i).getGlobalBounds().height));
 					Character.setMoveUp(false);
 					Character.setIsOnWhichCeiling(i);
-					if (Character.getIsPlayer()) player1.StopTimerJump();
+					if (Character.getIsPlayer())
+					{
+						player1.setVelocity({ player1.getVelocity().x,0.0f });
+						player1.setIsJumping(false);
+					}
+					
 				}
 
 				else if (Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height > levels[levelNumber].getRectangles(i).getPosition().y &&
 					Character.getRectangle().getPosition().y + Character.getRectangle().getGlobalBounds().height < levels[levelNumber].getRectangles(i).getPosition().y + rectangleCollisionLimitY)
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(true);
+					if (player1.getIsOnGround())
+					{
+						player1.setVelocity({ player1.getVelocity().x,0.0f });
+						player1.setIsJumping(false);
+						
+					}
+					else
+					{
+						playerFootStep.stop();
+					}
 					cameraDown = false;
 					Character.setGravity(false);
 					Character.setIsOnWhichGround(i);
@@ -781,7 +789,7 @@ namespace newgame
 						}
 					}
 					enemy.setCurrentlyTouchingPlayer(false);
-					animation.Update(0, deltaTime.asSeconds());
+					animation.Update(0, deltaTime);
 				}
 			}
 			else
@@ -846,8 +854,8 @@ namespace newgame
 
 						if (enemy.getMoveRight())
 						{
-							enemy.setMove(enemySpeed * deltaTime.asSeconds(), 0);
-							animation.Update(3, deltaTime.asSeconds());
+							enemy.setMove(enemySpeed * deltaTime, 0);
+							animation.Update(3, deltaTime);
 						}
 
 						enemy.setFlipLeft(false);
@@ -869,8 +877,8 @@ namespace newgame
 
 						if (enemy.getMoveLeft())
 						{
-							enemy.setMove(-(enemySpeed) * deltaTime.asSeconds(), 0);
-							animation.Update(3, deltaTime.asSeconds());
+							enemy.setMove(-(enemySpeed) * deltaTime, 0);
+							animation.Update(3, deltaTime);
 						}
 
 						
@@ -887,7 +895,7 @@ namespace newgame
 				if (enemy.getIsAlive())
 				{
 					enemy.getRectangle().move(0, 0);
-					animation.Update(2, deltaTime.asSeconds());
+					animation.Update(2, deltaTime);
 				}
 				crosshairTest.setFillColor(sf::Color::Red);
 			}
@@ -908,7 +916,7 @@ namespace newgame
 			}
 			else
 			{
-				if (animation.UpdateOnce(1, deltaTime.asSeconds()))
+				if (animation.UpdateOnce(1, deltaTime))
 				{
 					zombieDeath.play();
 					LivesEnemies[i].setFillColor(sf::Color::Transparent);
@@ -1031,7 +1039,7 @@ namespace newgame
 		{
 			if (player1.getGravity())
 			{
-				player1.setPosition(player1.getRectangle().getPosition().x, (player1.getRectangle().getPosition().y + (gravitySpeed * deltaTime.asSeconds())));
+				player1.setPosition(player1.getRectangle().getPosition().x, (player1.getRectangle().getPosition().y + (gravitySpeed * deltaTime)));
 				cameraUp = false;
 			}
 		}
@@ -1040,31 +1048,7 @@ namespace newgame
 		{
 			if (enemy.getGravity())
 			{
-				enemy.setPosition(enemy.getRectangle().getPosition().x, enemy.getRectangle().getPosition().y + (enemy.getSpeed().y * deltaTime.asSeconds()));
-			}
-		}
-
-		static void CheckCharacterJump(Character& character)
-		{
-			if (character.getIsJumping())
-			{
-				if (character.isTimerJumpRunning())
-				{
-					playerFootStep.stop();
-					cameraDown = false;
-					if(character.getMoveUp()) character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime.asSeconds()*(-1)));
-					
-				}
-
-				if (character.isTimerJumpExpired())
-				{
-					character.setIsJumping(false);
-					character.setGravity(true);
-				}
-			}
-			else
-			{
-				character.setResetTimerJump(initialJumpTime);
+				enemy.setPosition(enemy.getRectangle().getPosition().x, enemy.getRectangle().getPosition().y + (enemy.getSpeed().y * deltaTime));
 			}
 		}
 
@@ -1078,7 +1062,7 @@ namespace newgame
 			}
 			else if (weaponFireRate.isRunning())
 			{
-				pistolAnimation.UpdateY(pistolShoot, deltaTime.asSeconds());
+				pistolAnimation.UpdateY(pistolShoot, deltaTime);
 			}
 		}
 
@@ -1192,7 +1176,7 @@ namespace newgame
 				
 
 				// Jump
-				CheckCharacterJump(player1);
+				player1.updateJump(deltaTime);
 
 				CheckWeaponsFireRate(timerPistolFireRate);
 				

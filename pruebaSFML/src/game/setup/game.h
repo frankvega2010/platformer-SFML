@@ -71,7 +71,7 @@ namespace newgame
 	extern int selectOption;
 
 	extern sf::Clock deltaClock;
-	extern sf::Time deltaTime;
+	extern float deltaTime;
 
 	extern int globalSoundVolume;
 	extern int globalMusicVolume;
