@@ -42,6 +42,8 @@ namespace newgame
 		bool _moveRight;
 		bool _moveUp;
 		bool _moveDown;
+		bool _faceRight;
+		bool _faceLeft;
 		thor::CallbackTimer _timerJump;
 	public:
 		Character();
@@ -106,6 +108,10 @@ namespace newgame
 		void setMoveUp(bool moveUp);
 		bool getMoveDown();
 		void setMoveDown(bool moveDown);
+		bool getFaceRight();
+		void setFaceRight(bool faceRight);
+		bool getFaceLeft();
+		void setFaceLeft(bool faceLeft);
 		int getIsOnWhichLeftWall();
 		void setIsOnWhichLeftWall(int isOnWhichLeftWall);
 		int getIsOnWhichRightWall();
