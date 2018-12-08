@@ -25,10 +25,14 @@ namespace newgame
 		_moveLeft = true;
 		_moveRight = true;
 		_moveUp = true;
+		_faceLeft = false;
+		_faceRight = false;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
 		_isOnWhichCharacterLeftSide = -1;
 		_isOnWhichCharacterRightSide = -1;
+		_isOnWhichCharacterTopSide = -1;
+		_isOnWhichCharacterDownSide = -1;
 		_isOnWhichCeiling = -1;
 	}
 
@@ -55,10 +59,14 @@ namespace newgame
 		_moveLeft = true;
 		_moveRight = true;
 		_moveUp = true;
+		_faceLeft = false;
+		_faceRight = false;
 		_isOnWhichLeftWall = -1;
 		_isOnWhichRightWall = -1;
 		_isOnWhichCharacterLeftSide = -1;
 		_isOnWhichCharacterRightSide = -1;
+		_isOnWhichCharacterTopSide = -1;
+		_isOnWhichCharacterDownSide = -1;
 		_isOnWhichCeiling = -1;
 	}
 
@@ -342,6 +350,26 @@ namespace newgame
 	void Character::setMoveLeft(bool moveLeft)
 	{
 		_moveLeft = moveLeft;
+	}
+
+	bool Character::getFaceRight()
+	{
+		return _faceRight;
+	}
+
+	void Character::setFaceRight(bool faceRight)
+	{
+		_faceRight = faceRight;
+	}
+
+	bool Character::getFaceLeft()
+	{
+		return _faceLeft;
+	}
+
+	void Character::setFaceLeft(bool faceLeft)
+	{
+		_faceLeft = faceLeft;
 	}
 
 	int Character::getIsOnWhichLeftWall()

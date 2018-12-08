@@ -896,6 +896,9 @@ namespace newgame
 
 						enemy.setFlipLeft(false);
 						enemy.setFlipRight(true);
+
+						enemy.setFaceRight(true);
+						enemy.setFaceLeft(false);
 					}
 					
 
@@ -920,6 +923,9 @@ namespace newgame
 						
 						enemy.setFlipRight(false);
 						enemy.setFlipLeft(true);
+
+						enemy.setFaceLeft(true);
+						enemy.setFaceRight(false);
 					}
 					
 				}
@@ -955,7 +961,7 @@ namespace newgame
 			}
 			else
 			{
-				if (enemy.getMoveRight())
+				if (enemy.getFaceRight())
 				{
 					if (animation.UpdateOnce(1, deltaTime))
 					{
@@ -968,7 +974,7 @@ namespace newgame
 						enemy.setIsDead(true);
 					}
 				}
-				else if (enemy.getMoveLeft())
+				else if (enemy.getFaceLeft())
 				{
 					if (animation.UpdateOnce(5, deltaTime))
 					{
