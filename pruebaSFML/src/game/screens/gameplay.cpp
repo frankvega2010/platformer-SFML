@@ -148,6 +148,15 @@ namespace newgame
 
 	// Shapes
 
+	/*static sf::Vertex line[2];*/
+
+	static sf::RectangleShape line;
+	static int inWhichRectangle = -1;
+	static bool canDealDamage = false;
+	//static bool 
+
+
+
 	static sf::Texture crosshairTexture;
 	static sf::CircleShape crosshairTest;
 	static sf::RectangleShape gun;
@@ -304,6 +313,8 @@ namespace newgame
 			player1.setVelocity({ player1.getVelocity().x,0.0f });
 
 			// Player Gun
+
+			line.setSize(sf::Vector2f(300, 5));
 
 			gunLimit.setRadius(140);
 			gunLimit.setOutlineThickness(10);
@@ -768,6 +779,7 @@ namespace newgame
 
 		static void GunRotation()
 		{
+			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30});
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
 			
@@ -791,6 +803,7 @@ namespace newgame
 			}
 
 			gun.setRotation(angle);
+			line.setRotation(angle);
 		}
 
 		static void PlayerEnemyCollision(Character& enemy, thor::CallbackTimer& timer,SpriteAnimation& animation)
@@ -848,7 +861,7 @@ namespace newgame
 					LivesEnemies[i].setFillColor(sf::Color::White);
 					crosshairTest.setFillColor(sf::Color::Red);
 
-					if (player1.getCanShoot())
+					if (player1.getCanShoot() && canDealDamage)
 					{
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
@@ -1184,6 +1197,12 @@ namespace newgame
 		{
 			if (!gameOnPause)
 			{
+				//line.setPosition(player1.getPosition());
+				
+
+				
+
+
 				_window.setMouseCursorVisible(false);
 				/////// Setting the pause buttons OFF
 				for (int i = 0; i < maxButtons; i++)
@@ -1254,6 +1273,22 @@ namespace newgame
 
 				for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 				{
+					if (line.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
+					{
+						line.setFillColor(sf::Color::Yellow);
+						canDealDamage = false;
+						inWhichRectangle = i;
+					}
+					else
+					{
+						if (inWhichRectangle == i)
+						{
+							line.setFillColor(sf::Color::White);
+							canDealDamage = true;
+						}
+					}
+						
+					
 					CheckCollisionWithTiles(player1, i);
 					for (int f = 0; f < maxEnemiesLevel1; f++)
 					{
@@ -1328,6 +1363,10 @@ namespace newgame
 			
 			////---------------------
 			// Sprites / Shapes
+
+			// Lines
+
+			_window.draw(line);
 
 			//// Player
 			_window.draw(player1.getRectangle());
