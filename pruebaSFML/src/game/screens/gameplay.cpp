@@ -131,7 +131,6 @@ namespace newgame
 	static sf::Font deltaFont;
 	static sf::Font font2;
 
-	static sf::Text LivesEnemies[maxEnemiesLevel1];
 	static sf::Text zombiesKilledText;
 
 	static sf::Text playerStateText;
@@ -479,15 +478,6 @@ namespace newgame
 			pistolRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 			pistolRectangle.setSize({ 170, 90 });
 			pistolRectangle.setTexture(&pistolTexture);
-
-			
-			for (int i = 0; i < maxEnemiesLevel1; i++)
-			{
-				LivesEnemies[i].setCharacterSize(HUDdefaultFontSize);
-				LivesEnemies[i].setFont(deltaFont);
-				LivesEnemies[i].setPosition(50, 1400);
-				LivesEnemies[i].setFillColor(sf::Color::Transparent);
-			}
 
 			zombiesKilledText.setCharacterSize(HUDdefaultFontSize);
 			zombiesKilledText.setFont(deltaFont);
@@ -845,14 +835,12 @@ namespace newgame
 			{
 				if (enemy.getIsAlive())
 				{
-					LivesEnemies[i].setFillColor(sf::Color::White);
 					crosshairTest.setFillColor(sf::Color::Red);
 
 					if (player1.getCanShoot())
 					{
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
-
 							if (!timerPistolFireRate.isRunning())
 							{
 								pistolGunShoot.play();
@@ -866,9 +854,6 @@ namespace newgame
 			}
 			else
 			{
-				
-
-				LivesEnemies[i].setFillColor(sf::Color::Transparent);
 				crosshairTest.setFillColor(sf::Color::Red);
 				//player1.setCanShoot(false);
 			}
@@ -943,9 +928,22 @@ namespace newgame
 
 		static void CheckEnemyHP(Character& enemy,SpriteAnimation& animation,int i)
 		{
+			if (enemy.getHp()==75)
+			{
+				enemy.setColor({ 255,180,180,255 });
+			}
+			if (enemy.getHp() == 50)
+			{
+				enemy.setColor({ 255,100,100,255 });
+			}
+			if (enemy.getHp() == 25)
+			{
+				enemy.setColor({ 255,50,50,255 });
+			}
 			if (enemy.getHp() <= 0)
 			{
 				enemy.setIsAlive(false);
+				enemy.setColor({ 170,0,0,255 });
 			}
 
 			if (enemy.getIsAlive())
@@ -960,7 +958,6 @@ namespace newgame
 					if (animation.UpdateOnce(1, deltaTime))
 					{
 						zombieDeath.play();
-						LivesEnemies[i].setFillColor(sf::Color::Transparent);
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
@@ -973,7 +970,6 @@ namespace newgame
 					if (animation.UpdateOnce(5, deltaTime))
 					{
 						zombieDeath.play();
-						LivesEnemies[i].setFillColor(sf::Color::Transparent);
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
@@ -1084,8 +1080,6 @@ namespace newgame
 				{
 					enemies[i].setHp(0);
 				}
-				LivesEnemies[i].setString("Enemy HP: " + toString(enemies[i].getHp()));
-				LivesEnemies[i].setPosition(sf::Vector2f(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y - 100));
 			}
 
 			crosshairTest.setPosition(worldPos.x - 30, worldPos.y - 30);
@@ -1352,11 +1346,7 @@ namespace newgame
 			_window.draw(lifeHUDRectangle);
 			_window.draw(weaponHUDRectangle);
 			_window.draw(pistolRectangle);
-			
-			for (int i = 0; i < maxEnemiesLevel1; i++)
-			{
-				_window.draw(LivesEnemies[i]);
-			}
+
 			_window.draw(zombiesKilledText);
 			_window.draw(crosshairTest);
 			_window.draw(gun);
