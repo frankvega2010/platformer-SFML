@@ -20,6 +20,7 @@
 - The Credits screen is now updated with more info.
 - Player starting position was changed a bit more below to avoid collision with the ceiling.
 - Game code has been optimized.
+- Enemies health is now displayed with different tones of red on its sprite.
 
 
 ## v1.0 [2018-11-29]
