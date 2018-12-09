@@ -68,7 +68,7 @@ namespace newgame
 			creditsText[0].setCharacterSize(titleTextSize);
 			creditsText[0].setPosition(posTextX1, 20);
 			creditsText[0].setFillColor(sf::Color::Red);
-			creditsText[0].setString("Patient Zero v1.0");
+			creditsText[0].setString("Patient Zero v1.01");
 
 			creditsText[1].setCharacterSize(subtitleTextSize1);
 			creditsText[1].setPosition(posTextX1, 70);

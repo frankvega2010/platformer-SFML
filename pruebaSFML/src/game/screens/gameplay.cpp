@@ -367,7 +367,7 @@ namespace newgame
 			{
 				for (int i = 0; i < maxEnemiesLevelTutorial; i++)
 				{
-					enemies[i].setPosition(5200.f + static_cast<float>(increaseEnemyDistance), 1500.f);
+					enemies[i].setPosition(5000.f + static_cast<float>(increaseEnemyDistance), 1500.f);
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
@@ -381,7 +381,7 @@ namespace newgame
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y);
 					enemies[i].setPlayerDetectionSize(1400.0f, 540);
-					enemies[i].setPlayerDetectionColor(sf::Color::Blue);
+					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
