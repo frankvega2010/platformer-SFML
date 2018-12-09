@@ -381,7 +381,7 @@ namespace newgame
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
 					enemies[i].setPlayerDetectionSize(800.0f, 540); //1400
-					enemies[i].setPlayerDetectionColor(transparentBlue);
+					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
@@ -412,7 +412,7 @@ namespace newgame
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
 					enemies[i].setPlayerDetectionSize(800.0f, 540); // 1000
-					enemies[i].setPlayerDetectionColor(transparentBlue);
+					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
@@ -966,7 +966,12 @@ namespace newgame
 					if (enemy.getMoveLeft()) animation.Update(2, deltaTime);
 					
 				}
-				//crosshairTest.setFillColor(sf::Color::Red);
+
+				if (inWhichEnemy == i)
+				{
+					line.setFillColor(transparentRed);
+					crosshairTest.setFillColor(sf::Color::Red);
+				}
 			}
 		}
 
