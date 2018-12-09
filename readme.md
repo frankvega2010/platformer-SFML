@@ -14,7 +14,6 @@ As for now, the current features we want to add to the game are:
 - Player's aim with mouse movement.
 - 3 Weapons.
 - Limited Ammunition.
-- 2 Types of enemies.
 - Music.
 - Sound Effects.
 
