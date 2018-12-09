@@ -321,7 +321,7 @@ namespace newgame
 			line.setSize(sf::Vector2f(400, 5));
 			line.setTexture(&lineTexture);
 
-			lineCollision.setSize(sf::Vector2f(200, 10));
+			lineCollision.setSize(sf::Vector2f(300, 10));
 			lineCollision.setFillColor(sf::Color::Transparent);
 
 
@@ -379,8 +379,8 @@ namespace newgame
 					enemies[i].setTexture(zombieTexture);
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(800.0f, 540); //1400
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y);
+					enemies[i].setPlayerDetectionSize(1000.0f, 540); //1400
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
@@ -410,8 +410,8 @@ namespace newgame
 					enemies[i].setTexture(zombieTexture);
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(800.0f, 540); // 1000
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y);
+					enemies[i].setPlayerDetectionSize(1000.0f, 540); // 1000
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
@@ -1267,7 +1267,7 @@ namespace newgame
 
 					CheckEnemyGravity(enemies[i]);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y - 190);
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y - 190);
 
 					PlayerEnemyCollision(enemies[i], timerInvincibility, zombiesAnimation[i]);
 
