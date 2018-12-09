@@ -634,6 +634,15 @@ namespace newgame
 				Game::setIsKeyPressed(false);
 			}
 
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+			{
+				player1.setSpeed(750, 2100);
+			}
+			else
+			{
+				player1.setSpeed(500, 2100);
+			}
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
 				signalGoToPause();
