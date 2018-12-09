@@ -47,7 +47,7 @@ namespace newgame
 
 	static const int rectangleCollisionLimitX = 10;
 	static const int rectangleCollisionLimitY = 20;
-	static const float GravityAndWallFix = 0.5;
+	static const float GravityAndWallFix = 0.5; // int 1
 
 	// Camera Settings
 
@@ -1297,6 +1297,7 @@ namespace newgame
 					if (lineCollision.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 					{
 						line.setFillColor(transparentRed); // Transparent Red
+						crosshairTest.setFillColor(transparentRed);
 						canDealDamage = false;
 						inWhichRectangle = i;
 					}
