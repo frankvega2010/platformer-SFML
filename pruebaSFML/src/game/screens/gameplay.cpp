@@ -150,6 +150,7 @@ namespace newgame
 	/*static sf::Vertex line[2];*/
 
 	static sf::RectangleShape line;
+	static sf::Texture lineTexture;
 	static int inWhichRectangle = -1;
 	static bool canDealDamage = false;
 	//static bool 
@@ -312,8 +313,10 @@ namespace newgame
 			player1.setVelocity({ player1.getVelocity().x,0.0f });
 
 			// Player Gun
+			lineTexture.loadFromFile("res/assets/textures/laser.png");
+			line.setSize(sf::Vector2f(400, 2));
+			line.setTexture(&lineTexture);
 
-			line.setSize(sf::Vector2f(300, 5));
 
 			gunLimit.setRadius(140);
 			gunLimit.setOutlineThickness(10);
@@ -370,8 +373,8 @@ namespace newgame
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(1800.0f, 540);
-					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
+					enemies[i].setPlayerDetectionSize(1400.0f, 540);
+					enemies[i].setPlayerDetectionColor(sf::Color::Blue);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
@@ -400,8 +403,8 @@ namespace newgame
 					enemies[i].setTexture(zombieTexture);
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(1800.0f, 540);
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 600, enemies[i].getRectangle().getPosition().y);
+					enemies[i].setPlayerDetectionSize(1000.0f, 540);
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
@@ -769,7 +772,7 @@ namespace newgame
 
 		static void GunRotation()
 		{
-			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30});
+			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28});
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
 			
@@ -1235,7 +1238,7 @@ namespace newgame
 
 					CheckEnemyGravity(enemies[i]);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 800, enemies[i].getRectangle().getPosition().y - 190);
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y - 190);
 
 					PlayerEnemyCollision(enemies[i], timerInvincibility, zombiesAnimation[i]);
 
@@ -1269,7 +1272,7 @@ namespace newgame
 				{
 					if (line.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 					{
-						line.setFillColor(sf::Color::Yellow);
+						line.setFillColor({255,0,0,80});
 						canDealDamage = false;
 						inWhichRectangle = i;
 					}
@@ -1277,7 +1280,7 @@ namespace newgame
 					{
 						if (inWhichRectangle == i)
 						{
-							line.setFillColor(sf::Color::White);
+							line.setFillColor({ 0,255,0,80 });
 							canDealDamage = true;
 						}
 					}
