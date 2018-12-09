@@ -42,6 +42,8 @@ namespace newgame
 	static const int HUDdefaultFontSize = 80;
 
 	static const sf::Color transparentBlue = { 0,0,110,100 };
+	static const sf::Color transparentRed = { 255,0,0,80 };
+	static const sf::Color transparentGreen = { 0,255,0,80 };
 
 	static const int rectangleCollisionLimitX = 10;
 	static const int rectangleCollisionLimitY = 20;
@@ -150,8 +152,10 @@ namespace newgame
 	/*static sf::Vertex line[2];*/
 
 	static sf::RectangleShape line;
+	static sf::RectangleShape lineCollision;
 	static sf::Texture lineTexture;
 	static int inWhichRectangle = -1;
+	static int inWhichEnemy = -1;
 	static bool canDealDamage = false;
 	//static bool 
 
@@ -314,8 +318,11 @@ namespace newgame
 
 			// Player Gun
 			lineTexture.loadFromFile("res/assets/textures/laser.png");
-			line.setSize(sf::Vector2f(400, 2));
+			line.setSize(sf::Vector2f(400, 5));
 			line.setTexture(&lineTexture);
+
+			lineCollision.setSize(sf::Vector2f(200, 10));
+			lineCollision.setFillColor(sf::Color::Transparent);
 
 
 			gunLimit.setRadius(140);
@@ -773,6 +780,7 @@ namespace newgame
 		static void GunRotation()
 		{
 			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28});
+			//lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
 			
@@ -797,6 +805,7 @@ namespace newgame
 
 			gun.setRotation(angle);
 			line.setRotation(angle);
+			lineCollision.setRotation(angle);
 		}
 
 		static void PlayerEnemyCollision(Character& enemy, thor::CallbackTimer& timer,SpriteAnimation& animation)
@@ -851,7 +860,10 @@ namespace newgame
 			{
 				if (enemy.getIsAlive())
 				{
-					crosshairTest.setFillColor(sf::Color::Red);
+					crosshairTest.setFillColor(sf::Color::Green);
+					line.setFillColor(transparentGreen); // Transparent Green
+					inWhichEnemy = i;
+
 
 					if (player1.getCanShoot() && canDealDamage)
 					{
@@ -867,11 +879,22 @@ namespace newgame
 						}
 					}
 				}
+				else
+				{
+					if (inWhichEnemy == i)
+					{
+						line.setFillColor(transparentRed);
+						crosshairTest.setFillColor(sf::Color::Red);
+					}
+				}
 			}
 			else
 			{
-				crosshairTest.setFillColor(sf::Color::Red);
-				//player1.setCanShoot(false);
+				if (inWhichEnemy == i)
+				{
+					line.setFillColor(transparentRed);
+					crosshairTest.setFillColor(sf::Color::Red);
+				}
 			}
 		}
 
@@ -943,7 +966,7 @@ namespace newgame
 					if (enemy.getMoveLeft()) animation.Update(2, deltaTime);
 					
 				}
-				crosshairTest.setFillColor(sf::Color::Red);
+				//crosshairTest.setFillColor(sf::Color::Red);
 			}
 		}
 
@@ -1059,6 +1082,7 @@ namespace newgame
 		{
 			if (crosshairTest.getPosition().x < player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2)
 			{
+				lineCollision.setPosition({ player1.getRectangle().getPosition().x - 30,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 				if (player1.getFlipLeft())
 				{
 					player1.setOrigin(static_cast<int>(player1.getRectangle().getGlobalBounds().width), 0);
@@ -1071,7 +1095,7 @@ namespace newgame
 			}
 			else
 			{
-
+				lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 30,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 				if (player1.getFlipRight())
 				{
 					player1.setOrigin(0, 0 );
@@ -1270,9 +1294,9 @@ namespace newgame
 
 				for (int i = 0; i < levels[levelNumber].getRectanglesInLevel(); i++)
 				{
-					if (line.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
+					if (lineCollision.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 					{
-						line.setFillColor({255,0,0,80});
+						line.setFillColor(transparentRed); // Transparent Red
 						canDealDamage = false;
 						inWhichRectangle = i;
 					}
@@ -1280,7 +1304,6 @@ namespace newgame
 					{
 						if (inWhichRectangle == i)
 						{
-							line.setFillColor({ 0,255,0,80 });
 							canDealDamage = true;
 						}
 					}
@@ -1364,6 +1387,7 @@ namespace newgame
 			// Lines
 
 			_window.draw(line);
+			_window.draw(lineCollision);
 
 			//// Player
 			_window.draw(player1.getRectangle());
