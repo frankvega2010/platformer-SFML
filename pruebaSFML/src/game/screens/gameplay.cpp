@@ -379,9 +379,9 @@ namespace newgame
 					enemies[i].setTexture(zombieTexture);
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 200, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(1400.0f, 540);
-					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
+					enemies[i].setPlayerDetectionSize(800.0f, 540); //1400
+					enemies[i].setPlayerDetectionColor(transparentBlue);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
@@ -410,9 +410,9 @@ namespace newgame
 					enemies[i].setTexture(zombieTexture);
 					zombiesAnimation[i].SetAnimation(&zombieTexture, sf::Vector2u(9, 8), 0.1f);
 
-					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 600, enemies[i].getRectangle().getPosition().y);
-					enemies[i].setPlayerDetectionSize(1000.0f, 540);
-					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
+					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 400, enemies[i].getRectangle().getPosition().y);
+					enemies[i].setPlayerDetectionSize(800.0f, 540); // 1000
+					enemies[i].setPlayerDetectionColor(transparentBlue);
 
 					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
