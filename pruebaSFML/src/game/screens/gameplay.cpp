@@ -47,7 +47,7 @@ namespace newgame
 
 	static const int rectangleCollisionLimitX = 10;
 	static const int rectangleCollisionLimitY = 20;
-	static const int GravityAndWallFix = 1;
+	static const float GravityAndWallFix = 0.5;
 
 	// Camera Settings
 
@@ -702,10 +702,10 @@ namespace newgame
 				else
 				{
 					if (Character.getIsPlayer()) player1.setIsOnGround(false);
-					Character.setGravity(true);
-					Character.setMoveRight(true);
-					Character.setMoveLeft(true);
-					Character.setMoveUp(true);
+					if (Character.getIsOnWhichGround() == i) Character.setGravity(true);
+					if (Character.getIsOnWhichLeftWall() == i) Character.setMoveRight(true);
+					if (Character.getIsOnWhichRightWall() == i) Character.setMoveLeft(true);
+					if (Character.getIsOnWhichCeiling() == i) Character.setMoveUp(true);
 				}
 			}
 			else
