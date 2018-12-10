@@ -115,10 +115,12 @@ namespace newgame
 	static sf::SoundBuffer soundAttack;
 	static sf::SoundBuffer soundAlert;
 	static sf::SoundBuffer soundDeath;
+	static sf::SoundBuffer soundPain;
 
 	static sf::Sound zombieAttack;
 	static sf::Sound zombieAlert;
 	static sf::Sound zombieDeath;
+	static sf::Sound zombiePain;
 
 	// Gun Rotation Variable
 
@@ -571,6 +573,10 @@ namespace newgame
 			zombieAlert.setBuffer(soundAlert);
 			zombieAlert.setVolume(static_cast<float>(globalSoundVolume));
 
+			soundPain.loadFromFile("res/assets/sounds/zombie_pain.wav");
+			zombiePain.setBuffer(soundPain);
+			zombiePain.setVolume(static_cast<float>(globalSoundVolume));
+
 			// GUI
 
 			pauseButton = tgui::Button::create();
@@ -907,6 +913,7 @@ namespace newgame
 						{
 							if (!timerPistolFireRate.isRunning())
 							{
+								zombiePain.play();
 								pistolGunShoot.play();
 								timerPistolFireRate.start();
 								enemy.setHp(enemy.getHp() - 25);
