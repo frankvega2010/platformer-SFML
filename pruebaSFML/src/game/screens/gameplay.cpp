@@ -29,6 +29,9 @@ namespace newgame
 
 	// Consts
 
+	static const int maxMedkitsFloor = 2;
+	static const int maxMedkitsDrop = 3;
+
 	static const int maxEnemiesLevelTutorial = 5;
 	static const int maxEnemiesLevel1 = 20;
 	static const int maxTutorialTexts = 6;
@@ -93,6 +96,7 @@ namespace newgame
 	static thor::CallbackTimer footstepTimer;
 
 	//Textures & Animations
+	static sf::Texture medkitTexture;
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
 	static sf::Texture playerHands;
@@ -125,6 +129,9 @@ namespace newgame
 	static sf::Sound zombieDeath;
 	static sf::Sound zombiePain;
 
+	static sf::SoundBuffer soundHeal;
+	static sf::Sound playerHeal;
+
 	// Gun Rotation Variable
 
 	static sf::Vector2f v1;
@@ -151,6 +158,9 @@ namespace newgame
 	static Character player1;
 
 	static Character enemies[maxEnemiesLevel1];
+
+	static Character medkitFloor[maxMedkitsFloor];
+	static Character medkitDrop;
 
 	// Shapes
 
@@ -452,6 +462,36 @@ namespace newgame
 
 			increaseEnemyDistance = 0;
 
+			// Medkit Floor
+
+			medkitTexture.loadFromFile("res/assets/textures/medkit.png");
+			medkitTexture.setSmooth(true);
+			medkitTexture.setRepeated(false);
+
+			for (int i = 0; i < maxMedkitsFloor; i++)
+			{
+				medkitFloor[i].setColor(sf::Color::White);
+				medkitFloor[i].setPosition(900.0f, 1400.0f);
+				medkitFloor[i].setSize(100.0f, 70.0f);
+				medkitFloor[i].setIsAlive(true);
+				medkitFloor[i].setSpeed(0.0f, 900.0f);
+				medkitFloor[i].setTexture(medkitTexture);
+			}
+
+			medkitFloor[0].setPosition(7000.0f, 200.0f);
+			medkitFloor[1].setPosition(10600.0f, 200.0f);
+
+			// Medkit Drop
+
+			medkitDrop.setColor(sf::Color::White);
+			medkitDrop.setSize(0.0f, 0.0f);
+			medkitDrop.setIsAlive(false);
+			medkitDrop.setSpeed(0.0f, 900.0f);
+			medkitDrop.setTexture(medkitTexture);
+
+			
+			
+
 
 			//// Text
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
@@ -579,6 +619,10 @@ namespace newgame
 			soundPain.loadFromFile("res/assets/sounds/zombie_pain.wav");
 			zombiePain.setBuffer(soundPain);
 			zombiePain.setVolume(static_cast<float>(globalSoundVolume));
+
+			soundHeal.loadFromFile("res/assets/sounds/heal.wav");
+			playerHeal.setBuffer(soundHeal);
+			playerHeal.setVolume(static_cast<float>(globalSoundVolume));
 
 			if (levelNumber == 0)
 			{
@@ -1071,24 +1115,50 @@ namespace newgame
 				{
 					if (animation.UpdateOnce(1, deltaTime))
 					{
+						//thor::setRandomSeed(0);
+						int RandomDropNumber = thor::random(0, 4); // change to consts
+
 						zombieDeath.play();
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
 						enemy.setHp(defaultHP);
 						enemy.setIsDead(true);
+
+						if (RandomDropNumber == 4) // change to consts
+						{
+							if (!medkitDrop.getIsAlive())
+							{
+								medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								medkitDrop.setSize(100.0f, 70.0f);
+								medkitDrop.setIsAlive(true);
+							}
+						}
 					}
 				}
 				else if (enemy.getFaceLeft())
 				{
 					if (animation.UpdateOnce(5, deltaTime))
 					{
+						//thor::setRandomSeed(0);
+						int RandomDropNumber = thor::random(0, 4); // change to consts
+
 						zombieDeath.play();
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
 						enemy.setHp(defaultHP);
 						enemy.setIsDead(true);
+						
+						if (RandomDropNumber == 4) // change to consts
+						{
+							if (!medkitDrop.getIsAlive())
+							{
+								medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								medkitDrop.setSize(100.0f, 70.0f);
+								medkitDrop.setIsAlive(true);
+							}
+						}
 					}
 				}
 				
@@ -1209,11 +1279,11 @@ namespace newgame
 			}
 		}
 
-		static void CheckEnemyGravity(Character& enemy)
+		static void CheckCharacterGravity(Character& character)
 		{
-			if (enemy.getGravity())
+			if (character.getGravity())
 			{
-				enemy.setPosition(enemy.getRectangle().getPosition().x, enemy.getRectangle().getPosition().y + (enemy.getSpeed().y * deltaTime));
+				character.setPosition(character.getRectangle().getPosition().x, character.getRectangle().getPosition().y + (character.getSpeed().y * deltaTime));
 			}
 		}
 
@@ -1281,6 +1351,24 @@ namespace newgame
 			}
 		}
 
+		static void CheckMedkitCollisionWithPlayer(Character& medkit)
+		{
+			if (player1.getRectangle().getGlobalBounds().intersects(medkit.getRectangle().getGlobalBounds()))
+			{
+				player1.setHp(player1.getHp() + 25);
+				lifeBar.setSize({ lifeBar.getSize().x + 112.5f,lifeBar.getSize().y });
+				if (player1.getHp() > 100)
+				{
+					player1.setHp(defaultHP);
+					lifeBar.setSize({ 450,lifeBar.getSize().y });
+				}
+				medkit.setSize(0, 0);
+				medkit.setIsAlive(false);
+
+				playerHeal.play();
+			}
+		}
+
 		//-------END Gameplay Functions
 
 		void GameplayScreen::update()
@@ -1313,6 +1401,19 @@ namespace newgame
 				//////Set View
 				_window.setView(view);
 
+				//// Items
+
+				for (int i = 0; i < maxMedkitsFloor; i++)
+				{
+					CheckCharacterGravity(medkitFloor[i]);
+					
+					CheckMedkitCollisionWithPlayer(medkitFloor[i]);
+				}
+
+				CheckCharacterGravity(medkitDrop);
+				CheckMedkitCollisionWithPlayer(medkitDrop);
+
+
 				////// Characters
 
 				if (player1.getIsJumping())
@@ -1329,7 +1430,7 @@ namespace newgame
 
 					CheckInvincibilityFrames(timerInvincibility,i);
 
-					CheckEnemyGravity(enemies[i]);
+					CheckCharacterGravity(enemies[i]);
 
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y - 190);
 
@@ -1384,6 +1485,13 @@ namespace newgame
 					{
 						CheckCollisionWithTiles(enemies[f], i);
 					}
+
+					for (int c = 0; c < maxMedkitsFloor; c++)
+					{
+						CheckCollisionWithTiles(medkitFloor[c], i);
+					}
+
+					CheckCollisionWithTiles(medkitDrop, i);
 				}
 
 				// Check Winning Condition
@@ -1468,6 +1576,15 @@ namespace newgame
 				_window.draw(enemies[i].getPlayerDetection());
 				_window.draw(enemies[i].getRectangle());
 			}
+
+			//Items
+
+			for (int i = 0; i < maxMedkitsFloor; i++)
+			{
+				_window.draw(medkitFloor[i].getRectangle());
+			}
+
+			_window.draw(medkitDrop.getRectangle());
 			
 			////---------------------
 

@@ -10,6 +10,7 @@
 
 #include "Thor/Animations.hpp"
 #include "Thor/Time.hpp"
+#include "Thor/Math.hpp"
 #include "spriteanimation.h"
 
 namespace newgame
