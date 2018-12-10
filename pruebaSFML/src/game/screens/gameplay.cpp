@@ -103,6 +103,9 @@ namespace newgame
 
 	// Audio
 
+	static sf::Music level1Ambience;
+	static sf::Music level0Ambience;
+
 	static sf::SoundBuffer pistolshoot;
 	static sf::Sound pistolGunShoot;
 
@@ -576,6 +579,24 @@ namespace newgame
 			soundPain.loadFromFile("res/assets/sounds/zombie_pain.wav");
 			zombiePain.setBuffer(soundPain);
 			zombiePain.setVolume(static_cast<float>(globalSoundVolume));
+
+			if (levelNumber == 0)
+			{
+				level0Ambience.openFromFile("res/assets/music/level0ambience.wav");
+				level0Ambience.setLoop(true);
+				level0Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
+				level0Ambience.play();
+			}
+
+			if (levelNumber == 1)
+			{
+				level1Ambience.openFromFile("res/assets/music/level1ambience.wav");
+				level1Ambience.setLoop(true);
+				level1Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
+				level1Ambience.play();
+			}
+
+			
 
 			// GUI
 
@@ -1484,6 +1505,9 @@ namespace newgame
 			{
 				buttons[i]->setVisible(false);
 			}
+
+			level0Ambience.stop();
+			level1Ambience.stop();
 		}
 
 		bool GameplayScreen::finish()
