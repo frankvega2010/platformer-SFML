@@ -264,7 +264,6 @@ namespace newgame
 			MousePosition = sf::Mouse::getPosition(_window);
 			worldPos = _window.mapPixelToCoords(MousePosition);
 
-			view.setCenter(200.0f, 1800.f);
 			view.zoom(2.0f);
 
 			gameOnPause = false;
@@ -332,7 +331,6 @@ namespace newgame
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - player1.getRectangle().getGlobalBounds().width / 2, player1.getRectangle().getPosition().y - player1.getRectangle().getGlobalBounds().height / 2 });
 
 			gun.setFillColor(sf::Color::White);
-			gun.setPosition(gunLimit.getPosition().x, gunLimit.getPosition().y - 80);
 			gun.setSize({ 140,90 });
 			gun.setTexture(&playerHands);
 			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.055f);
