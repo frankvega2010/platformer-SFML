@@ -390,15 +390,7 @@ namespace newgame
 			if (levelNumber == 1)
 			{
 				for (int i = 0; i < maxEnemiesLevel1; i++)
-				{
-					if (i < 3) enemies[i].setPosition(300.f + static_cast<float>(increaseEnemyDistance), 100.f);
-					else if (i < 6)enemies[i].setPosition(2300.f + static_cast<float>(increaseEnemyDistance), 400.f);
-					else if (i < 9)enemies[i].setPosition(4300.f + static_cast<float>(increaseEnemyDistance), 400.f);
-					else if (i < 12)enemies[i].setPosition(6300.f + static_cast<float>(increaseEnemyDistance), 600.f);
-					else if (i < 15)enemies[i].setPosition(9300.f + static_cast<float>(increaseEnemyDistance), 600.f);
-					else if (i < 18)enemies[i].setPosition(5300.f + static_cast<float>(increaseEnemyDistance), 600.f);
-					else if (i < maxEnemiesLevel1)enemies[i].setPosition(3300.f + static_cast<float>(increaseEnemyDistance), 600.f);
-					
+				{					
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
@@ -413,9 +405,46 @@ namespace newgame
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y);
 					enemies[i].setPlayerDetectionSize(1000.0f, 540); // 1000
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
-
-					increaseEnemyDistance = increaseEnemyDistance + 100;
 				}
+
+
+				// NPC Positions
+
+				//part 1
+				enemies[0].setPosition(300.f, 100.f);
+				enemies[1].setPosition(500.f, 100.f);
+
+				enemies[2].setPosition(1700.f, 1100.f);
+
+				enemies[3].setPosition(1800.f, 100.f);
+
+				enemies[4].setPosition(2600.f, 700.f);
+
+				enemies[5].setPosition(4000.f, 700.f);
+
+				//part 2
+				enemies[6].setPosition(4800.f, 700.f);
+				enemies[7].setPosition(5100.f, 700.f);
+
+				enemies[8].setPosition(5300.f, 1200.f);
+				enemies[9].setPosition(5600.f, 1200.f);
+
+				enemies[10].setPosition(6700.f, 700.f);
+
+				enemies[11].setPosition(7500.f, 1000.f);
+				enemies[12].setPosition(8200.f, 1200.f);
+
+				//part 3
+				enemies[13].setPosition(9000.f, 700.f);
+				enemies[14].setPosition(9300.f, 700.f);
+
+				enemies[15].setPosition(10100.f, 300.f);
+
+				enemies[16].setPosition(10300.f, 700.f);
+				enemies[17].setPosition(10800.f, 700.f);
+				enemies[18].setPosition(11200.f, 700.f);
+				enemies[19].setPosition(11600.f, 300.f);
+
 			}
 
 			increaseEnemyDistance = 0;
