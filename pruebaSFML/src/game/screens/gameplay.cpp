@@ -719,6 +719,10 @@ namespace newgame
 					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x - (Character.getRectangle().getGlobalBounds().width) + GravityAndWallFix, Character.getRectangle().getPosition().y);
 					Character.setMoveRight(false);
 					Character.setIsOnWhichLeftWall(i);
+					if (Character.getIsPlayer())
+					{
+						player1.setIsOnGround(false);
+					}
 				}
 
 				else if (Character.getRectangle().getPosition().x < levels[levelNumber].getRectangles(i).getPosition().x + levels[levelNumber].getRectangles(i).getGlobalBounds().width &&
@@ -728,6 +732,10 @@ namespace newgame
 					Character.setPosition(levels[levelNumber].getRectangles(i).getPosition().x + (levels[levelNumber].getRectangles(i).getGlobalBounds().width) - GravityAndWallFix, Character.getRectangle().getPosition().y);
 					Character.setMoveLeft(false);
 					Character.setIsOnWhichRightWall(i);
+					if (Character.getIsPlayer())
+					{
+						player1.setIsOnGround(false);
+					}
 				}
 
 				else if (Character.getRectangle().getPosition().y < levels[levelNumber].getRectangles(i).getPosition().y + levels[levelNumber].getRectangles(i).getGlobalBounds().height &&
