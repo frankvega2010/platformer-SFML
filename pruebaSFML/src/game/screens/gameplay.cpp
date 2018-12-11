@@ -52,6 +52,10 @@ namespace newgame
 	static const int rectangleCollisionLimitY = 20;
 	static const float GravityAndWallFix = 0.5; // int 1
 
+	static const int DifferentMousePositions = 16;
+	static int DistanceValue = 1000;
+	static int RectangleValue = 500;
+
 	// Camera Settings
 
 	static sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
@@ -1409,7 +1413,28 @@ namespace newgame
 				//////Set View
 				_window.setView(view);
 
+
 				//// Items
+
+
+				//Laser Sight Changing Size
+
+				if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 1000) line.setSize(sf::Vector2f(500, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 950) line.setSize(sf::Vector2f(450, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 900) line.setSize(sf::Vector2f(400, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 850) line.setSize(sf::Vector2f(350, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 800) line.setSize(sf::Vector2f(300, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 750) line.setSize(sf::Vector2f(250, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 700) line.setSize(sf::Vector2f(200, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 650) line.setSize(sf::Vector2f(0, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 350) line.setSize(sf::Vector2f(0, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 300) line.setSize(sf::Vector2f(200, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 250) line.setSize(sf::Vector2f(250, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 200) line.setSize(sf::Vector2f(300, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 150) line.setSize(sf::Vector2f(350, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 100) line.setSize(sf::Vector2f(400, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 50) line.setSize(sf::Vector2f(450, 5));
+				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500) line.setSize(sf::Vector2f(500, 5));
 
 				for (int i = 0; i < maxMedkitsFloor; i++)
 				{
