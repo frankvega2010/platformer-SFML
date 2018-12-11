@@ -96,6 +96,7 @@ namespace newgame
 			creditsText[17].setString("- smgshoot.wav, tehlordoswag420, https://freesound.org/people/tehlordoswag420/sounds/240377/.");
 			creditsText[18].setString("- Various Shotgun Pumps.aif, jeseid77, https://freesound.org/people/jeseid77/sounds/86246/.");
 			creditsText[19].setString("- Shotgun Shot/Blast (Outdoors/Close), EFlexMusic, https://freesound.org/people/EFlexMusic/sounds/416280/.");
+			creditsText[20].setString("- medikit.wav, Syna-Max, https://freesound.org/people/Syna-Max/sounds/63833/.");
 			creditsText[21].setString("- Fonts:");
 			creditsText[22].setString("- Times New Yorker, D.O.C.S., https://www.dafont.com/times-new-yorker.font.");
 			creditsText[23].setString("- Roman New Times, winty5, https://www.dafont.com/es/roman-new-times.font.");
