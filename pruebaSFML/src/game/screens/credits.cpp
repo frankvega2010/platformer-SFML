@@ -5,7 +5,7 @@
 namespace newgame
 {
 	static const int maxButtons = 1;
-	static const int maxCreditsTexts = 36;
+	static const int maxCreditsTexts = 37;
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
@@ -29,7 +29,7 @@ namespace newgame
 
 	static float posTextX2 = 180;
 
-	static float posTextY = 20;
+	static unsigned int posTextY = 20;
 
 	namespace Credits_Section
 	{
@@ -69,7 +69,7 @@ namespace newgame
 				creditsText[i].setFillColor(sf::Color::White);
 				if (i == 0)
 					creditsText[i].setCharacterSize(titleTextSize);
-				else if (i == 1 || i == 3 || i == 28)
+				else if (i == 1 || i == 3 || i == 29)
 					creditsText[i].setCharacterSize(subtitleTextSize1);
 				else
 					creditsText[i].setCharacterSize(subtitleTextSize2);
@@ -96,22 +96,22 @@ namespace newgame
 			creditsText[17].setString("- smgshoot.wav, tehlordoswag420, https://freesound.org/people/tehlordoswag420/sounds/240377/.");
 			creditsText[18].setString("- Various Shotgun Pumps.aif, jeseid77, https://freesound.org/people/jeseid77/sounds/86246/.");
 			creditsText[19].setString("- Shotgun Shot/Blast (Outdoors/Close), EFlexMusic, https://freesound.org/people/EFlexMusic/sounds/416280/.");
-			creditsText[20].setString("- Fonts:");
-			creditsText[21].setString("- Times New Yorker, D.O.C.S., https://www.dafont.com/times-new-yorker.font.");
-			creditsText[22].setString("- Roman New Times, winty5, https://www.dafont.com/es/roman-new-times.font.");
-			creditsText[23].setString("- Sansation, Bernd Montag, https://www.dafont.com/es/sansation.font.");
-			creditsText[24].setString("- Tilemaps:");
-			creditsText[25].setString("- Sci-fi platform tiles, Eris, https://opengameart.org/content/sci-fi-platform-tiles.");
-			creditsText[26].setString("- Platformer Art: Requests, Kenney, https://www.kenney.nl/assets/platformer-art-requests.");
-			creditsText[27].setString("- Music: made with BoscaCeoil.");
-			creditsText[28].setString("Tools used:");
-			creditsText[29].setString("- SFML.");
-			creditsText[30].setString("- Thor (SFML lib).");
-			creditsText[31].setString("- TGUI (SFML lib).");
-			creditsText[32].setString("- STP (SFML lib).");
-			creditsText[33].setString("- DragonBones.");
-			creditsText[34].setString("- Adobe Illustrator.");
-			creditsText[35].setString("- Adobe Photoshop.");
+			creditsText[21].setString("- Fonts:");
+			creditsText[22].setString("- Times New Yorker, D.O.C.S., https://www.dafont.com/times-new-yorker.font.");
+			creditsText[23].setString("- Roman New Times, winty5, https://www.dafont.com/es/roman-new-times.font.");
+			creditsText[24].setString("- Sansation, Bernd Montag, https://www.dafont.com/es/sansation.font.");
+			creditsText[25].setString("- Tilemaps:");
+			creditsText[26].setString("- Sci-fi platform tiles, Eris, https://opengameart.org/content/sci-fi-platform-tiles.");
+			creditsText[27].setString("- Platformer Art: Requests, Kenney, https://www.kenney.nl/assets/platformer-art-requests.");
+			creditsText[28].setString("- Music: made with BoscaCeoil.");
+			creditsText[29].setString("Tools used:");
+			creditsText[30].setString("- SFML.");
+			creditsText[31].setString("- Thor (SFML lib).");
+			creditsText[32].setString("- TGUI (SFML lib).");
+			creditsText[33].setString("- STP (SFML lib).");
+			creditsText[34].setString("- DragonBones.");
+			creditsText[35].setString("- Adobe Illustrator.");
+			creditsText[36].setString("- Adobe Photoshop.");
 
 			button[0]->connect("Pressed", signalGoToMenu);
 
@@ -134,43 +134,44 @@ namespace newgame
 		void CreditsScreen::update()
 		{
 			input();
-			posTextY = static_cast<int>((scrollbar->getValue())*-1);
-			creditsText[0].setPosition(posTextX1, posTextY);
-			creditsText[1].setPosition(posTextX1, posTextY + 50);
-			creditsText[2].setPosition(posTextX1, posTextY + 90);
-			creditsText[3].setPosition(posTextX1, posTextY + 120);
-			creditsText[4].setPosition(posTextX1, posTextY + 160);
-			creditsText[5].setPosition(posTextX1, posTextY + 190);
-			creditsText[6].setPosition(posTextX2, posTextY + 220);
-			creditsText[7].setPosition(posTextX2, posTextY + 250);
-			creditsText[8].setPosition(posTextX2, posTextY + 280);
-			creditsText[9].setPosition(posTextX2, posTextY + 310);
-			creditsText[10].setPosition(posTextX2, posTextY + 340);
-			creditsText[11].setPosition(posTextX2, posTextY + 370);
-			creditsText[12].setPosition(posTextX2, posTextY + 400);
-			creditsText[13].setPosition(posTextX2, posTextY + 430);
-			creditsText[14].setPosition(posTextX2, posTextY + 460);
-			creditsText[15].setPosition(posTextX2, posTextY + 490);
-			creditsText[16].setPosition(posTextX2, posTextY + 520);
-			creditsText[17].setPosition(posTextX2, posTextY + 550);
-			creditsText[18].setPosition(posTextX2, posTextY + 580);
-			creditsText[19].setPosition(posTextX2, posTextY + 610);
-			creditsText[20].setPosition(posTextX1, posTextY + 640);
-			creditsText[21].setPosition(posTextX2, posTextY + 670);
-			creditsText[22].setPosition(posTextX2, posTextY + 700);
-			creditsText[23].setPosition(posTextX2, posTextY + 730);
-			creditsText[24].setPosition(posTextX1, posTextY + 760);
-			creditsText[25].setPosition(posTextX2, posTextY + 790);
-			creditsText[26].setPosition(posTextX2, posTextY + 820);
-			creditsText[27].setPosition(posTextX1, posTextY + 850);
-			creditsText[28].setPosition(posTextX1, posTextY + 890);
-			creditsText[29].setPosition(posTextX1, posTextY + 930);
-			creditsText[30].setPosition(posTextX1, posTextY + 960);
-			creditsText[31].setPosition(posTextX1, posTextY + 990);
-			creditsText[32].setPosition(posTextX1, posTextY + 1020);
-			creditsText[33].setPosition(posTextX1, posTextY + 1050);
-			creditsText[34].setPosition(posTextX1, posTextY + 1080);
-			creditsText[35].setPosition(posTextX1, posTextY + 1110);
+			posTextY = ((scrollbar->getValue())*-1);
+			creditsText[0].setPosition(posTextX1,static_cast<float>( posTextY));
+			creditsText[1].setPosition(posTextX1, static_cast<float>(posTextY + 50));
+			creditsText[2].setPosition(posTextX1, static_cast<float>(posTextY + 90));
+			creditsText[3].setPosition(posTextX1, static_cast<float>(posTextY + 120));
+			creditsText[4].setPosition(posTextX1, static_cast<float>(posTextY + 160));
+			creditsText[5].setPosition(posTextX1, static_cast<float>(posTextY + 190));
+			creditsText[6].setPosition(posTextX2, static_cast<float>(posTextY + 220));
+			creditsText[7].setPosition(posTextX2, static_cast<float>(posTextY + 250));
+			creditsText[8].setPosition(posTextX2, static_cast<float>(posTextY + 280));
+			creditsText[9].setPosition(posTextX2, static_cast<float>(posTextY + 310));
+			creditsText[10].setPosition(posTextX2, static_cast<float>(posTextY + 340));
+			creditsText[11].setPosition(posTextX2, static_cast<float>(posTextY + 370));
+			creditsText[12].setPosition(posTextX2, static_cast<float>(posTextY + 400));
+			creditsText[13].setPosition(posTextX2, static_cast<float>(posTextY + 430));
+			creditsText[14].setPosition(posTextX2, static_cast<float>(posTextY + 460));
+			creditsText[15].setPosition(posTextX2, static_cast<float>(posTextY + 490));
+			creditsText[16].setPosition(posTextX2, static_cast<float>(posTextY + 520));
+			creditsText[17].setPosition(posTextX2, static_cast<float>(posTextY + 550));
+			creditsText[18].setPosition(posTextX2, static_cast<float>(posTextY + 580));
+			creditsText[19].setPosition(posTextX2, static_cast<float>(posTextY + 610));
+			creditsText[20].setPosition(posTextX2, static_cast<float>(posTextY + 640));
+			creditsText[21].setPosition(posTextX1, static_cast<float>(posTextY + 670));
+			creditsText[22].setPosition(posTextX2, static_cast<float>(posTextY + 700));
+			creditsText[23].setPosition(posTextX2, static_cast<float>(posTextY + 730));
+			creditsText[24].setPosition(posTextX2, static_cast<float>(posTextY + 760));
+			creditsText[25].setPosition(posTextX1, static_cast<float>(posTextY + 790));
+			creditsText[26].setPosition(posTextX2, static_cast<float>(posTextY + 820));
+			creditsText[27].setPosition(posTextX2, static_cast<float>(posTextY + 850));
+			creditsText[28].setPosition(posTextX1, static_cast<float>(posTextY + 880));
+			creditsText[29].setPosition(posTextX1, static_cast<float>(posTextY + 920));
+			creditsText[30].setPosition(posTextX1, static_cast<float>(posTextY + 960));
+			creditsText[31].setPosition(posTextX1, static_cast<float>(posTextY + 990));
+			creditsText[32].setPosition(posTextX1, static_cast<float>(posTextY + 1020));
+			creditsText[33].setPosition(posTextX1, static_cast<float>(posTextY + 1050));
+			creditsText[34].setPosition(posTextX1, static_cast<float>(posTextY + 1080));
+			creditsText[35].setPosition(posTextX1, static_cast<float>(posTextY + 1110));
+			creditsText[36].setPosition(posTextX1, static_cast<float>(posTextY + 1140));
 		}
 
 		void CreditsScreen::draw()
