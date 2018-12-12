@@ -113,6 +113,8 @@ namespace newgame
 
 	static sf::Music level1Ambience;
 	static sf::Music level0Ambience;
+	static sf::Music level1Song;
+	static sf::Music tutorialSong;
 
 	static sf::SoundBuffer pistolshoot;
 	static sf::Sound pistolGunShoot;
@@ -630,6 +632,10 @@ namespace newgame
 				level0Ambience.setLoop(true);
 				level0Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
 				level0Ambience.play();
+				tutorialSong.openFromFile("res/assets/music/tuto.wav");
+				tutorialSong.setLoop(true);
+				tutorialSong.setVolume(static_cast<float>(globalMusicVolume / 1));
+				tutorialSong.play();
 			}
 
 			if (levelNumber == 1)
@@ -638,6 +644,10 @@ namespace newgame
 				level1Ambience.setLoop(true);
 				level1Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
 				level1Ambience.play();
+				level1Song.openFromFile("res/assets/music/level1.wav");
+				level1Song.setLoop(true);
+				level1Song.setVolume(static_cast<float>(globalMusicVolume / 1));
+				level1Song.play();
 			}
 
 			
@@ -1623,6 +1633,8 @@ namespace newgame
 
 			level0Ambience.stop();
 			level1Ambience.stop();
+			tutorialSong.stop();
+			level1Song.stop();
 		}
 
 		bool GameplayScreen::finish()
