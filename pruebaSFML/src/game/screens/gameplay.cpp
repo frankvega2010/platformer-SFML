@@ -1954,26 +1954,27 @@ namespace newgame
 				}
 
 			}
-			for (int i = 0; i < maxWeapons; i++)
+			/*for (int i = 0; i < maxWeapons; i++)
 			{
 				switch (currentWeapon)
 				{
 				case 0:
-					particles.update(pistolFireRate);
+					particles.update(sf::seconds(deltaTime));
 					break;
 				case 1:
-					particles.update(shotgunFireRate);
+					particles.update(sf::seconds(deltaTime));
 					break;
 				case 2:
-					particles.update(smgFireRate);
+					particles.update(sf::seconds(deltaTime));
 					break;
 				default:
 					break;
 				}
 
 				particles.setColor(sf::Color::Red);
-			}
-
+			}*/
+			particles.update(sf::seconds(deltaTime));
+			particles.setColor(sf::Color::Red);
 			
 			
 		}
