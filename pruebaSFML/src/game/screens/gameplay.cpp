@@ -138,6 +138,8 @@ namespace newgame
 
 	static sf::Music level1Ambience;
 	static sf::Music level0Ambience;
+	static sf::Music level1Song;
+	static sf::Music tutorialSong;
 
 	//static sf::SoundBuffer pistolShootBuffer;
 	//static sf::Sound pistolShoot;
@@ -199,11 +201,7 @@ namespace newgame
 
 	// Shapes
 
-	/*static sf::Vertex line[2];*/
-
-	static sf::RectangleShape line;
 	static sf::RectangleShape lineCollision;
-	static sf::Texture lineTexture;
 	static int inWhichRectangle = -1;
 	static int inWhichEnemy = -1;
 	static bool canDealDamage = false;
@@ -231,6 +229,8 @@ namespace newgame
 	static sf::RectangleShape smgHUD;
 
 	static bool gameOnPause;
+
+	int aux;
 
 	namespace Gameplay_Section
 	{
@@ -420,9 +420,7 @@ namespace newgame
 			player1.setVelocity({ player1.getVelocity().x,0.0f });
 
 			// Player Gun
-			lineTexture.loadFromFile("res/assets/textures/laser.png");
-			line.setSize(sf::Vector2f(400, 5));
-			line.setTexture(&lineTexture);
+
 
 			lineCollision.setSize(sf::Vector2f(300, 10));
 			lineCollision.setFillColor(sf::Color::Transparent);
@@ -765,6 +763,10 @@ namespace newgame
 				level0Ambience.setLoop(true);
 				level0Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
 				level0Ambience.play();
+				tutorialSong.openFromFile("res/assets/music/tuto.wav");
+				tutorialSong.setLoop(true);
+				tutorialSong.setVolume(static_cast<float>(globalMusicVolume / 1));
+				tutorialSong.play();
 			}
 
 			if (levelNumber == 1)
@@ -773,10 +775,14 @@ namespace newgame
 				level1Ambience.setLoop(true);
 				level1Ambience.setVolume(static_cast<float>(globalMusicVolume / 1));
 				level1Ambience.play();
+				level1Song.openFromFile("res/assets/music/level1.wav");
+				level1Song.setLoop(true);
+				level1Song.setVolume(static_cast<float>(globalMusicVolume / 1));
+				level1Song.play();
 			}
 
 			
-
+			aux = 0;
 			// GUI
 
 			pauseButton = tgui::Button::create();
@@ -1071,7 +1077,6 @@ namespace newgame
 
 		static void GunRotation()
 		{
-			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28});
 			//lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 
@@ -1151,7 +1156,6 @@ namespace newgame
 			gun.setRotation(angle);
 			shotgunRectangle.setRotation(angle);
 			smgRectangle.setRotation(angle);
-			line.setRotation(angle);
 			lineCollision.setRotation(angle);
 		}
 
@@ -1208,7 +1212,6 @@ namespace newgame
 				if (enemy.getIsAlive())
 				{
 					crosshairTest.setFillColor(sf::Color::Green);
-					line.setFillColor(transparentGreen); // Transparent Green
 					inWhichEnemy = i;
 
 
@@ -1232,7 +1235,6 @@ namespace newgame
 				{
 					if (inWhichEnemy == i)
 					{
-						line.setFillColor(transparentRed);
 						crosshairTest.setFillColor(sf::Color::Red);
 					}
 				}
@@ -1241,7 +1243,6 @@ namespace newgame
 			{
 				if (inWhichEnemy == i)
 				{
-					line.setFillColor(transparentRed);
 					crosshairTest.setFillColor(sf::Color::Red);
 				}
 			}
@@ -1318,7 +1319,6 @@ namespace newgame
 
 				if (inWhichEnemy == i)
 				{
-					line.setFillColor(transparentRed);
 					crosshairTest.setFillColor(sf::Color::Red);
 				}
 			}
@@ -1771,7 +1771,6 @@ namespace newgame
 		{
 			if (!gameOnPause)
 			{
-				//line.setPosition(player1.getPosition());
 				
 
 				
@@ -1799,6 +1798,8 @@ namespace newgame
 
 
 				//// Items
+
+
 
 
 				// Ammo Count
@@ -1877,7 +1878,6 @@ namespace newgame
 				{
 					if (lineCollision.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 					{
-						line.setFillColor(transparentRed); // Transparent Red
 						crosshairTest.setFillColor(transparentRed);
 						canDealDamage = false;
 						inWhichRectangle = i;
@@ -1978,9 +1978,6 @@ namespace newgame
 			////---------------------
 			// Sprites / Shapes
 
-			// Lines
-
-			_window.draw(line);
 			_window.draw(lineCollision);
 
 			//// Player
@@ -2062,6 +2059,8 @@ namespace newgame
 
 			level0Ambience.stop();
 			level1Ambience.stop();
+			tutorialSong.stop();
+			level1Song.stop();
 		}
 
 		bool GameplayScreen::finish()
