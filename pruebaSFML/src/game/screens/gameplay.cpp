@@ -56,6 +56,8 @@ namespace newgame
 	static int DistanceValue = 1000;
 	static int RectangleValue = 500;
 
+	static int currentWeapon = -1;
+
 	// Camera Settings
 
 	static sf::View view(sf::FloatRect(0.f, 0.f, 1280.f, 800.f));
@@ -68,6 +70,29 @@ namespace newgame
 	static float cameraLimitDown = 350.f;
 	static float cameraLimitLeft = 300.f;
 	static float cameraLimitRight = 100.f;
+
+	// Weapons
+
+	bool inputActive = false;
+	bool inputActive2 = false;
+	bool inputActive3 = false;
+
+	weapon weapons[maxWeapons];
+
+	static sf::RectangleShape gun;
+	static SpriteAnimation pistolAnimation;
+	static sf::Texture playerHands;
+	static const sf::Time pistolFireRate = sf::seconds(0.5f);
+
+	static sf::RectangleShape shotgunRectangle;
+	static SpriteAnimation shotgunAnimation;
+	static sf::Texture shotgunTexture;
+	static const sf::Time shotgunFireRate = sf::seconds(1.0f);
+
+	static sf::RectangleShape smgRectangle;
+	static SpriteAnimation smgAnimation;
+	static sf::Texture smgTexture;
+	static const sf::Time smgFireRate = sf::seconds(0.09f);
 
 	// Victory Condition
 
@@ -93,19 +118,19 @@ namespace newgame
 	static const sf::Time initialInvincibilityTime = sf::seconds(3.0f);
 	static thor::CallbackTimer timerInvincibility;
 
-	static const sf::Time pistolFireRate = sf::seconds(0.5f);
-	static thor::CallbackTimer timerPistolFireRate;
-
 	static const sf::Time footstepInitialTime = sf::seconds(0.49f);
 	static thor::CallbackTimer footstepTimer;
 
 	//Textures & Animations
+	static sf::Texture pistolAmmoTexture;
+	static sf::Texture smgAmmoTexture;
+	static sf::Texture shotgunAmmoTexture;
 	static sf::Texture medkitTexture;
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
-	static sf::Texture playerHands;
+	
 	static SpriteAnimation playerAnimation;
-	static SpriteAnimation pistolAnimation;
+	
 
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
 
@@ -114,8 +139,8 @@ namespace newgame
 	static sf::Music level1Ambience;
 	static sf::Music level0Ambience;
 
-	static sf::SoundBuffer pistolshoot;
-	static sf::Sound pistolGunShoot;
+	//static sf::SoundBuffer pistolShootBuffer;
+	//static sf::Sound pistolShoot;
 
 	static sf::SoundBuffer footstep;
 	static sf::Sound playerFootStep;
@@ -135,6 +160,9 @@ namespace newgame
 
 	static sf::SoundBuffer soundHeal;
 	static sf::Sound playerHeal;
+
+	static sf::SoundBuffer ammoPickupSoundBuffer;
+	static sf::Sound ammoPickupSound;
 
 	// Gun Rotation Variable
 
@@ -165,6 +193,9 @@ namespace newgame
 
 	static Character medkitFloor[maxMedkitsFloor];
 	static Character medkitDrop;
+	static Character pistolAmmo;
+	static Character smgAmmo;
+	static Character shotgunAmmo;
 
 	// Shapes
 
@@ -182,7 +213,7 @@ namespace newgame
 
 	static sf::Texture crosshairTexture;
 	static sf::CircleShape crosshairTest;
-	static sf::RectangleShape gun;
+	
 	static sf::CircleShape gunLimit;
 	static sf::RectangleShape Exit;
 
@@ -194,6 +225,10 @@ namespace newgame
 	static sf::RectangleShape weaponHUDRectangle;
 	static sf::Texture pistolTexture;
 	static sf::RectangleShape pistolRectangle;
+	static sf::Texture shotgunHUDTexture;
+	static sf::RectangleShape shotgunHUD;
+	static sf::Texture smgHUDTexture;
+	static sf::RectangleShape smgHUD;
 
 	static bool gameOnPause;
 
@@ -288,6 +323,56 @@ namespace newgame
 			gameOnPause = false;
 
 			//// World Entities
+
+			// Weapons
+
+			currentWeapon = 1;
+
+			//pistolShootBuffer.loadFromFile("res/assets/sounds/pistolshoot.wav");
+			//pistolShoot.setB
+			weapons[pistol].setAmmo(60);
+			weapons[pistol].setDamage(25);
+			weapons[pistol].setSoundVolume(globalSoundVolume);
+			weapons[pistol].setSoundBufferLocation("res/assets/sounds/pistolshoot.wav");
+			weapons[pistol].setSoundBufferLocationDraw("res/assets/sounds/pistoldraw.wav");
+			weapons[pistol].setFireRateTimer(pistolFireRate);
+
+			weapons[shotgun].setAmmo(30);
+			weapons[shotgun].setDamage(50);
+			weapons[shotgun].setSoundVolume(globalSoundVolume);
+			weapons[shotgun].setSoundBufferLocation("res/assets/sounds/shotgunshoot.wav");
+			weapons[shotgun].setSoundBufferLocationDraw("res/assets/sounds/shotgundraw.wav");
+			weapons[shotgun].setFireRateTimer(shotgunFireRate);
+
+			shotgunTexture.loadFromFile("res/assets/textures/shotgun.png");
+			shotgunTexture.setSmooth(true);
+			shotgunTexture.setRepeated(false);
+
+			shotgunRectangle.setFillColor(sf::Color::White);
+			shotgunRectangle.setSize({ 140,90 });
+			shotgunRectangle.setTexture(&shotgunTexture);
+			shotgunAnimation.SetAnimation(&shotgunTexture, sf::Vector2u(9, 1), 0.11f);
+
+			weapons[smg].setAmmo(150);
+			weapons[smg].setDamage(5);
+			weapons[smg].setSoundVolume(globalSoundVolume);
+			weapons[smg].setSoundBufferLocation("res/assets/sounds/smgshoot.wav");
+			weapons[smg].setSoundBufferLocationDraw("res/assets/sounds/smgdraw.wav");
+			weapons[smg].setFireRateTimer(smgFireRate);
+
+			smgTexture.loadFromFile("res/assets/textures/smg.png");
+			smgTexture.setSmooth(true);
+			smgTexture.setRepeated(false);
+
+			smgRectangle.setFillColor(sf::Color::White);
+			smgRectangle.setSize({ 110,70 });
+			smgRectangle.setTexture(&smgTexture);
+			smgAnimation.SetAnimation(&smgTexture, sf::Vector2u(9, 1), 0.025f);
+
+			/*for (int i = 0; i < length; i++)
+			{
+
+			}*/
 
 			//Tilemap
 
@@ -493,8 +578,38 @@ namespace newgame
 			medkitDrop.setSpeed(0.0f, 900.0f);
 			medkitDrop.setTexture(medkitTexture);
 
+			// Ammo
+
+			pistolAmmoTexture.loadFromFile("res/assets/textures/pistolammo.png");
+			pistolAmmoTexture.setSmooth(true);
+			pistolAmmoTexture.setRepeated(false);
+
+			pistolAmmo.setColor(sf::Color::White);
+			pistolAmmo.setSize(0.0f, 0.0f);
+			pistolAmmo.setIsAlive(false);
+			pistolAmmo.setSpeed(0.0f, 900.0f);
+			pistolAmmo.setTexture(pistolAmmoTexture);
+
+
+			smgAmmoTexture.loadFromFile("res/assets/textures/smgammo.png");
+			smgAmmoTexture.setSmooth(true);
+			smgAmmoTexture.setRepeated(false);
+
+			smgAmmo.setColor(sf::Color::White);
+			smgAmmo.setSize(0.0f, 0.0f);
+			smgAmmo.setIsAlive(false);
+			smgAmmo.setSpeed(0.0f, 900.0f);
+			smgAmmo.setTexture(smgAmmoTexture);
+
+			shotgunAmmoTexture.loadFromFile("res/assets/textures/shotgunammo.png");
+			shotgunAmmoTexture.setSmooth(true);
+			shotgunAmmoTexture.setRepeated(false);
 			
-			
+			shotgunAmmo.setColor(sf::Color::White);
+			shotgunAmmo.setSize(0.0f, 0.0f);
+			shotgunAmmo.setIsAlive(false);
+			shotgunAmmo.setSpeed(0.0f, 900.0f);
+			shotgunAmmo.setTexture(shotgunAmmoTexture);
 
 
 			//// Text
@@ -549,9 +664,9 @@ namespace newgame
 
 			//// HUD
 
-			bulletsText.setCharacterSize(150);
+			bulletsText.setCharacterSize(50);
 			bulletsText.setFont(font2);
-			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 700));
+			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 100));
 			bulletsText.setFillColor(sf::Color::Red);
 			bulletsText.setString("-");
 
@@ -576,6 +691,18 @@ namespace newgame
 			pistolRectangle.setSize({ 170, 90 });
 			pistolRectangle.setTexture(&pistolTexture);
 
+			shotgunHUDTexture.loadFromFile("res/assets/textures/shotgunHUD.png");
+			shotgunHUD.setFillColor(sf::Color::White);
+			shotgunHUD.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			shotgunHUD.setSize({ 170, 90 });
+			shotgunHUD.setTexture(&shotgunHUDTexture);
+
+			smgHUDTexture.loadFromFile("res/assets/textures/smgHUD.png");
+			smgHUD.setFillColor(sf::Color::White);
+			smgHUD.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
+			smgHUD.setSize({ 170, 90 });
+			smgHUD.setTexture(&smgHUDTexture);
+
 			zombiesKilledText.setCharacterSize(HUDdefaultFontSize);
 			zombiesKilledText.setFont(deltaFont);
 			zombiesKilledText.setPosition(500, 200);
@@ -594,9 +721,9 @@ namespace newgame
 
 			//// Audio
 
-			pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
+			/*pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
 			pistolGunShoot.setBuffer(pistolshoot);
-			pistolGunShoot.setVolume(static_cast<float>(globalSoundVolume));
+			pistolGunShoot.setVolume(static_cast<float>(globalSoundVolume));*/
 
 			footstep.loadFromFile("res/assets/sounds/footstep.wav");
 			playerFootStep.setBuffer(footstep);
@@ -627,6 +754,10 @@ namespace newgame
 			soundHeal.loadFromFile("res/assets/sounds/heal.wav");
 			playerHeal.setBuffer(soundHeal);
 			playerHeal.setVolume(static_cast<float>(globalSoundVolume));
+
+			ammoPickupSoundBuffer.loadFromFile("res/assets/sounds/ammopickup.wav");
+			ammoPickupSound.setBuffer(ammoPickupSoundBuffer);
+			ammoPickupSound.setVolume(static_cast<float>(globalSoundVolume));
 
 			if (levelNumber == 0)
 			{
@@ -743,6 +874,48 @@ namespace newgame
 			else
 			{
 				player1.setSpeed(500, 2100);
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+			{
+				if (!inputActive)
+				{
+					weapons[pistol].playDrawSound();
+					currentWeapon = pistol;
+					inputActive = true;
+				}			
+			}
+			else
+			{
+				inputActive = false;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+			{
+				if (!inputActive2)
+				{
+					weapons[shotgun].playDrawSound();
+					currentWeapon = shotgun;
+					inputActive2 = true;
+				}
+			}
+			else
+			{
+				inputActive2 = false;
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+			{
+				if (!inputActive3)
+				{
+					weapons[smg].playDrawSound();
+					currentWeapon = smg;
+					inputActive3 = true;
+				}
+			}
+			else
+			{
+				inputActive3 = false;
 			}
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -901,28 +1074,83 @@ namespace newgame
 			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28});
 			//lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
-			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
-			
 
-			v1.x = 0;
-			v1.y = 0.0f - gun.getPosition().y;
-
-			v2.x = worldPos.x - gun.getPosition().x;
-			v2.y = worldPos.y - gun.getPosition().y;
-
-			prodVect = v1.x*v2.x + v1.y*v2.y;
-			modv1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
-			modv2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
-
-			angle = acos(prodVect / (modv1*modv2));
-			angle *= (180 / 3.1415f);
-			angle = angle + 270;
-			if (worldPos.x < gun.getPosition().x)
+			switch (currentWeapon)
 			{
-				angle = 180 - angle;
+			case pistol:
+				gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
+
+				v1.x = 0;
+				v1.y = 0.0f - gun.getPosition().y;
+
+				v2.x = worldPos.x - gun.getPosition().x;
+				v2.y = worldPos.y - gun.getPosition().y;
+
+				prodVect = v1.x*v2.x + v1.y*v2.y;
+				modv1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
+				modv2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
+
+				angle = acos(prodVect / (modv1*modv2));
+				angle *= (180 / 3.1415f);
+				angle = angle + 270;
+				if (worldPos.x < gun.getPosition().x)
+				{
+					angle = 180 - angle;
+				}
+
+
+				break;
+			case shotgun:
+				shotgunRectangle.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
+
+				v1.x = 0;
+				v1.y = 0.0f - shotgunRectangle.getPosition().y;
+
+				v2.x = worldPos.x - shotgunRectangle.getPosition().x;
+				v2.y = worldPos.y - shotgunRectangle.getPosition().y;
+
+				prodVect = v1.x*v2.x + v1.y*v2.y;
+				modv1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
+				modv2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
+
+				angle = acos(prodVect / (modv1*modv2));
+				angle *= (180 / 3.1415f);
+				angle = angle + 270;
+				if (worldPos.x < shotgunRectangle.getPosition().x)
+				{
+					angle = 180 - angle;
+				}
+				
+				break;
+			case 2:
+				smgRectangle.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 15 });
+
+				v1.x = 0;
+				v1.y = 0.0f - smgRectangle.getPosition().y;
+
+				v2.x = worldPos.x - smgRectangle.getPosition().x;
+				v2.y = worldPos.y - smgRectangle.getPosition().y;
+
+				prodVect = v1.x*v2.x + v1.y*v2.y;
+				modv1 = sqrt(pow(v1.x, 2) + pow(v1.y, 2));
+				modv2 = sqrt(pow(v2.x, 2) + pow(v2.y, 2));
+
+				angle = acos(prodVect / (modv1*modv2));
+				angle *= (180 / 3.1415f);
+				angle = angle + 270;
+				if (worldPos.x < smgRectangle.getPosition().x)
+				{
+					angle = 180 - angle;
+				}
+
+				break;
+			default:
+				break;
 			}
 
 			gun.setRotation(angle);
+			shotgunRectangle.setRotation(angle);
+			smgRectangle.setRotation(angle);
 			line.setRotation(angle);
 			lineCollision.setRotation(angle);
 		}
@@ -963,12 +1191,12 @@ namespace newgame
 			{
 				if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 				{
-
-					if (!timerPistolFireRate.isRunning())
+					if (!weapons[currentWeapon].isFireRateTimerRunning() && weapons[currentWeapon].getAmmo() > 0)
 					{
-						pistolGunShoot.play();
-						timerPistolFireRate.start();
-					}
+						weapons[currentWeapon].playSound();
+						weapons[currentWeapon].StartFireRateTimer();
+						weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
+					}				
 				}
 			}
 		}
@@ -988,12 +1216,13 @@ namespace newgame
 					{
 						if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 						{
-							if (!timerPistolFireRate.isRunning())
+							if (!weapons[currentWeapon].isFireRateTimerRunning() && weapons[currentWeapon].getAmmo() > 0)
 							{
 								zombiePain.play();
-								pistolGunShoot.play();
-								timerPistolFireRate.start();
-								enemy.setHp(enemy.getHp() - 25);
+								weapons[currentWeapon].playSound();
+								weapons[currentWeapon].StartFireRateTimer();
+								weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
+								enemy.setHp(enemy.getHp() - weapons[currentWeapon].getDamage());
 								enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y);
 							}
 						}
@@ -1128,7 +1357,7 @@ namespace newgame
 					if (animation.UpdateOnce(1, deltaTime))
 					{
 						//thor::setRandomSeed(0);
-						int RandomDropNumber = thor::random(0, 4); // change to consts
+						int RandomDropNumber = thor::random(0, 8); // change to consts
 
 						zombieDeath.play();
 						enemy.setSize(0, 0);
@@ -1137,15 +1366,48 @@ namespace newgame
 						enemy.setHp(defaultHP);
 						enemy.setIsDead(true);
 
-						if (RandomDropNumber == 4) // change to consts
+						switch (RandomDropNumber)
 						{
+						case 2:
+							if (!pistolAmmo.getIsAlive())
+							{
+								pistolAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								pistolAmmo.setSize(100.0f, 70.0f);
+								pistolAmmo.setIsAlive(true);
+							}
+							break;
+						case 4:
 							if (!medkitDrop.getIsAlive())
 							{
 								medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
 								medkitDrop.setSize(100.0f, 70.0f);
 								medkitDrop.setIsAlive(true);
 							}
+							break;
+						case 7:
+							if (!smgAmmo.getIsAlive())
+							{
+								smgAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								smgAmmo.setSize(100.0f, 70.0f);
+								smgAmmo.setIsAlive(true);
+							}
+							break;
+						case 8:
+							if (!shotgunAmmo.getIsAlive())
+							{
+								shotgunAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								shotgunAmmo.setSize(100.0f, 70.0f);
+								shotgunAmmo.setIsAlive(true);
+							}
+							break;
+						default:
+							break;
 						}
+
+						//if (RandomDropNumber == 4) // change to consts
+						//{
+						//	
+						//}
 					}
 				}
 				else if (enemy.getFaceLeft())
@@ -1153,7 +1415,7 @@ namespace newgame
 					if (animation.UpdateOnce(5, deltaTime))
 					{
 						//thor::setRandomSeed(0);
-						int RandomDropNumber = thor::random(0, 4); // change to consts
+						int RandomDropNumber = thor::random(0, 8); // change to consts
 
 						zombieDeath.play();
 						enemy.setSize(0, 0);
@@ -1161,16 +1423,55 @@ namespace newgame
 						enemy.setIsAlive(true);
 						enemy.setHp(defaultHP);
 						enemy.setIsDead(true);
-						
-						if (RandomDropNumber == 4) // change to consts
+
+						switch (RandomDropNumber)
 						{
+						case 2:
+							if (!pistolAmmo.getIsAlive())
+							{
+								pistolAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								pistolAmmo.setSize(100.0f, 70.0f);
+								pistolAmmo.setIsAlive(true);
+							}
+							break;
+						case 4:
 							if (!medkitDrop.getIsAlive())
 							{
 								medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
 								medkitDrop.setSize(100.0f, 70.0f);
 								medkitDrop.setIsAlive(true);
 							}
+							break;
+						case 7:
+							if (!smgAmmo.getIsAlive())
+							{
+								smgAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								smgAmmo.setSize(100.0f, 70.0f);
+								smgAmmo.setIsAlive(true);
+							}
+							break;
+						case 8:
+							if (!shotgunAmmo.getIsAlive())
+							{
+								shotgunAmmo.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+								shotgunAmmo.setSize(100.0f, 70.0f);
+								shotgunAmmo.setIsAlive(true);
+							}
+							break;
+						default:
+							break;
 						}
+
+						
+						//if (RandomDropNumber == 4) // change to consts
+						//{
+						//	if (!medkitDrop.getIsAlive())
+						//	{
+						//		medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
+						//		medkitDrop.setSize(100.0f, 70.0f);
+						//		medkitDrop.setIsAlive(true);
+						//	}
+						//}
 					}
 				}
 				
@@ -1240,6 +1541,11 @@ namespace newgame
 					player1.scale(-1, 1);
 					gun.setOrigin({ -20,40 });
 					gun.scale(1, -1);
+					shotgunRectangle.setOrigin({ -20,40 });
+					shotgunRectangle.scale(1, -1);
+					smgRectangle.setOrigin({ -20,40 });
+					smgRectangle.scale(1, -1);
+					
 				}
 				player1.setFlipLeft(false);
 				player1.setFlipRight(true);
@@ -1253,6 +1559,10 @@ namespace newgame
 					player1.scale(-1, 1);
 					gun.setOrigin({ -20, 40 });
 					gun.scale(1, -1);
+					shotgunRectangle.setOrigin({ -20, 40 });
+					shotgunRectangle.scale(1, -1);
+					smgRectangle.setOrigin({ -20, 40 });
+					smgRectangle.scale(1, -1);
 				}
 				player1.setFlipRight(false);
 				player1.setFlipLeft(true);
@@ -1265,9 +1575,11 @@ namespace newgame
 			lifeBar.setPosition(sf::Vector2f(view.getCenter().x - 1232, view.getCenter().y - 700));
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
 			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
-			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 450, view.getCenter().y - 700));
+			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 450, view.getCenter().y - 625));
 			zombiesKilledText.setPosition(sf::Vector2f(view.getCenter().x + 300, view.getCenter().y - 800));
 			pistolRectangle.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
+			shotgunHUD.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
+			smgHUD.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
 
 			zombiesKilledText.setString("Zombies Killed: " + toString(zombiesKilled));
 
@@ -1300,16 +1612,49 @@ namespace newgame
 		}
 
 		//WIP Function
-		static void CheckWeaponsFireRate(thor::CallbackTimer& weaponFireRate)
+		static void CheckWeaponsFireRate(weapon& weapon)
 		{
-			if (weaponFireRate.isExpired())
+			//if (weaponFireRate.isExpired())
+			if(weapon.isFireRateTimerExpired())
 			{
-				pistolAnimation.SetSingleFrame(sf::Vector2u(0, 0));
-				weaponFireRate.reset(pistolFireRate);
+				switch (currentWeapon)
+				{
+				case 0:
+					pistolAnimation.SetSingleFrame(sf::Vector2u(0, 0));
+					weapon.setFireRateTimer(pistolFireRate);
+					break;
+				case 1:
+					shotgunAnimation.SetSingleFrame(sf::Vector2u(0, 0));
+					weapon.setFireRateTimer(shotgunFireRate);
+					break;
+				case 2:
+					smgAnimation.SetSingleFrame(sf::Vector2u(0, 0));
+					weapon.setFireRateTimer(smgFireRate);
+					break;
+				default:
+					break;
+				}
+				
+				//weaponFireRate.reset(pistolFireRate);
 			}
-			else if (weaponFireRate.isRunning())
+			//else if (weaponFireRate.isRunning())
+			else if(weapon.isFireRateTimerRunning())
 			{
-				pistolAnimation.UpdateY(pistolShoot, deltaTime);
+				switch (currentWeapon)
+				{
+				case 0:
+					pistolAnimation.UpdateY(pistolShoot, deltaTime);
+					break;
+				case 1:
+					shotgunAnimation.Update(0, deltaTime);
+					break;
+				case 2:
+					smgAnimation.Update(0, deltaTime);
+					break;
+				default:
+					break;
+				}
+				
 			}
 		}
 
@@ -1381,6 +1726,45 @@ namespace newgame
 			}
 		}
 
+		static void CheckAmmoCollisionWithPlayer()
+		{
+			if (player1.getRectangle().getGlobalBounds().intersects(pistolAmmo.getRectangle().getGlobalBounds()))
+			{
+				weapons[pistol].setAmmo(weapons[pistol].getAmmo() + 12);
+				if (weapons[pistol].getAmmo() >= 100)
+				{
+					weapons[pistol].setAmmo(100);
+				}
+				pistolAmmo.setSize(0, 0);
+				pistolAmmo.setIsAlive(false);
+				ammoPickupSound.play();
+			}
+
+			if (player1.getRectangle().getGlobalBounds().intersects(smgAmmo.getRectangle().getGlobalBounds()))
+			{
+				weapons[smg].setAmmo(weapons[smg].getAmmo() + 50);
+				if (weapons[smg].getAmmo() >= 400)
+				{
+					weapons[smg].setAmmo(400);
+				}
+				smgAmmo.setSize(0, 0);
+				smgAmmo.setIsAlive(false);
+				ammoPickupSound.play();
+			}
+
+			if (player1.getRectangle().getGlobalBounds().intersects(shotgunAmmo.getRectangle().getGlobalBounds()))
+			{
+				weapons[shotgun].setAmmo(weapons[shotgun].getAmmo() + 6);
+				if (weapons[shotgun].getAmmo() >= 50)
+				{
+					weapons[shotgun].setAmmo(50);
+				}
+				shotgunAmmo.setSize(0, 0);
+				shotgunAmmo.setIsAlive(false);
+				ammoPickupSound.play();
+			}
+		}
+
 		//-------END Gameplay Functions
 
 		void GameplayScreen::update()
@@ -1417,24 +1801,9 @@ namespace newgame
 				//// Items
 
 
-				//Laser Sight Changing Size
+				// Ammo Count
 
-				if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 1000) line.setSize(sf::Vector2f(500, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 950) line.setSize(sf::Vector2f(450, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 900) line.setSize(sf::Vector2f(400, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 850) line.setSize(sf::Vector2f(350, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 800) line.setSize(sf::Vector2f(300, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 750) line.setSize(sf::Vector2f(250, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 700) line.setSize(sf::Vector2f(200, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 650) line.setSize(sf::Vector2f(0, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 350) line.setSize(sf::Vector2f(0, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 300) line.setSize(sf::Vector2f(200, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 250) line.setSize(sf::Vector2f(250, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 200) line.setSize(sf::Vector2f(300, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 150) line.setSize(sf::Vector2f(350, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 100) line.setSize(sf::Vector2f(400, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 50) line.setSize(sf::Vector2f(450, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500) line.setSize(sf::Vector2f(500, 5));
+				bulletsText.setString(toString(weapons[currentWeapon].getAmmo()));
 
 				for (int i = 0; i < maxMedkitsFloor; i++)
 				{
@@ -1444,7 +1813,13 @@ namespace newgame
 				}
 
 				CheckCharacterGravity(medkitDrop);
+				CheckCharacterGravity(pistolAmmo);
+				CheckCharacterGravity(smgAmmo);
+				CheckCharacterGravity(shotgunAmmo);
+
+
 				CheckMedkitCollisionWithPlayer(medkitDrop);
+				CheckAmmoCollisionWithPlayer();
 
 
 				////// Characters
@@ -1456,6 +1831,9 @@ namespace newgame
 
 				player1.setTextureRect(playerAnimation.uvRect);
 				gun.setTextureRect(pistolAnimation.uvRect);
+				shotgunRectangle.setTextureRect(shotgunAnimation.uvRect);
+				smgRectangle.setTextureRect(smgAnimation.uvRect);
+
 
 				for (int i = 0; i < maxEnemiesLevel1; i++)
 				{
@@ -1485,7 +1863,7 @@ namespace newgame
 				// Jump
 				player1.updateJump(deltaTime);
 
-				CheckWeaponsFireRate(timerPistolFireRate);
+				CheckWeaponsFireRate(weapons[currentWeapon]);
 				
 				player1.getRectangle().move(player1.getMove());
 
@@ -1524,7 +1902,12 @@ namespace newgame
 						CheckCollisionWithTiles(medkitFloor[c], i);
 					}
 
+					
 					CheckCollisionWithTiles(medkitDrop, i);
+
+					CheckCollisionWithTiles(pistolAmmo, i);
+					CheckCollisionWithTiles(smgAmmo, i);
+					CheckCollisionWithTiles(shotgunAmmo, i);
 				}
 
 				// Check Winning Condition
@@ -1618,7 +2001,10 @@ namespace newgame
 			}
 
 			_window.draw(medkitDrop.getRectangle());
-			
+
+			_window.draw(pistolAmmo.getRectangle());
+			_window.draw(smgAmmo.getRectangle());
+			_window.draw(shotgunAmmo.getRectangle());
 			////---------------------
 
 			// Text
@@ -1637,12 +2023,30 @@ namespace newgame
 			_window.draw(lifeBar);
 			_window.draw(lifeHUDRectangle);
 			_window.draw(weaponHUDRectangle);
-			_window.draw(pistolRectangle);
+			
 
 			_window.draw(zombiesKilledText);
 			_window.draw(crosshairTest);
-			_window.draw(gun);
+			//
 			_window.draw(bulletsText);
+
+			switch (currentWeapon)
+			{
+			case pistol:
+				_window.draw(pistolRectangle);
+				_window.draw(gun);
+				break;
+			case shotgun:
+				_window.draw(shotgunHUD);
+				_window.draw(shotgunRectangle);
+				break;
+			case 2:
+				_window.draw(smgHUD);
+				_window.draw(smgRectangle);
+				break;
+			default:
+				break;
+			}
 		}
 
 

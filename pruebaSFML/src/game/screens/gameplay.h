@@ -6,6 +6,7 @@
 #include "setup/screens.h"
 #include "setup/character.h"
 #include "setup/level.h"
+#include "setup\weapon.h"
 #include "STP/TMXLoader.hpp"
 
 #include "Thor/Animations.hpp"
@@ -24,7 +25,7 @@ namespace newgame
 	};
 
 	extern int scoreLimit;
-	
+	//extern sf::SoundBuffer pistolShootBuffer;
 
 	namespace Gameplay_Section
 	{

@@ -153,6 +153,7 @@
     <ClCompile Include="..\src\game\setup\level.cpp" />
     <ClCompile Include="..\src\game\setup\screens.cpp" />
     <ClCompile Include="..\src\game\setup\spriteanimation.cpp" />
+    <ClCompile Include="..\src\game\setup\weapon.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\pugixml\pugixml.cpp" />
   </ItemGroup>
@@ -167,6 +168,7 @@
     <ClInclude Include="..\src\game\setup\level.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
     <ClInclude Include="..\src\game\setup\spriteanimation.h" />
+    <ClInclude Include="..\src\game\setup\weapon.h" />
     <ClInclude Include="..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\src\pugixml\pugixml.hpp" />
   </ItemGroup>
