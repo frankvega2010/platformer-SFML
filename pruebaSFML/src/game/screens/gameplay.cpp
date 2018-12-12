@@ -121,6 +121,10 @@ namespace newgame
 	static const sf::Time footstepInitialTime = sf::seconds(0.49f);
 	static thor::CallbackTimer footstepTimer;
 
+	static const sf::Time bloodInitialTime = sf::seconds(0.5f);
+	static thor::CallbackTimer bloodTimer;
+	static int currentEnemy = -1;
+
 	//Textures & Animations
 	static sf::Texture pistolAmmoTexture;
 	static sf::Texture smgAmmoTexture;
@@ -132,7 +136,7 @@ namespace newgame
 	static SpriteAnimation playerAnimation;
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
 
-	ParticleSystem particles(500);
+	ParticleSystem particles(900);
 
 	// Audio
 
@@ -1247,7 +1251,13 @@ namespace newgame
 								weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
 								enemy.setHp(enemy.getHp() - weapons[currentWeapon].getDamage());
 								enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y);
-								particles.setEmitter({enemy.getPosition().x+45, enemy.getPosition().y+45});
+								
+								bloodTimer.reset(bloodInitialTime);
+								bloodTimer.start();
+								currentEnemy = i;
+
+								
+								//particles.set
 							}
 						}
 					}
@@ -1271,6 +1281,7 @@ namespace newgame
 
 		static void CanEnemyHearPlayer(Character& enemy,SpriteAnimation& animation,int i)
 		{
+
 			if (player1.getRectangle().getGlobalBounds().intersects(enemy.getPlayerDetection().getGlobalBounds()))
 			{
 
@@ -1794,7 +1805,7 @@ namespace newgame
 			{
 
 
-
+				
 
 
 				_window.setMouseCursorVisible(false);
@@ -1876,6 +1887,19 @@ namespace newgame
 					CheckCollisionBetweenEnemies(i);
 
 					//particles.setEmitter(enemies[i].getPosition());
+				}
+
+				// Blood particles
+
+				if (bloodTimer.isRunning())
+				{
+					particles.setEmitter({ enemies[currentEnemy].getPosition().x + 45, enemies[currentEnemy].getPosition().y + 45 });
+				}
+
+				if (bloodTimer.isExpired())
+				{
+					bloodTimer.reset(bloodInitialTime);
+					particles.setEmitter({ 0, 0 });
 				}
 
 				playerShoot();
