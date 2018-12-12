@@ -7,6 +7,7 @@
 #include "setup/character.h"
 #include "setup/level.h"
 #include "setup\weapon.h"
+#include "setup/particles.h"
 #include "STP/TMXLoader.hpp"
 
 #include "Thor/Animations.hpp"

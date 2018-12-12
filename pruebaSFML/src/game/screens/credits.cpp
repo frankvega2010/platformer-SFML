@@ -5,7 +5,7 @@
 namespace newgame
 {
 	static const int maxButtons = 1;
-	static const int maxCreditsTexts = 37;
+	static const int maxCreditsTexts = 45;
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
@@ -69,7 +69,7 @@ namespace newgame
 				creditsText[i].setFillColor(sf::Color::White);
 				if (i == 0)
 					creditsText[i].setCharacterSize(titleTextSize);
-				else if (i == 1 || i == 3 || i == 29)
+				else if (i == 1 || i == 3 || i == 36)
 					creditsText[i].setCharacterSize(subtitleTextSize1);
 				else
 					creditsText[i].setCharacterSize(subtitleTextSize2);
@@ -97,22 +97,30 @@ namespace newgame
 			creditsText[18].setString("- Various Shotgun Pumps.aif, jeseid77, https://freesound.org/people/jeseid77/sounds/86246/.");
 			creditsText[19].setString("- Shotgun Shot/Blast (Outdoors/Close), EFlexMusic, https://freesound.org/people/EFlexMusic/sounds/416280/.");
 			creditsText[20].setString("- medikit.wav, Syna-Max, https://freesound.org/people/Syna-Max/sounds/63833/.");
-			creditsText[21].setString("- Fonts:");
-			creditsText[22].setString("- Times New Yorker, D.O.C.S., https://www.dafont.com/times-new-yorker.font.");
-			creditsText[23].setString("- Roman New Times, winty5, https://www.dafont.com/es/roman-new-times.font.");
-			creditsText[24].setString("- Sansation, Bernd Montag, https://www.dafont.com/es/sansation.font.");
-			creditsText[25].setString("- Tilemaps:");
-			creditsText[26].setString("- Sci-fi platform tiles, Eris, https://opengameart.org/content/sci-fi-platform-tiles.");
-			creditsText[27].setString("- Platformer Art: Requests, Kenney, https://www.kenney.nl/assets/platformer-art-requests.");
-			creditsText[28].setString("- Music: made with BoscaCeoil.");
-			creditsText[29].setString("Tools used:");
-			creditsText[30].setString("- SFML.");
-			creditsText[31].setString("- Thor (SFML lib).");
-			creditsText[32].setString("- TGUI (SFML lib).");
-			creditsText[33].setString("- STP (SFML lib).");
-			creditsText[34].setString("- DragonBones.");
-			creditsText[35].setString("- Adobe Illustrator.");
-			creditsText[36].setString("- Adobe Photoshop.");
+			creditsText[21].setString("- Search in a bag, Tristan_Lohengrin, https://freesound.org/people/Tristan_Lohengrin/sounds/233441/.");
+			creditsText[22].setString("- Weapons_GunUnHolster.wav, duckduckpony, https://freesound.org/people/duckduckpony/sounds/204043/.");
+			creditsText[23].setString("- Full Reload of a Pistol (Mixed), EFlexMusic, https://freesound.org/people/EFlexMusic/sounds/370251/.");
+			creditsText[24].setString("- 9mm Pistol Quick Load.wav, EverydaySounds, https://freesound.org/people/EverydaySounds/sounds/125074/.");
+			creditsText[25].setString("- Goblin Scream, qubodup, https://freesound.org/people/qubodup/sounds/442816/.");
+			creditsText[26].setString("- Dog Begging.wav, Coral_Island_Studios, https://freesound.org/people/Coral_Island_Studios/sounds/277195/.");
+			creditsText[27].setString("- Dog Growl - Beast / Creature, coldvet, https://freesound.org/people/coldvet/sounds/404920/.");
+			creditsText[28].setString("- Fonts:");
+			creditsText[29].setString("- Times New Yorker, D.O.C.S., https://www.dafont.com/times-new-yorker.font.");
+			creditsText[30].setString("- Roman New Times, winty5, https://www.dafont.com/es/roman-new-times.font.");
+			creditsText[31].setString("- Sansation, Bernd Montag, https://www.dafont.com/es/sansation.font.");
+			creditsText[32].setString("- Tilemaps:");
+			creditsText[33].setString("- Sci-fi platform tiles, Eris, https://opengameart.org/content/sci-fi-platform-tiles.");
+			creditsText[34].setString("- Platformer Art: Requests, Kenney, https://www.kenney.nl/assets/platformer-art-requests.");
+			creditsText[35].setString("- Music: made with BoscaCeoil.");
+			creditsText[36].setString("Tools used:");
+			creditsText[37].setString("- SFML.");
+			creditsText[38].setString("- Thor (SFML lib).");
+			creditsText[39].setString("- TGUI (SFML lib).");
+			creditsText[40].setString("- STP (SFML lib).");
+			creditsText[41].setString("- DragonBones.");
+			creditsText[42].setString("- Adobe Illustrator.");
+			creditsText[43].setString("- Adobe Photoshop.");
+			creditsText[44].setString("- Audacity.");
 
 			button[0]->connect("Pressed", signalGoToMenu);
 
@@ -120,7 +128,7 @@ namespace newgame
 			scrollbar->setRenderer(blackTheme.getRenderer("Scrollbar"));
 			scrollbar->setPosition(900, 90);
 			scrollbar->setSize(18, 740);
-			scrollbar->setMaximum(200);
+			scrollbar->setMaximum(450);
 			scrollbar->setValue(0);
 			gui.add(scrollbar);
 
@@ -157,22 +165,30 @@ namespace newgame
 			creditsText[18].setPosition(posTextX2, static_cast<float>(posTextY + 580));
 			creditsText[19].setPosition(posTextX2, static_cast<float>(posTextY + 610));
 			creditsText[20].setPosition(posTextX2, static_cast<float>(posTextY + 640));
-			creditsText[21].setPosition(posTextX1, static_cast<float>(posTextY + 670));
+			creditsText[21].setPosition(posTextX2, static_cast<float>(posTextY + 670));
 			creditsText[22].setPosition(posTextX2, static_cast<float>(posTextY + 700));
 			creditsText[23].setPosition(posTextX2, static_cast<float>(posTextY + 730));
 			creditsText[24].setPosition(posTextX2, static_cast<float>(posTextY + 760));
-			creditsText[25].setPosition(posTextX1, static_cast<float>(posTextY + 790));
+			creditsText[25].setPosition(posTextX2, static_cast<float>(posTextY + 790));
 			creditsText[26].setPosition(posTextX2, static_cast<float>(posTextY + 820));
 			creditsText[27].setPosition(posTextX2, static_cast<float>(posTextY + 850));
 			creditsText[28].setPosition(posTextX1, static_cast<float>(posTextY + 880));
-			creditsText[29].setPosition(posTextX1, static_cast<float>(posTextY + 920));
-			creditsText[30].setPosition(posTextX1, static_cast<float>(posTextY + 960));
-			creditsText[31].setPosition(posTextX1, static_cast<float>(posTextY + 990));
-			creditsText[32].setPosition(posTextX1, static_cast<float>(posTextY + 1020));
-			creditsText[33].setPosition(posTextX1, static_cast<float>(posTextY + 1050));
-			creditsText[34].setPosition(posTextX1, static_cast<float>(posTextY + 1080));
-			creditsText[35].setPosition(posTextX1, static_cast<float>(posTextY + 1110));
-			creditsText[36].setPosition(posTextX1, static_cast<float>(posTextY + 1140));
+			creditsText[29].setPosition(posTextX2, static_cast<float>(posTextY + 910));
+			creditsText[30].setPosition(posTextX2, static_cast<float>(posTextY + 940));
+			creditsText[31].setPosition(posTextX2, static_cast<float>(posTextY + 970));
+			creditsText[32].setPosition(posTextX1, static_cast<float>(posTextY + 1000));
+			creditsText[33].setPosition(posTextX2, static_cast<float>(posTextY + 1030));
+			creditsText[34].setPosition(posTextX2, static_cast<float>(posTextY + 1060));
+			creditsText[35].setPosition(posTextX1, static_cast<float>(posTextY + 1090));
+			creditsText[36].setPosition(posTextX1, static_cast<float>(posTextY + 1130));
+			creditsText[37].setPosition(posTextX1, static_cast<float>(posTextY + 1170));
+			creditsText[38].setPosition(posTextX1, static_cast<float>(posTextY + 1200));
+			creditsText[39].setPosition(posTextX1, static_cast<float>(posTextY + 1230));
+			creditsText[40].setPosition(posTextX1, static_cast<float>(posTextY + 1260));
+			creditsText[41].setPosition(posTextX1, static_cast<float>(posTextY + 1290));
+			creditsText[42].setPosition(posTextX1, static_cast<float>(posTextY + 1320));
+			creditsText[43].setPosition(posTextX1, static_cast<float>(posTextY + 1350));
+			creditsText[44].setPosition(posTextX1, static_cast<float>(posTextY + 1380));
 		}
 
 		void CreditsScreen::draw()
@@ -180,7 +196,10 @@ namespace newgame
 			_window.draw(backgroundSprite);
 			for (int i = 0; i < maxCreditsTexts; i++)
 			{
-				_window.draw(creditsText[i]);
+				if (creditsText[i].getPosition().y<950)
+				{
+					_window.draw(creditsText[i]);
+				}
 			}
 		}
 
