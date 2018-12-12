@@ -34,6 +34,7 @@ namespace newgame
 
 	static const int maxEnemiesLevelTutorial = 5;
 	static const int maxEnemiesLevel1 = 20;
+	static const int maxEnemiesDog = 5;
 	static const int maxTutorialTexts = 9;
 	static const int enemySpeed = 300;
 
@@ -132,9 +133,11 @@ namespace newgame
 	static sf::Texture medkitTexture;
 	static sf::Texture playerTexture;
 	static sf::Texture zombieTexture;
+	static sf::Texture zombieDogTexture;
 	
 	static SpriteAnimation playerAnimation;
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
+	static SpriteAnimation zombiesDogAnimation[maxEnemiesDog];
 
 	ParticleSystem particles(900);
 
@@ -196,6 +199,7 @@ namespace newgame
 	static Character player1;
 
 	static Character enemies[maxEnemiesLevel1];
+	//static Character enemiesDog[maxEnemiesDog];
 
 	static Character medkitFloor[maxMedkitsFloor];
 	static Character medkitDrop;
@@ -447,10 +451,15 @@ namespace newgame
 			zombieTexture.setSmooth(true);
 			zombieTexture.setRepeated(false);
 
+			zombieDogTexture.loadFromFile("res/assets/textures/zombiedog.png");
+			zombieDogTexture.setSmooth(true);
+			zombieDogTexture.setRepeated(false);
+
 
 			// Reseting Enemies
 			for (int i = 0; i < maxEnemiesLevel1; i++)
 			{
+				
 				enemies[i].setPosition(0, 0);
 				enemies[i].setSize(0, 0);
 				enemies[i].setColor(sf::Color::Transparent);
@@ -461,7 +470,22 @@ namespace newgame
 				enemies[i].setFlipLeft(false);
 				enemies[i].setFlipRight(false);
 				enemies[i].setIsDead(false);
+
+				if (i > 14)
+				{
+					enemies[i].setPosition(0, 0);
+					enemies[i].setSize(0, 0);
+					enemies[i].setColor(sf::Color::Transparent);
+					enemies[i].setIsAlive(true);
+					enemies[i].setSpeed(0, 0);
+					enemies[i].setHp(defaultHP);
+					enemies[i].setCurrentlyTouchingPlayer(false);
+					enemies[i].setFlipLeft(false);
+					enemies[i].setFlipRight(false);
+					enemies[i].setIsDead(false);
+				}
 			}
+
 
 			// Creating the enemies depening on the level
 
@@ -475,7 +499,7 @@ namespace newgame
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
-					enemies[i].setSpeed(500, 1400);
+					enemies[i].setSpeed(300, 1400);
 					enemies[i].setHp(defaultHP);
 					enemies[i].setCurrentlyTouchingPlayer(true);
 					enemies[i].setFlipLeft(true);
@@ -498,7 +522,7 @@ namespace newgame
 					enemies[i].setSize(100, 180);
 					enemies[i].setColor(sf::Color::White);
 					enemies[i].setIsAlive(true);
-					enemies[i].setSpeed(500, 1400);
+					enemies[i].setSpeed(300, 1400);
 					enemies[i].setHp(defaultHP);
 					enemies[i].setCurrentlyTouchingPlayer(true);
 					enemies[i].setFlipLeft(true);
@@ -509,6 +533,23 @@ namespace newgame
 					enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y);
 					enemies[i].setPlayerDetectionSize(1000.0f, 540); // 1000
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
+					if (i > 14)
+					{
+						enemies[i].setSize(200, 150);
+						enemies[i].setColor(sf::Color::White);
+						enemies[i].setIsAlive(true);
+						enemies[i].setSpeed(600, 1400);
+						enemies[i].setHp(50);
+						enemies[i].setCurrentlyTouchingPlayer(true);
+						enemies[i].setFlipLeft(true);
+						enemies[i].setFlipRight(true);
+						enemies[i].setTexture(zombieDogTexture);
+						zombiesAnimation[i].SetAnimation(&zombieDogTexture, sf::Vector2u(9, 8), 0.1f);
+
+						enemies[i].setPlayerDetectionPosition(enemies[i].getRectangle().getPosition().x - 500, enemies[i].getRectangle().getPosition().y);
+						enemies[i].setPlayerDetectionSize(1000.0f, 540); // 1000
+						enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
+					}
 				}
 
 
@@ -516,7 +557,7 @@ namespace newgame
 
 				//part 1
 				enemies[0].setPosition(300.f, 100.f);
-				enemies[1].setPosition(500.f, 100.f);
+				enemies[16].setPosition(500.f, 100.f);
 
 				enemies[2].setPosition(1700.f, 1100.f);
 
@@ -528,26 +569,32 @@ namespace newgame
 
 				//part 2
 				enemies[6].setPosition(4800.f, 700.f);
-				enemies[7].setPosition(5100.f, 700.f);
+				enemies[17].setPosition(5100.f, 700.f);
 
 				enemies[8].setPosition(5300.f, 1200.f);
-				enemies[9].setPosition(5600.f, 1200.f);
+				enemies[18].setPosition(5600.f, 1200.f);
 
 				enemies[10].setPosition(6700.f, 700.f);
 
-				enemies[11].setPosition(7500.f, 1000.f);
+				enemies[19].setPosition(7500.f, 1000.f);
 				enemies[12].setPosition(8200.f, 1200.f);
 
 				//part 3
 				enemies[13].setPosition(9000.f, 700.f);
 				enemies[14].setPosition(9300.f, 700.f);
 
+				/*
 				enemies[15].setPosition(10100.f, 300.f);
-
 				enemies[16].setPosition(10300.f, 700.f);
 				enemies[17].setPosition(10800.f, 700.f);
 				enemies[18].setPosition(11200.f, 700.f);
-				enemies[19].setPosition(11600.f, 300.f);
+				enemies[19].setPosition(11600.f, 300.f);*/
+
+				enemies[15].setPosition(10300.f, 700.f);
+				enemies[1].setPosition(10800.f, 700.f);
+				enemies[7].setPosition(11600.f, 300.f);
+				enemies[9].setPosition(10100.f, 300.f);
+				enemies[11].setPosition(11200.f, 700.f);
 
 			}
 
@@ -1296,7 +1343,7 @@ namespace newgame
 
 						if (enemy.getMoveRight())
 						{
-							enemy.setMove(enemySpeed * deltaTime, 0);
+							enemy.setMove(enemy.getSpeed().x * deltaTime, 0);
 							animation.Update(3, deltaTime);
 						}
 
@@ -1322,7 +1369,7 @@ namespace newgame
 
 						if (enemy.getMoveLeft())
 						{
-							enemy.setMove(-(enemySpeed)* deltaTime, 0);
+							enemy.setMove(-(enemy.getSpeed().x)* deltaTime, 0);
 							animation.Update(7, deltaTime);
 						}
 
@@ -1359,23 +1406,39 @@ namespace newgame
 
 		static void CheckEnemyHP(Character& enemy,SpriteAnimation& animation,int i)
 		{
-			if (enemy.getHp()==75)
+			if (i < 14)
 			{
-				enemy.setColor({ 255,180,180,255 });
+				if (enemy.getHp() == 75)
+				{
+					enemy.setColor({ 255,180,180,255 });
+				}
+				if (enemy.getHp() == 50)
+				{
+					enemy.setColor({ 255,100,100,255 });
+				}
+				if (enemy.getHp() == 25)
+				{
+					enemy.setColor({ 255,50,50,255 });
+				}
+				if (enemy.getHp() <= 0)
+				{
+					enemy.setIsAlive(false);
+					enemy.setColor({ 170,0,0,255 });
+				}
 			}
-			if (enemy.getHp() == 50)
+			else
 			{
-				enemy.setColor({ 255,100,100,255 });
+				if (enemy.getHp() == 25)
+				{
+					enemy.setColor({ 255,100,100,255 });
+				}
+				if (enemy.getHp() <= 0)
+				{
+					enemy.setIsAlive(false);
+					enemy.setColor({ 170,0,0,255 });
+				}
 			}
-			if (enemy.getHp() == 25)
-			{
-				enemy.setColor({ 255,50,50,255 });
-			}
-			if (enemy.getHp() <= 0)
-			{
-				enemy.setIsAlive(false);
-				enemy.setColor({ 170,0,0,255 });
-			}
+			
 
 			if (enemy.getIsAlive())
 			{
@@ -1871,6 +1934,7 @@ namespace newgame
 				for (int i = 0; i < maxEnemiesLevel1; i++)
 				{
 					enemies[i].setTextureRect(zombiesAnimation[i].uvRect);
+					
 
 					CheckInvincibilityFrames(timerInvincibility, i);
 
