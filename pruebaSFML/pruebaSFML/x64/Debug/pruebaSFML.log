@@ -1,0 +1,25 @@
+﻿  credits.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\screens\credits.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'setup/screens.h': No such file or directory
+  gameover.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\screens\gameover.h(3): fatal error C1083: No se puede abrir el archivo incluir: 'Setup/game.h': No such file or directory
+  gameplay.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\screens\gameplay.h(5): fatal error C1083: No se puede abrir el archivo incluir: 'Setup\game.h': No such file or directory
+  menu.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\screens\menu.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'setup/screens.h': No such file or directory
+  settings.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\screens\settings.h(3): fatal error C1083: No se puede abrir el archivo incluir: 'setup/screens.h': No such file or directory
+  character.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\setup\game.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'SFML/Audio.hpp': No such file or directory
+  game.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\setup\game.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'SFML/Audio.hpp': No such file or directory
+  level.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\setup\level.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'gameplay.h': No such file or directory
+  screens.cpp
+  spriteanimation.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\setup\spriteanimation.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'gameplay.h': No such file or directory
+  weapon.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\game\setup\weapon.h(4): fatal error C1083: No se puede abrir el archivo incluir: 'gameplay.h': No such file or directory
+  main.cpp
+c:\users\marian\desktop\platformer-sfml\pruebasfml\src\main.cpp(1): fatal error C1083: No se puede abrir el archivo incluir: 'setup/game.h': No such file or directory
+  pugixml.cpp
+  Generando código...

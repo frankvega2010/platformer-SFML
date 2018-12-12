@@ -2,10 +2,10 @@
 <settings>
 	<volume>
 		<sound value="40" />
-		<music value="40" />
+		<music value="0" />
 	</volume>
 	<res>
-		<width value="1024" />
-		<height value="768" />
+		<width value="1280" />
+		<height value="720" />
 	</res>
 </settings>

@@ -47,6 +47,7 @@ namespace newgame
 	static const sf::Color transparentBlue = { 0,0,110,100 };
 	static const sf::Color transparentRed = { 255,0,0,80 };
 	static const sf::Color transparentGreen = { 0,255,0,80 };
+	static const sf::Color shotParticlesColor = { 125, 81, 0 ,255 };
 
 	static const int rectangleCollisionLimitX = 10;
 	static const int rectangleCollisionLimitY = 20;
@@ -123,6 +124,11 @@ namespace newgame
 
 	static const sf::Time bloodInitialTime = sf::seconds(0.5f);
 	static thor::CallbackTimer bloodTimer;
+	static sf::Vector2f bloodDisablePosition;
+
+	static const sf::Time shootInitialTime = sf::seconds(0.2f);
+	static thor::CallbackTimer shootTimer;
+	static sf::Vector2f shootDisablePosition;
 	static int currentEnemy = -1;
 
 	//Textures & Animations
@@ -136,8 +142,10 @@ namespace newgame
 	static SpriteAnimation playerAnimation;
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
 
-	ParticleSystem particles(900);
+	//Particles
 
+	static ParticleSystem particles(900);
+	static ParticleSystem particlesShoot(500);
 	// Audio
 
 	static sf::Music level1Ambience;
@@ -613,6 +621,8 @@ namespace newgame
 			shotgunAmmo.setSpeed(0.0f, 900.0f);
 			shotgunAmmo.setTexture(shotgunAmmoTexture);
 
+			bloodDisablePosition = { -800,-800 };
+			shootDisablePosition = { -3000,-3000 };
 
 			//// Text
 			deltaFont.loadFromFile("res/assets/fonts/sansation.ttf");
@@ -1181,6 +1191,7 @@ namespace newgame
 			shotgunRectangle.setRotation(angle);
 			smgRectangle.setRotation(angle);
 			lineCollision.setRotation(angle);
+			particlesShoot.setRotation(angle);
 		}
 
 		static void PlayerEnemyCollision(Character& enemy, thor::CallbackTimer& timer,SpriteAnimation& animation)
@@ -1224,6 +1235,9 @@ namespace newgame
 						weapons[currentWeapon].playSound();
 						weapons[currentWeapon].StartFireRateTimer();
 						weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
+
+						shootTimer.reset(shootInitialTime);
+						shootTimer.start();
 					}				
 				}
 			}
@@ -1254,6 +1268,8 @@ namespace newgame
 								
 								bloodTimer.reset(bloodInitialTime);
 								bloodTimer.start();
+								shootTimer.reset(shootInitialTime);
+								shootTimer.start();
 								currentEnemy = i;
 
 								
@@ -1889,19 +1905,6 @@ namespace newgame
 					//particles.setEmitter(enemies[i].getPosition());
 				}
 
-				// Blood particles
-
-				if (bloodTimer.isRunning())
-				{
-					particles.setEmitter({ enemies[currentEnemy].getPosition().x + 45, enemies[currentEnemy].getPosition().y + 45 });
-				}
-
-				if (bloodTimer.isExpired())
-				{
-					bloodTimer.reset(bloodInitialTime);
-					particles.setEmitter({ 0, 0 });
-				}
-
 				playerShoot();
 
 				// gravity
@@ -1969,6 +1972,36 @@ namespace newgame
 					footstepTimer.reset(footstepInitialTime);
 				}
 
+				//Particles
+
+				if (bloodTimer.isRunning())
+				{
+					particles.setEmitter({ enemies[currentEnemy].getPosition().x + 45, enemies[currentEnemy].getPosition().y + 45 });
+				}
+
+				if (bloodTimer.isExpired())
+				{
+					bloodTimer.reset(bloodInitialTime);
+					particles.setEmitter(bloodDisablePosition);
+				}
+
+				if (shootTimer.isRunning())
+				{
+					particlesShoot.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 15 });
+					particlesShoot.setEmitter({ shotgunRectangle.getGlobalBounds().width,0.f });
+				}
+
+				if (shootTimer.isExpired())
+				{
+					shootTimer.reset(shootInitialTime);
+					particlesShoot.setEmitter(shootDisablePosition);
+					particlesShoot.setRotation(0.f);
+				}
+
+				particles.update(sf::seconds(deltaTime));
+				particlesShoot.update(sf::seconds(deltaTime));
+				particles.setColor(sf::Color::Red);
+				particlesShoot.setColor(shotParticlesColor);
 			}
 			else if (gameOnPause)
 			{
@@ -1996,27 +2029,7 @@ namespace newgame
 				}
 
 			}
-			/*for (int i = 0; i < maxWeapons; i++)
-			{
-				switch (currentWeapon)
-				{
-				case 0:
-					particles.update(sf::seconds(deltaTime));
-					break;
-				case 1:
-					particles.update(sf::seconds(deltaTime));
-					break;
-				case 2:
-					particles.update(sf::seconds(deltaTime));
-					break;
-				default:
-					break;
-				}
-
-				particles.setColor(sf::Color::Red);
-			}*/
-			particles.update(sf::seconds(deltaTime));
-			particles.setColor(sf::Color::Red);
+			
 			
 			
 		}
@@ -2113,15 +2126,8 @@ namespace newgame
 				break;
 			}
 
-			for (int i = 0; i < maxWeapons; i++)
-			{
-				if (!weapons[i].isFireRateTimerExpired())
-				{
-					_window.draw(particles);
-				}
-				
-			}
-			
+			_window.draw(particles);
+			_window.draw(particlesShoot);		
 		}
 
 
