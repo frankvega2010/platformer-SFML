@@ -105,5 +105,8 @@
     <ClInclude Include="..\src\game\setup\weapon.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\game\setup\particles.h">
+      <Filter>Game\Setup</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

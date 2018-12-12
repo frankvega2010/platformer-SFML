@@ -200,7 +200,6 @@ namespace newgame
 				{
 					_window.draw(creditsText[i]);
 				}
-				
 			}
 		}
 

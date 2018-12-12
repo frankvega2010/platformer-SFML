@@ -130,9 +130,9 @@ namespace newgame
 	static sf::Texture zombieTexture;
 	
 	static SpriteAnimation playerAnimation;
-	
-
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
+
+	ParticleSystem particles(500);
 
 	// Audio
 
@@ -812,6 +812,8 @@ namespace newgame
 			default:
 				break;
 			}
+
+			
 		}
 
 		void GameplayScreen::input()
@@ -1227,6 +1229,7 @@ namespace newgame
 								weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
 								enemy.setHp(enemy.getHp() - weapons[currentWeapon].getDamage());
 								enemy.setPosition(enemy.getPosition().x, enemy.getPosition().y);
+								particles.setEmitter({enemy.getPosition().x+45, enemy.getPosition().y+45});
 							}
 						}
 					}
@@ -1771,9 +1774,9 @@ namespace newgame
 		{
 			if (!gameOnPause)
 			{
-				
 
-				
+
+
 
 
 				_window.setMouseCursorVisible(false);
@@ -1809,7 +1812,7 @@ namespace newgame
 				for (int i = 0; i < maxMedkitsFloor; i++)
 				{
 					CheckCharacterGravity(medkitFloor[i]);
-					
+
 					CheckMedkitCollisionWithPlayer(medkitFloor[i]);
 				}
 
@@ -1840,7 +1843,7 @@ namespace newgame
 				{
 					enemies[i].setTextureRect(zombiesAnimation[i].uvRect);
 
-					CheckInvincibilityFrames(timerInvincibility,i);
+					CheckInvincibilityFrames(timerInvincibility, i);
 
 					CheckCharacterGravity(enemies[i]);
 
@@ -1848,24 +1851,26 @@ namespace newgame
 
 					PlayerEnemyCollision(enemies[i], timerInvincibility, zombiesAnimation[i]);
 
-					CheckEnemyHP(enemies[i], zombiesAnimation[i],i);
+					CheckEnemyHP(enemies[i], zombiesAnimation[i], i);
 
 					CanEnemyHearPlayer(enemies[i], zombiesAnimation[i], i);
 
 					CheckCollisionBetweenEnemies(i);
+
+					//particles.setEmitter(enemies[i].getPosition());
 				}
 
 				playerShoot();
 
 				// gravity
 				CheckPlayerGravity();
-				
+
 
 				// Jump
 				player1.updateJump(deltaTime);
 
 				CheckWeaponsFireRate(weapons[currentWeapon]);
-				
+
 				player1.getRectangle().move(player1.getMove());
 
 				CheckPlayerFlipSprite();
@@ -1889,8 +1894,8 @@ namespace newgame
 							canDealDamage = true;
 						}
 					}
-						
-					
+
+
 					CheckCollisionWithTiles(player1, i);
 					for (int f = 0; f < maxEnemiesLevel1; f++)
 					{
@@ -1902,7 +1907,7 @@ namespace newgame
 						CheckCollisionWithTiles(medkitFloor[c], i);
 					}
 
-					
+
 					CheckCollisionWithTiles(medkitDrop, i);
 
 					CheckCollisionWithTiles(pistolAmmo, i);
@@ -1912,7 +1917,7 @@ namespace newgame
 
 				// Check Winning Condition
 				CheckWinCondition();
-				
+
 				// Check Losing Condition
 				CheckLossCondition();
 
@@ -1921,7 +1926,7 @@ namespace newgame
 				{
 					footstepTimer.reset(footstepInitialTime);
 				}
-				
+
 			}
 			else if (gameOnPause)
 			{
@@ -1949,8 +1954,28 @@ namespace newgame
 				}
 
 			}
+			for (int i = 0; i < maxWeapons; i++)
+			{
+				switch (currentWeapon)
+				{
+				case 0:
+					particles.update(pistolFireRate);
+					break;
+				case 1:
+					particles.update(shotgunFireRate);
+					break;
+				case 2:
+					particles.update(smgFireRate);
+					break;
+				default:
+					break;
+				}
 
+				particles.setColor(sf::Color::Red);
+			}
 
+			
+			
 		}
 
 		void GameplayScreen::draw()
@@ -2044,6 +2069,16 @@ namespace newgame
 			default:
 				break;
 			}
+
+			for (int i = 0; i < maxWeapons; i++)
+			{
+				if (!weapons[i].isFireRateTimerExpired())
+				{
+					_window.draw(particles);
+				}
+				
+			}
+			
 		}
 
 

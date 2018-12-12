@@ -166,6 +166,7 @@
     <ClInclude Include="..\src\game\setup\character.h" />
     <ClInclude Include="..\src\game\setup\game.h" />
     <ClInclude Include="..\src\game\setup\level.h" />
+    <ClInclude Include="..\src\game\setup\particles.h" />
     <ClInclude Include="..\src\game\setup\screens.h" />
     <ClInclude Include="..\src\game\setup\spriteanimation.h" />
     <ClInclude Include="..\src\game\setup\weapon.h" />
