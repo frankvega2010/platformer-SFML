@@ -18,7 +18,7 @@ namespace newgame
 
 	void level::setRectangles(int RectanglesInLevel)
 	{
-		_object = _doc.child("map").child("objectgroup");;
+		_object = _doc.child("map").child("objectgroup");
 		_someObjects = _object.begin();
 		_RectanglesInLevel = RectanglesInLevel;
 		_enemyKillObjetive = 0;

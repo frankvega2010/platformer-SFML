@@ -34,7 +34,7 @@ namespace newgame
 
 	static const int maxEnemiesLevelTutorial = 5;
 	static const int maxEnemiesLevel1 = 20;
-	static const int maxTutorialTexts = 6;
+	static const int maxTutorialTexts = 9;
 	static const int enemySpeed = 300;
 
 	static const int defaultHP = 100;
@@ -633,6 +633,12 @@ namespace newgame
 				tutorialText[1].setFillColor(tutorialColor);
 				tutorialText[1].setString("Press SPACEBAR to jump, go to the next room!");
 
+				tutorialText[7].setCharacterSize(tutorialFontSize);
+				tutorialText[7].setFont(font2);
+				tutorialText[7].setPosition(200, 1400);
+				tutorialText[7].setFillColor(tutorialColor);
+				tutorialText[7].setString("You can Run with LSHIFT and Pause the game with the ESC button.");
+
 				tutorialText[2].setCharacterSize(tutorialFontSize);
 				tutorialText[2].setFont(font2);
 				tutorialText[2].setPosition(3525, 1700);
@@ -643,13 +649,25 @@ namespace newgame
 				tutorialText[3].setFont(font2);
 				tutorialText[3].setPosition(3525, 1900);
 				tutorialText[3].setFillColor(tutorialColor);
-				tutorialText[3].setString("You will be able to shoot once your crosshair is in the enemy position");
+				tutorialText[3].setString("You will be able to shoot once the zombie sees you");
+
+				tutorialText[6].setCharacterSize(tutorialFontSize);
+				tutorialText[6].setFont(font2);
+				tutorialText[6].setPosition(3525, 2100);
+				tutorialText[6].setFillColor(tutorialColor);
+				tutorialText[6].setString("Choose your weapons with 1 (Pistol) 2 (Shotgun) 3 (SMG) number buttons.");
 
 				tutorialText[4].setCharacterSize(tutorialFontSize);
 				tutorialText[4].setFont(font2);
 				tutorialText[4].setPosition(2500, 1200);
 				tutorialText[4].setFillColor(tutorialColor);
 				tutorialText[4].setString("Once you have killed enough zombies,the exit will be unlocked!");
+
+				tutorialText[8].setCharacterSize(tutorialFontSize);
+				tutorialText[8].setFont(font2);
+				tutorialText[8].setPosition(2400, 1400);
+				tutorialText[8].setFillColor(tutorialColor);
+				tutorialText[8].setString("Zombies may drop ammo and medkits!.");
 
 				tutorialText[5].setCharacterSize(tutorialFontSize);
 				tutorialText[5].setFont(font2);

@@ -28,6 +28,11 @@ namespace newgame
 
 	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
 
+	static pugi::xml_document config;
+	static pugi::xml_parse_result configResult = config.load_file("res/assets/config/config.xml");
+	static pugi::xml_node configVolume = config.child("settings").child("volume");
+	static pugi::xml_node configResolution = config.child("settings").child("res");
+
 	namespace Settings_Section
 	{
 		SettingsScreen::SettingsScreen()
@@ -105,7 +110,7 @@ namespace newgame
 		}
 
 		void SettingsScreen::init()
-		{
+		{			
 			int maxDistance = 0;
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -201,6 +206,14 @@ namespace newgame
 			sliderMusic->setVisible(false);
 			labelSoundVolume->setVisible(false);
 			sliderSound->setVisible(false);
+
+			// Config File
+
+			configVolume.child("sound").attribute("value").set_value(static_cast<float>(globalSoundVolume));
+			configVolume.child("music").attribute("value").set_value(static_cast<float>(globalMusicVolume));
+			configResolution.child("width").attribute("value").set_value(Game::getNewScreenWidth());
+			configResolution.child("height").attribute("value").set_value(Game::getNewScreenHeight());
+			std::cout << "Saving result: " << config.save_file("res/assets/config/config.xml") << std::endl;
 		}
 
 		bool SettingsScreen::finish()

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<settings>
+	<volume>
+		<sound value="0" />
+		<music value="0" />
+	</volume>
+	<res>
+		<width value="1024" />
+		<height value="768" />
+	</res>
+</settings>
