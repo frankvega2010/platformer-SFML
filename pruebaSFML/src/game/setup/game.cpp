@@ -52,6 +52,11 @@ namespace newgame
 	sf::Texture background;
 	sf::Sprite backgroundSprite;
 
+	static pugi::xml_document config;
+	static pugi::xml_parse_result configResult = config.load_file("res/assets/config/config.xml");
+	static pugi::xml_node configVolume = config.child("settings").child("volume");
+	static pugi::xml_node configResolution = config.child("settings").child("res");
+
 
 	Game::Game()
 	{
@@ -69,8 +74,8 @@ namespace newgame
 		setScreenHeight(1080);
 		
 		_window.create(sf::VideoMode(getScreenWidth(), getScreenHeight()), "Patient Zero", _defaultStyle);
-		Game::setNewScreenWidth(1440);
-		Game::setNewScreenHeight(900);
+		Game::setNewScreenWidth(configResolution.child("width").attribute("value").as_int());
+		Game::setNewScreenHeight(configResolution.child("height").attribute("value").as_int());
 		_window.setPosition(sf::Vector2i(Game::getNewScreenWidth()/16, Game::getNewScreenHeight() /16));
 		_window.setSize(sf::Vector2u(Game::getNewScreenWidth(), Game::getNewScreenHeight()));
 	}
@@ -183,8 +188,8 @@ namespace newgame
 
 		_window.setActive();
 	
-		globalSoundVolume = 40;
-		globalMusicVolume = 40;
+		globalSoundVolume = configVolume.child("sound").attribute("value").as_int();
+		globalMusicVolume = configVolume.child("music").attribute("value").as_int();
 		
 
 		for (int i = 0; i < MaxGameScreens; i++)
