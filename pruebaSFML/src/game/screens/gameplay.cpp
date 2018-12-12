@@ -168,11 +168,7 @@ namespace newgame
 
 	// Shapes
 
-	/*static sf::Vertex line[2];*/
-
-	static sf::RectangleShape line;
 	static sf::RectangleShape lineCollision;
-	static sf::Texture lineTexture;
 	static int inWhichRectangle = -1;
 	static int inWhichEnemy = -1;
 	static bool canDealDamage = false;
@@ -196,6 +192,8 @@ namespace newgame
 	static sf::RectangleShape pistolRectangle;
 
 	static bool gameOnPause;
+
+	int aux;
 
 	namespace Gameplay_Section
 	{
@@ -335,9 +333,7 @@ namespace newgame
 			player1.setVelocity({ player1.getVelocity().x,0.0f });
 
 			// Player Gun
-			lineTexture.loadFromFile("res/assets/textures/laser.png");
-			line.setSize(sf::Vector2f(400, 5));
-			line.setTexture(&lineTexture);
+
 
 			lineCollision.setSize(sf::Vector2f(300, 10));
 			lineCollision.setFillColor(sf::Color::Transparent);
@@ -645,7 +641,7 @@ namespace newgame
 			}
 
 			
-
+			aux = 0;
 			// GUI
 
 			pauseButton = tgui::Button::create();
@@ -898,7 +894,6 @@ namespace newgame
 
 		static void GunRotation()
 		{
-			line.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28});
 			//lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 			gun.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 30 });
@@ -923,7 +918,6 @@ namespace newgame
 			}
 
 			gun.setRotation(angle);
-			line.setRotation(angle);
 			lineCollision.setRotation(angle);
 		}
 
@@ -980,7 +974,6 @@ namespace newgame
 				if (enemy.getIsAlive())
 				{
 					crosshairTest.setFillColor(sf::Color::Green);
-					line.setFillColor(transparentGreen); // Transparent Green
 					inWhichEnemy = i;
 
 
@@ -1003,7 +996,6 @@ namespace newgame
 				{
 					if (inWhichEnemy == i)
 					{
-						line.setFillColor(transparentRed);
 						crosshairTest.setFillColor(sf::Color::Red);
 					}
 				}
@@ -1012,7 +1004,6 @@ namespace newgame
 			{
 				if (inWhichEnemy == i)
 				{
-					line.setFillColor(transparentRed);
 					crosshairTest.setFillColor(sf::Color::Red);
 				}
 			}
@@ -1089,7 +1080,6 @@ namespace newgame
 
 				if (inWhichEnemy == i)
 				{
-					line.setFillColor(transparentRed);
 					crosshairTest.setFillColor(sf::Color::Red);
 				}
 			}
@@ -1387,7 +1377,6 @@ namespace newgame
 		{
 			if (!gameOnPause)
 			{
-				//line.setPosition(player1.getPosition());
 				
 
 				
@@ -1415,26 +1404,6 @@ namespace newgame
 
 
 				//// Items
-
-
-				//Laser Sight Changing Size
-
-				if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 1000) line.setSize(sf::Vector2f(500, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 950) line.setSize(sf::Vector2f(450, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 900) line.setSize(sf::Vector2f(400, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 850) line.setSize(sf::Vector2f(350, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 800) line.setSize(sf::Vector2f(300, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 750) line.setSize(sf::Vector2f(250, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 700) line.setSize(sf::Vector2f(200, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 650) line.setSize(sf::Vector2f(0, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 350) line.setSize(sf::Vector2f(0, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 300) line.setSize(sf::Vector2f(200, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 250) line.setSize(sf::Vector2f(250, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 200) line.setSize(sf::Vector2f(300, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 150) line.setSize(sf::Vector2f(350, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 100) line.setSize(sf::Vector2f(400, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500 + 50) line.setSize(sf::Vector2f(450, 5));
-				else if (worldPos.x  > player1.getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 - 500) line.setSize(sf::Vector2f(500, 5));
 
 				for (int i = 0; i < maxMedkitsFloor; i++)
 				{
@@ -1499,7 +1468,6 @@ namespace newgame
 				{
 					if (lineCollision.getGlobalBounds().intersects(levels[levelNumber].getRectangles(i).getGlobalBounds()))
 					{
-						line.setFillColor(transparentRed); // Transparent Red
 						crosshairTest.setFillColor(transparentRed);
 						canDealDamage = false;
 						inWhichRectangle = i;
@@ -1595,9 +1563,6 @@ namespace newgame
 			////---------------------
 			// Sprites / Shapes
 
-			// Lines
-
-			_window.draw(line);
 			_window.draw(lineCollision);
 
 			//// Player
