@@ -45,6 +45,7 @@ namespace newgame
 		bool _faceRight;
 		bool _faceLeft;
 		thor::CallbackTimer _timerJump;
+		bool _isADog;
 	public:
 		Character();
 		Character(float x, float y, float width, float height, sf::Color color);
@@ -129,6 +130,8 @@ namespace newgame
 		void updateJump(float deltaTime);
 		sf::Vector2f getVelocity();
 		void setVelocity(sf::Vector2f vel);
+		void setIsADog(bool isadog);
+		bool getIsADog();
 	};
 }
 

@@ -175,6 +175,14 @@ namespace newgame
 	static sf::Sound zombieDeath;
 	static sf::Sound zombiePain;
 
+	static sf::SoundBuffer dogSoundAttack;
+	static sf::SoundBuffer dogSoundAlert;
+	static sf::SoundBuffer dogSoundPain;
+
+	static sf::Sound dogAttack;
+	static sf::Sound dogAlert;
+	static sf::Sound dogPain;
+
 	static sf::SoundBuffer soundHeal;
 	static sf::Sound playerHeal;
 
@@ -543,6 +551,7 @@ namespace newgame
 					enemies[i].setPlayerDetectionColor(sf::Color::Transparent);
 					if (i > 14)
 					{
+						enemies[i].setIsADog(true);
 						enemies[i].setSize(200, 150);
 						enemies[i].setColor(sf::Color::White);
 						enemies[i].setIsAlive(true);
@@ -827,6 +836,18 @@ namespace newgame
 			soundPain.loadFromFile("res/assets/sounds/zombie_pain.wav");
 			zombiePain.setBuffer(soundPain);
 			zombiePain.setVolume(static_cast<float>(globalSoundVolume));
+
+			dogSoundAttack.loadFromFile("res/assets/sounds/attackdog.wav");
+			dogAttack.setBuffer(dogSoundAttack);
+			dogAttack.setVolume(static_cast<float>(globalSoundVolume));
+
+			dogSoundAlert.loadFromFile("res/assets/sounds/alertdog.wav");
+			dogAlert.setBuffer(dogSoundAlert);
+			dogAlert.setVolume(static_cast<float>(globalSoundVolume));
+
+			dogSoundPain.loadFromFile("res/assets/sounds/woundeddog.wav");
+			dogPain.setBuffer(dogSoundPain);
+			dogPain.setVolume(static_cast<float>(globalSoundVolume));
 
 			soundHeal.loadFromFile("res/assets/sounds/heal.wav");
 			playerHeal.setBuffer(soundHeal);
@@ -1252,7 +1273,10 @@ namespace newgame
 						if (!(timer.isRunning()))
 						{
 							timer.start();
-							zombieAttack.play();
+							if (enemy.getIsADog())
+								dogAttack.play();
+							else
+								zombieAttack.play();
 							player1.setHp(player1.getHp() - 25);
 							lifeBar.setSize({ lifeBar.getSize().x - 112.5f,lifeBar.getSize().y });
 						}
@@ -1306,7 +1330,10 @@ namespace newgame
 						{
 							if (!weapons[currentWeapon].isFireRateTimerRunning() && weapons[currentWeapon].getAmmo() > 0)
 							{
-								zombiePain.play();
+								if (enemy.getIsADog())
+									dogPain.play();
+								else
+									zombiePain.play();
 								weapons[currentWeapon].playSound();
 								weapons[currentWeapon].StartFireRateTimer();
 								weapons[currentWeapon].setAmmo(weapons[currentWeapon].getAmmo() - 1);
@@ -1354,7 +1381,10 @@ namespace newgame
 					{
 						if (enemy.getFlipLeft())
 						{
-							zombieAlert.play();
+							if (enemy.getIsADog())
+								dogAlert.play();
+							else
+								zombieAlert.play();
 						}
 
 						if (enemy.getMoveRight())
@@ -1470,7 +1500,10 @@ namespace newgame
 						//thor::setRandomSeed(0);
 						int RandomDropNumber = thor::random(0, 8); // change to consts
 
-						zombieDeath.play();
+						if (enemy.getIsADog())
+							dogPain.play();
+						else
+							zombieDeath.play();
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
@@ -1528,7 +1561,10 @@ namespace newgame
 						//thor::setRandomSeed(0);
 						int RandomDropNumber = thor::random(0, 8); // change to consts
 
-						zombieDeath.play();
+						if (enemy.getIsADog())
+							dogPain.play();
+						else
+							zombieDeath.play();
 						enemy.setSize(0, 0);
 						enemy.setPlayerDetectionSize(0, 0);
 						enemy.setIsAlive(true);
@@ -2052,7 +2088,20 @@ namespace newgame
 				if (shootTimer.isRunning())
 				{
 					particlesShoot.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width / 2 ,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 15 });
-					particlesShoot.setEmitter({ shotgunRectangle.getGlobalBounds().width,0.f });
+					switch (currentWeapon)
+					{
+					case pistol:
+						particlesShoot.setEmitter({ pistolRectangle.getGlobalBounds().width,0.f });
+						break;
+					case shotgun:
+						particlesShoot.setEmitter({ shotgunRectangle.getGlobalBounds().width,0.f });
+						break;
+					case 2:
+						particlesShoot.setEmitter({ smgRectangle.getGlobalBounds().width,0.f });
+						break;
+					default:
+						break;
+					}
 				}
 
 				if (shootTimer.isExpired())

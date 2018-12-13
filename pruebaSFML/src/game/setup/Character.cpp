@@ -34,6 +34,7 @@ namespace newgame
 		_isOnWhichCharacterTopSide = -1;
 		_isOnWhichCharacterDownSide = -1;
 		_isOnWhichCeiling = -1;
+		_isADog = false;
 	}
 
 	Character::Character(float x, float y, float width, float height, sf::Color color)
@@ -68,6 +69,7 @@ namespace newgame
 		_isOnWhichCharacterTopSide = -1;
 		_isOnWhichCharacterDownSide = -1;
 		_isOnWhichCeiling = -1;
+		_isADog = false;
 	}
 
 	Character::~Character()
@@ -484,5 +486,15 @@ namespace newgame
 		velocity.y += 1781.f*deltaTime;
 
 		_rectangle.move(velocity*deltaTime);
+	}
+
+	bool Character::getIsADog()
+	{
+		return _isADog;
+	}
+
+	void Character::setIsADog(bool isadog)
+	{
+		_isADog = isadog;
 	}
 }

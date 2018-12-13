@@ -2,7 +2,7 @@
 <settings>
 	<volume>
 		<sound value="40" />
-		<music value="0" />
+		<music value="15" />
 	</volume>
 	<res>
 		<width value="1280" />
