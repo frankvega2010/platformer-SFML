@@ -1,4 +1,4 @@
-## v1.02 [2018-12-12]
+## v1.1 [2018-12-13]
 ### Added
 - Added new Enemy:
   Zombie Dog: Faster than a regular zombie,but weaker.
@@ -24,6 +24,7 @@
 ### Changed
 - Updated Tutorial displaying the new weapons and controls.
 - Enemies Positions are now changed in Level 1 for better gameplay.
+- Pistol Sprite Updated.
 
 ## v1.01 [2018-12-9]
 ### Added
