@@ -78,7 +78,7 @@ namespace newgame
 			}
 
 			creditsText[0].setFillColor(sf::Color::Red);
-			creditsText[0].setString("Patient Zero v1.01");
+			creditsText[0].setString("Patient Zero v1.1");
 			creditsText[1].setString("Game made by:");
 			creditsText[2].setString("Franco Vega and Mariano Martinez.");
 			creditsText[3].setString("Assets:");

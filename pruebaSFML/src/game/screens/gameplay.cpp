@@ -438,7 +438,7 @@ namespace newgame
 			gun.setFillColor(sf::Color::White);
 			gun.setSize({ 140,90 });
 			gun.setTexture(&playerHands);
-			pistolAnimation.SetAnimationY(&playerHands, sf::Vector2u(1, 9), 0.055f);
+			pistolAnimation.SetAnimation(&playerHands, sf::Vector2u(9, 1), 0.055f);
 
 			// Enemy 1
 
@@ -1142,7 +1142,6 @@ namespace newgame
 
 		static void GunRotation()
 		{
-			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 
 			switch (currentWeapon)
 			{
@@ -1727,7 +1726,7 @@ namespace newgame
 				switch (currentWeapon)
 				{
 				case 0:
-					pistolAnimation.UpdateY(pistolShoot, deltaTime);
+					pistolAnimation.Update(pistolShoot, deltaTime);
 					break;
 				case 1:
 					shotgunAnimation.Update(0, deltaTime);
@@ -2015,7 +2014,7 @@ namespace newgame
 					switch (currentWeapon)
 					{
 					case pistol:
-						particlesShoot.setEmitter({ pistolRectangle.getGlobalBounds().width,0.f });
+						particlesShoot.setEmitter({ gun.getGlobalBounds().width-40.f,-10.f });
 						break;
 					case shotgun:
 						particlesShoot.setEmitter({ shotgunRectangle.getGlobalBounds().width,0.f });
