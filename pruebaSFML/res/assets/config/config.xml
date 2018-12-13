@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <settings>
 	<volume>
-		<sound value="40" />
-		<music value="15" />
+		<sound value="79" />
+		<music value="49" />
 	</volume>
 	<res>
-		<width value="1280" />
-		<height value="720" />
+		<width value="1440" />
+		<height value="900" />
 	</res>
 </settings>
