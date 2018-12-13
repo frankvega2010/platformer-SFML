@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <settings>
 	<volume>
-		<sound value="40" />
-		<music value="15" />
+		<sound value="30" />
+		<music value="28" />
 	</volume>
 	<res>
 		<width value="1280" />

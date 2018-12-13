@@ -156,9 +156,6 @@ namespace newgame
 	static sf::Music level1Song;
 	static sf::Music tutorialSong;
 
-	//static sf::SoundBuffer pistolShootBuffer;
-	//static sf::Sound pistolShoot;
-
 	static sf::SoundBuffer footstep;
 	static sf::Sound playerFootStep;
 
@@ -215,7 +212,6 @@ namespace newgame
 	static Character player1;
 
 	static Character enemies[maxEnemiesLevel1];
-	//static Character enemiesDog[maxEnemiesDog];
 
 	static Character medkitFloor[maxMedkitsFloor];
 	static Character medkitDrop;
@@ -229,9 +225,6 @@ namespace newgame
 	static int inWhichRectangle = -1;
 	static int inWhichEnemy = -1;
 	static bool canDealDamage = false;
-	//static bool 
-
-
 
 	static sf::Texture crosshairTexture;
 	static sf::CircleShape crosshairTest;
@@ -253,8 +246,6 @@ namespace newgame
 	static sf::RectangleShape smgHUD;
 
 	static bool gameOnPause;
-
-	int aux;
 
 	namespace Gameplay_Section
 	{
@@ -352,8 +343,6 @@ namespace newgame
 
 			currentWeapon = 1;
 
-			//pistolShootBuffer.loadFromFile("res/assets/sounds/pistolshoot.wav");
-			//pistolShoot.setB
 			weapons[pistol].setAmmo(60);
 			weapons[pistol].setDamage(25);
 			weapons[pistol].setSoundVolume(globalSoundVolume);
@@ -600,13 +589,6 @@ namespace newgame
 				enemies[13].setPosition(9000.f, 700.f);
 				enemies[14].setPosition(9300.f, 700.f);
 
-				/*
-				enemies[15].setPosition(10100.f, 300.f);
-				enemies[16].setPosition(10300.f, 700.f);
-				enemies[17].setPosition(10800.f, 700.f);
-				enemies[18].setPosition(11200.f, 700.f);
-				enemies[19].setPosition(11600.f, 300.f);*/
-
 				enemies[15].setPosition(10300.f, 700.f);
 				enemies[1].setPosition(10800.f, 700.f);
 				enemies[7].setPosition(11600.f, 300.f);
@@ -807,10 +789,6 @@ namespace newgame
 
 			//// Audio
 
-			/*pistolshoot.loadFromFile("res/assets/sounds/pistolshoot.wav");
-			pistolGunShoot.setBuffer(pistolshoot);
-			pistolGunShoot.setVolume(static_cast<float>(globalSoundVolume));*/
-
 			footstep.loadFromFile("res/assets/sounds/footstep.wav");
 			playerFootStep.setBuffer(footstep);
 			playerFootStep.setVolume(static_cast<float>(globalSoundVolume));
@@ -819,8 +797,6 @@ namespace newgame
 			playerJumpSound.setBuffer(jump);
 			playerJumpSound.setVolume(static_cast<float>(globalSoundVolume));
 
-
-			
 			soundAttack.loadFromFile("res/assets/sounds/zombie_attack.wav");
 			zombieAttack.setBuffer(soundAttack);
 			zombieAttack.setVolume(static_cast<float>(globalSoundVolume));
@@ -880,9 +856,6 @@ namespace newgame
 				level1Song.setVolume(static_cast<float>(globalMusicVolume / 1));
 				level1Song.play();
 			}
-
-			
-			aux = 0;
 			// GUI
 
 			pauseButton = tgui::Button::create();
@@ -1179,7 +1152,6 @@ namespace newgame
 
 		static void GunRotation()
 		{
-			//lineCollision.setPosition({ player1.getRectangle().getPosition().x + player1.getRectangle().getGlobalBounds().width + 10,player1.getRectangle().getPosition().y + player1.getRectangle().getGlobalBounds().height / 2 - 28 });
 			gunLimit.setPosition({ player1.getRectangle().getPosition().x - 70,player1.getRectangle().getPosition().y - 70 });
 
 			switch (currentWeapon)
@@ -1345,9 +1317,6 @@ namespace newgame
 								shootTimer.reset(shootInitialTime);
 								shootTimer.start();
 								currentEnemy = i;
-
-								
-								//particles.set
 							}
 						}
 					}
@@ -1497,7 +1466,6 @@ namespace newgame
 				{
 					if (animation.UpdateOnce(1, deltaTime))
 					{
-						//thor::setRandomSeed(0);
 						int RandomDropNumber = thor::random(0, 8); // change to consts
 
 						if (enemy.getIsADog())
@@ -1547,18 +1515,12 @@ namespace newgame
 						default:
 							break;
 						}
-
-						//if (RandomDropNumber == 4) // change to consts
-						//{
-						//	
-						//}
 					}
 				}
 				else if (enemy.getFaceLeft())
 				{
 					if (animation.UpdateOnce(5, deltaTime))
 					{
-						//thor::setRandomSeed(0);
 						int RandomDropNumber = thor::random(0, 8); // change to consts
 
 						if (enemy.getIsADog())
@@ -1608,17 +1570,6 @@ namespace newgame
 						default:
 							break;
 						}
-
-						
-						//if (RandomDropNumber == 4) // change to consts
-						//{
-						//	if (!medkitDrop.getIsAlive())
-						//	{
-						//		medkitDrop.setPosition(enemy.getPosition().x, enemy.getPosition().y - 20);
-						//		medkitDrop.setSize(100.0f, 70.0f);
-						//		medkitDrop.setIsAlive(true);
-						//	}
-						//}
 					}
 				}
 				
@@ -1761,7 +1712,6 @@ namespace newgame
 		//WIP Function
 		static void CheckWeaponsFireRate(weapon& weapon)
 		{
-			//if (weaponFireRate.isExpired())
 			if(weapon.isFireRateTimerExpired())
 			{
 				switch (currentWeapon)
@@ -1781,10 +1731,7 @@ namespace newgame
 				default:
 					break;
 				}
-				
-				//weaponFireRate.reset(pistolFireRate);
 			}
-			//else if (weaponFireRate.isRunning())
 			else if(weapon.isFireRateTimerRunning())
 			{
 				switch (currentWeapon)
@@ -1918,11 +1865,6 @@ namespace newgame
 		{
 			if (!gameOnPause)
 			{
-
-
-				
-
-
 				_window.setMouseCursorVisible(false);
 				/////// Setting the pause buttons OFF
 				for (int i = 0; i < maxButtons; i++)
@@ -1942,12 +1884,6 @@ namespace newgame
 
 				//////Set View
 				_window.setView(view);
-
-
-				//// Items
-
-
-
 
 				// Ammo Count
 
@@ -2001,8 +1937,6 @@ namespace newgame
 					CanEnemyHearPlayer(enemies[i], zombiesAnimation[i], i);
 
 					CheckCollisionBetweenEnemies(i);
-
-					//particles.setEmitter(enemies[i].getPosition());
 				}
 
 				playerShoot();
@@ -2218,7 +2152,7 @@ namespace newgame
 
 			_window.draw(zombiesKilledText);
 			_window.draw(crosshairTest);
-			//
+
 			_window.draw(bulletsText);
 
 			switch (currentWeapon)
