@@ -144,7 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\game\screens\credits.cpp" />
-    <ClCompile Include="..\src\game\screens\gameover.cpp" />
     <ClCompile Include="..\src\game\screens\gameplay.cpp" />
     <ClCompile Include="..\src\game\screens\menu.cpp" />
     <ClCompile Include="..\src\game\screens\settings.cpp" />
@@ -159,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\game\screens\credits.h" />
-    <ClInclude Include="..\src\game\screens\gameover.h" />
     <ClInclude Include="..\src\game\screens\gameplay.h" />
     <ClInclude Include="..\src\game\screens\menu.h" />
     <ClInclude Include="..\src\game\screens\settings.h" />

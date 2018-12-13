@@ -34,9 +34,6 @@
     <ClCompile Include="..\src\game\screens\credits.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game\screens\gameover.cpp">
-      <Filter>Game\Screens</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\game\screens\gameplay.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
       <Filter>Game\Setup</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\screens\credits.h">
-      <Filter>Game\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\game\screens\gameover.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
     <ClInclude Include="..\src\game\screens\gameplay.h">

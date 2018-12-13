@@ -4,7 +4,6 @@
 
 #include "Screens/gameplay.h"
 #include "Screens/menu.h"
-#include "Screens/gameover.h"
 #include "Screens/settings.h"
 #include "Screens/credits.h"
 #include "setup/screens.h"
@@ -12,7 +11,6 @@
 
 using namespace newgame;
 using namespace Gameplay_Section;
-using namespace GameOver_Section;
 using namespace Menu_Section;
 using namespace Settings_Section;
 using namespace Credits_Section;
@@ -200,7 +198,6 @@ namespace newgame
 		gameScreens[Menu] = new MenuScreen();
 		gameScreens[Play] = new GameplayScreen();
 		gameScreens[Settings] = new SettingsScreen();
-		gameScreens[GameOver] = new GameOverScreen();
 		gameScreens[Credits] = new CreditsScreen();
 
 		_gameScreen = Menu;
@@ -282,33 +279,6 @@ namespace newgame
 		}
 		break;
 
-		case GameOver:
-		{
-			gameScreens[GameOver]->update();
-
-			if (gameScreens[GameOver]->finish())
-			{
-				gameScreens[GameOver]->deInit();
-				switch (_buttonOption)
-				{
-				case buttonMenu:
-				{
-
-					_gameScreen = Menu;
-					gameScreens[Menu]->init();
-					break;
-				}
-				case buttonRestart:
-				{
-					_gameScreen = Play;
-					gameScreens[Play]->init();
-					break;
-				}
-				}
-			}
-		}
-		break;
-
 		case Play:
 		{
 			menuSong.stop();
@@ -330,12 +300,6 @@ namespace newgame
 				{
 					_gameScreen = Play;
 					gameScreens[Play]->init();
-					break;
-				}
-				case buttonGameOver:
-				{
-					_gameScreen = GameOver;
-					gameScreens[GameOver]->init();
 					break;
 				}
 				}

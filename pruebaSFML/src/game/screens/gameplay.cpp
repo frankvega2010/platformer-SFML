@@ -1,6 +1,14 @@
 #include "gameplay.h"
 
+#include "setup/character.h"
+#include "setup\weapon.h"
+#include "setup/particles.h"
+
+#include "STP/TMXLoader.hpp"
+#include "Thor/Animations.hpp"
+#include "Thor/Math.hpp"
 #include "menu.h"
+#include "spriteanimation.h"
 
 namespace newgame
 {
@@ -34,9 +42,7 @@ namespace newgame
 
 	static const int maxEnemiesLevelTutorial = 5;
 	static const int maxEnemiesLevel1 = 20;
-	static const int maxEnemiesDog = 5;
 	static const int maxTutorialTexts = 9;
-	static const int enemySpeed = 300;
 
 	static const int defaultHP = 100;
 
@@ -47,16 +53,11 @@ namespace newgame
 
 	static const sf::Color transparentBlue = { 0,0,110,100 };
 	static const sf::Color transparentRed = { 255,0,0,80 };
-	static const sf::Color transparentGreen = { 0,255,0,80 };
 	static const sf::Color shotParticlesColor = { 125, 81, 0 ,255 };
 
 	static const int rectangleCollisionLimitX = 10;
 	static const int rectangleCollisionLimitY = 20;
 	static const float GravityAndWallFix = 0.5; // int 1
-
-	static const int DifferentMousePositions = 16;
-	static int DistanceValue = 1000;
-	static int RectangleValue = 500;
 
 	static int currentWeapon = -1;
 
@@ -106,8 +107,6 @@ namespace newgame
 
 	// Gravity
 
-	static int gravityValue = -1;
-
 	static int gravitySpeed = 0;
 
 	// Mouse Position
@@ -143,7 +142,6 @@ namespace newgame
 	
 	static SpriteAnimation playerAnimation;
 	static SpriteAnimation zombiesAnimation[maxEnemiesLevel1];
-	static SpriteAnimation zombiesDogAnimation[maxEnemiesDog];
 
 	//Particles
 
@@ -229,7 +227,6 @@ namespace newgame
 	static sf::Texture crosshairTexture;
 	static sf::CircleShape crosshairTest;
 	
-	static sf::CircleShape gunLimit;
 	static sf::RectangleShape Exit;
 
 	//HUD
@@ -437,13 +434,6 @@ namespace newgame
 
 			lineCollision.setSize(sf::Vector2f(300, 10));
 			lineCollision.setFillColor(sf::Color::Transparent);
-
-
-			gunLimit.setRadius(140);
-			gunLimit.setOutlineThickness(10);
-			gunLimit.setFillColor(sf::Color::Transparent);
-			gunLimit.setOutlineColor(sf::Color::Blue);
-			gunLimit.setPosition({ player1.getRectangle().getPosition().x - player1.getRectangle().getGlobalBounds().width / 2, player1.getRectangle().getPosition().y - player1.getRectangle().getGlobalBounds().height / 2 });
 
 			gun.setFillColor(sf::Color::White);
 			gun.setSize({ 140,90 });
@@ -2144,7 +2134,6 @@ namespace newgame
 			
 
 			// HUD
-			_window.draw(crosshairTest);
 			_window.draw(lifeBar);
 			_window.draw(lifeHUDRectangle);
 			_window.draw(weaponHUDRectangle);
