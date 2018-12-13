@@ -27,7 +27,7 @@ A virus has spread all over the city and you are one of the current survivors of
 
 Itchio Link: https://frankvega.itch.io/patient-zero
 
-Github Link: https://github.com/frankvega2010/platformer-SFML/releases/tag/v1.0
+Github Link: https://github.com/frankvega2010/platformer-SFML/releases/tag/v1.1
 
 ## Bio (Franco Vega)
 
