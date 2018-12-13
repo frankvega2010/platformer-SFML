@@ -78,7 +78,3 @@
 - Resolution Scaling Code.
 - Players Static Camera.
 - Player Control Scheme from Arrows to WASD.
-
-### [Unreleased]
-- 3 Weapons.
-- Limited Ammunition.
