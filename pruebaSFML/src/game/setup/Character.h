@@ -3,7 +3,6 @@
 #include "game.h"
 
 #include "Thor/Time.hpp"
-#include "spriteanimation.h"
 
 namespace newgame
 {

@@ -2,7 +2,6 @@
 #define WEAPON_H
 
 #include "gameplay.h"
-#include "SpriteAnimation.h"
 
 namespace newgame
 {
@@ -18,9 +17,6 @@ namespace newgame
 	class weapon
 	{
 	private:
-		//sf::Texture _texture;
-		//SpriteAnimation _animation;
-		//sf::Time _fireRate;
 		int _ammo;
 		int _damage;
 		thor::CallbackTimer _fireRateTimer;

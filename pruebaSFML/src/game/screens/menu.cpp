@@ -154,9 +154,6 @@ namespace newgame
 
 		void MenuScreen::update()
 		{
-			#ifdef AUDIO
-						UpdateMusicStream(pong_menu_song);
-			#endif
 			input();
 		}
 
