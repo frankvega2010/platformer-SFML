@@ -10,6 +10,8 @@ namespace newgame
 {
 	static const int maxButtons = 7;
 
+	static const int maxSlidersAndLabels = 2;
+
 	static const int guiXPosition = 500;
 
 	static const int guiTextSize = 50;
@@ -18,13 +20,9 @@ namespace newgame
 
 	static tgui::Button::Ptr buttons[maxButtons];
 
-	static tgui::Slider::Ptr sliderMusic;
+	static tgui::Slider::Ptr sliders[maxSlidersAndLabels];
 
-	static tgui::Label::Ptr labelMusicVolume;
-
-	static tgui::Slider::Ptr sliderSound;
-
-	static tgui::Label::Ptr labelSoundVolume;
+	static tgui::Label::Ptr labels[maxSlidersAndLabels];
 
 	static tgui::Font fontButtons("res/assets/fonts/times_new_yorker.ttf");
 
@@ -142,39 +140,31 @@ namespace newgame
 			buttons[5]->connect("Pressed", signalChangeTo1920x1080);
 			buttons[6]->connect("Pressed", signalGoToMenu);
 
-			labelMusicVolume = tgui::Label::create();
-			labelMusicVolume->setRenderer(blackTheme.getRenderer("Label"));
-			labelMusicVolume->setText("Music Volume");
-			labelMusicVolume->setPosition(guiXPosition, 210);
-			labelMusicVolume->setTextSize(guiTextSize);
-			labelMusicVolume->setInheritedFont(fontButtons);
-			gui.add(labelMusicVolume);
+			for (int i = 0; i < maxSlidersAndLabels; i++)
+			{
+				labels[i]= tgui::Label::create();
+				labels[i]->setRenderer(blackTheme.getRenderer("Label"));
+				labels[i]->setTextSize(guiTextSize);
+				labels[i]->setInheritedFont(fontButtons);
+				gui.add(labels[i]);
 
-			sliderMusic = tgui::Slider::create();
-			sliderMusic->setRenderer(blackTheme.getRenderer("Slider"));
-			sliderMusic->setMinimum(0);
-			sliderMusic->setMaximum(100);
-			sliderMusic->setPosition(guiXPosition, 310);
-			sliderMusic->setSize(350, 30);
-			sliderMusic->setValue(static_cast<float>(globalMusicVolume));
-			gui.add(sliderMusic);
+				sliders[i]= tgui::Slider::create();
+				sliders[i]->setRenderer(blackTheme.getRenderer("Slider"));
+				sliders[i]->setMinimum(0);
+				sliders[i]->setMaximum(100);
+				sliders[i]->setSize(350, 30);
+				gui.add(sliders[i]);
+			}
 
-			labelSoundVolume = tgui::Label::create();
-			labelSoundVolume->setRenderer(blackTheme.getRenderer("Label"));
-			labelSoundVolume->setText("Sound Volume");
-			labelSoundVolume->setPosition(guiXPosition, 570);
-			labelSoundVolume->setTextSize(guiTextSize);
-			labelSoundVolume->setInheritedFont(fontButtons);
-			gui.add(labelSoundVolume);
+			labels[0]->setText("Music Volume");
+			labels[0]->setPosition(guiXPosition, 210);
+			labels[1]->setText("Sound Volume");
+			labels[1]->setPosition(guiXPosition, 570);
 
-			sliderSound = tgui::Slider::create();
-			sliderSound->setRenderer(blackTheme.getRenderer("Slider"));
-			sliderSound->setMinimum(0);
-			sliderSound->setMaximum(100);
-			sliderSound->setPosition(guiXPosition, 670);
-			sliderSound->setSize(350, 30);
-			sliderSound->setValue(static_cast<float>(globalSoundVolume));
-			gui.add(sliderSound);
+			sliders[0]->setPosition(guiXPosition, 310);
+			sliders[0]->setValue(static_cast<float>(globalMusicVolume));
+			sliders[1]->setPosition(guiXPosition, 670);
+			sliders[1]->setValue(static_cast<float>(globalSoundVolume));
 
 			setHasScreenFinished(false);
 		}
@@ -186,8 +176,8 @@ namespace newgame
 
 		void SettingsScreen::update()
 		{
-			globalMusicVolume = static_cast<int>(sliderMusic->getValue());
-			globalSoundVolume=static_cast<int>(sliderSound->getValue());
+			globalMusicVolume = static_cast<int>(sliders[0]->getValue());
+			globalSoundVolume=static_cast<int>(sliders[1]->getValue());
 			input();
 		}
 
@@ -202,11 +192,11 @@ namespace newgame
 			{
 				buttons[i]->setVisible(false);
 			}
-			labelMusicVolume->setVisible(false);
-			sliderMusic->setVisible(false);
-			labelSoundVolume->setVisible(false);
-			sliderSound->setVisible(false);
-
+			for (int i = 0; i < maxSlidersAndLabels; i++)
+			{
+				labels[i]->setVisible(false);
+				sliders[i]->setVisible(false);
+			}
 			// Config File
 
 			configVolume.child("sound").attribute("value").set_value(static_cast<float>(globalSoundVolume));

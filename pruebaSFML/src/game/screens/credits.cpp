@@ -5,7 +5,7 @@
 namespace newgame
 {
 	static const int maxButtons = 1;
-	static const int maxCreditsTexts = 45;
+	static const int maxCreditsTexts = 49;
 
 	static tgui::Theme blackTheme{ "res/assets/themes/Black.txt" };
 
@@ -69,7 +69,7 @@ namespace newgame
 				creditsText[i].setFillColor(sf::Color::White);
 				if (i == 0)
 					creditsText[i].setCharacterSize(titleTextSize);
-				else if (i == 1 || i == 3 || i == 36)
+				else if (i == 1 || i == 3 || i == 36 || i==45)
 					creditsText[i].setCharacterSize(subtitleTextSize1);
 				else
 					creditsText[i].setCharacterSize(subtitleTextSize2);
@@ -121,6 +121,10 @@ namespace newgame
 			creditsText[42].setString("- Adobe Illustrator.");
 			creditsText[43].setString("- Adobe Photoshop.");
 			creditsText[44].setString("- Audacity.");
+			creditsText[45].setString("- Testers:.");
+			creditsText[46].setString("- Lucas Fernandez.");
+			creditsText[47].setString("- Dylan Piserchia.");
+			creditsText[48].setString("- Tomas Peralta.");
 
 			button[0]->connect("Pressed", signalGoToMenu);
 
@@ -128,7 +132,7 @@ namespace newgame
 			scrollbar->setRenderer(blackTheme.getRenderer("Scrollbar"));
 			scrollbar->setPosition(900, 90);
 			scrollbar->setSize(18, 740);
-			scrollbar->setMaximum(450);
+			scrollbar->setMaximum(580);
 			scrollbar->setValue(0);
 			gui.add(scrollbar);
 
@@ -189,6 +193,10 @@ namespace newgame
 			creditsText[42].setPosition(posTextX1, static_cast<float>(posTextY + 1320));
 			creditsText[43].setPosition(posTextX1, static_cast<float>(posTextY + 1350));
 			creditsText[44].setPosition(posTextX1, static_cast<float>(posTextY + 1380));
+			creditsText[45].setPosition(posTextX1, static_cast<float>(posTextY + 1420));
+			creditsText[46].setPosition(posTextX1, static_cast<float>(posTextY + 1460));
+			creditsText[47].setPosition(posTextX1, static_cast<float>(posTextY + 1490));
+			creditsText[48].setPosition(posTextX1, static_cast<float>(posTextY + 1520));
 		}
 
 		void CreditsScreen::draw()
