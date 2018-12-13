@@ -1,3 +1,30 @@
+## v1.02 [2018-12-12]
+### Added
+- Added new Enemy:
+  Zombie Dog: Faster than a regular zombie,but weaker.
+- Added 2 New weapons:
+
+  Shotgun: It deals more damage than the pistol but its slower.
+  
+  SMG: It deals little damage but with a high fire rate.
+  
+- Added particles when firing a weapon and when dealing damage to an enemy.
+- The player can now run with the LSHIFT button.
+- Added background songs for both levels.
+- Ammo is now limited and can be dropped by enemies.
+- Added a sound when enemies are damaged.
+- Added a Medkit Item, it gives the player 25 points of health.
+
+### Fixed
+- Now the crosshair changes colour properly.
+
+### Removed
+- Laser sight removed because it confused the player on how the weapon range works.
+
+### Changed
+- Updated Tutorial displaying the new weapons and controls.
+- Enemies Positions are now changed in Level 1 for better gameplay.
+
 ## v1.01 [2018-12-9]
 ### Added
 - Gravity when player jumps.
@@ -51,7 +78,3 @@
 - Resolution Scaling Code.
 - Players Static Camera.
 - Player Control Scheme from Arrows to WASD.
-
-### [Unreleased]
-- 3 Weapons.
-- Limited Ammunition.
