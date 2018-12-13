@@ -137,7 +137,7 @@ namespace newgame
 			menuSubTitle2.setCharacterSize(static_cast<int>(Game::getDefaultFontSize() ));
 			menuSubTitle2.setFillColor(sf::Color::Red);
 			menuSubTitle2.setPosition(menuTitle.getPosition().x + 200, 250);
-			menuSubTitle2.setString("Version 1.01");
+			menuSubTitle2.setString("Version 1.1");
 
 			buttons[0]->connect("Pressed", signalGoToPlay);
 			buttons[1]->connect("Pressed", signalGoToTutorial);
