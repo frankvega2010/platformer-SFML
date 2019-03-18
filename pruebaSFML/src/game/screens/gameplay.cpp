@@ -81,6 +81,7 @@ namespace newgame
 	bool inputActive3 = false;
 
 	weapon weapons[maxWeapons];
+	static int WeaponsLowAmmoCount[maxWeapons];
 
 	static sf::RectangleShape gun;
 	static SpriteAnimation pistolAnimation;
@@ -337,6 +338,10 @@ namespace newgame
 			//// World Entities
 
 			// Weapons
+
+			WeaponsLowAmmoCount[pistol] = 10;
+			WeaponsLowAmmoCount[shotgun] = 5;
+			WeaponsLowAmmoCount[smg] = 40;
 
 			currentWeapon = 1;
 
@@ -1407,6 +1412,21 @@ namespace newgame
 			}
 		}
 
+		static void CheckCurrentAmmo(weapon& weapon, sf::RectangleShape& weaponRectangle)
+		{
+			if (weapon.getAmmo() <= 0)
+			{
+				weaponRectangle.setFillColor({ 255,25,25,255 });
+			}
+			else if (weapon.getAmmo() <= WeaponsLowAmmoCount[currentWeapon])
+			{
+				weaponRectangle.setFillColor({ 255,100,100,255 });
+			}
+			else
+			{
+				weaponRectangle.setFillColor(sf::Color::White);
+			}
+		}
 
 		static void CheckEnemyHP(Character& enemy,SpriteAnimation& animation,int i)
 		{
@@ -1938,6 +1958,24 @@ namespace newgame
 				player1.updateJump(deltaTime);
 
 				CheckWeaponsFireRate(weapons[currentWeapon]);
+				
+				
+				switch (currentWeapon)
+				{
+				case pistol:
+					CheckCurrentAmmo(weapons[currentWeapon], gun);
+					break;
+				case shotgun:
+					CheckCurrentAmmo(weapons[currentWeapon], shotgunRectangle);
+					break;
+				case smg:
+					CheckCurrentAmmo(weapons[currentWeapon], smgRectangle);
+					break;
+				default:
+					break;
+				}
+				
+				
 
 				player1.getRectangle().move(player1.getMove());
 
