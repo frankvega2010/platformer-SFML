@@ -185,6 +185,9 @@ namespace newgame
 	static sf::SoundBuffer ammoPickupSoundBuffer;
 	static sf::Sound ammoPickupSound;
 
+	static sf::SoundBuffer emptyMagazineSoundBuffer;
+	static sf::Sound emptyMagazineSound;
+
 	// Gun Rotation Variable
 
 	static sf::Vector2f v1;
@@ -844,6 +847,10 @@ namespace newgame
 			ammoPickupSound.setBuffer(ammoPickupSoundBuffer);
 			ammoPickupSound.setVolume(static_cast<float>(globalSoundVolume));
 
+			emptyMagazineSoundBuffer.loadFromFile("res/assets/sounds/noammo.wav");
+			emptyMagazineSound.setBuffer(emptyMagazineSoundBuffer);
+			emptyMagazineSound.setVolume(static_cast<float>(globalSoundVolume));
+
 			if (levelNumber == 0)
 			{
 				level0Ambience.openFromFile("res/assets/music/level0ambience.wav");
@@ -1291,7 +1298,12 @@ namespace newgame
 
 						shootTimer.reset(shootInitialTime);
 						shootTimer.start();
-					}				
+					}
+					else if (!weapons[currentWeapon].isFireRateTimerRunning() && weapons[currentWeapon].getAmmo() <= 0)
+					{
+						emptyMagazineSound.play();
+						weapons[currentWeapon].StartFireRateTimer();
+					}
 				}
 			}
 		}
