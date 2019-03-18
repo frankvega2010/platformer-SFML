@@ -205,6 +205,9 @@ namespace newgame
 
 	static sf::Text tutorialText[maxTutorialTexts];
 
+	static sf::Text LowAmmoText;
+	static sf::Text NoAmmoText;
+
 	// Characters
 	
 
@@ -666,6 +669,8 @@ namespace newgame
 			playerStateText.setPosition(400, 400);
 			playerStateText.setString("");
 
+			
+
 			if (levelNumber==0)
 			{
 				tutorialText[0].setCharacterSize(tutorialFontSize);
@@ -726,6 +731,17 @@ namespace newgame
 
 
 			//// HUD
+			LowAmmoText.setCharacterSize(50);
+			LowAmmoText.setFont(font2);
+			LowAmmoText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 100));
+			LowAmmoText.setFillColor(sf::Color::Transparent);
+			LowAmmoText.setString("LOW AMMO!");
+
+			NoAmmoText.setCharacterSize(50);
+			NoAmmoText.setFont(font2);
+			NoAmmoText.setPosition(sf::Vector2f(view.getCenter().x - 200, view.getCenter().y - 100));
+			NoAmmoText.setFillColor(sf::Color::Transparent);
+			NoAmmoText.setString("NO AMMO LEFT!");
 
 			bulletsText.setCharacterSize(50);
 			bulletsText.setFont(font2);
@@ -1417,13 +1433,19 @@ namespace newgame
 			if (weapon.getAmmo() <= 0)
 			{
 				weaponRectangle.setFillColor({ 255,25,25,255 });
+				LowAmmoText.setFillColor(sf::Color::Transparent);
+				NoAmmoText.setFillColor(sf::Color::Red);
 			}
 			else if (weapon.getAmmo() <= WeaponsLowAmmoCount[currentWeapon])
 			{
 				weaponRectangle.setFillColor({ 255,100,100,255 });
+				LowAmmoText.setFillColor(sf::Color::Red);
+				NoAmmoText.setFillColor(sf::Color::Transparent);
 			}
 			else
 			{
+				LowAmmoText.setFillColor(sf::Color::Transparent);
+				NoAmmoText.setFillColor(sf::Color::Transparent);
 				weaponRectangle.setFillColor(sf::Color::White);
 			}
 		}
@@ -1683,6 +1705,8 @@ namespace newgame
 			lifeHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 1300, view.getCenter().y - 800));
 			weaponHUDRectangle.setPosition(sf::Vector2f(view.getCenter().x - 700, view.getCenter().y - 800));
 			bulletsText.setPosition(sf::Vector2f(view.getCenter().x - 450, view.getCenter().y - 625));
+			LowAmmoText.setPosition(sf::Vector2f(view.getCenter().x - 670, view.getCenter().y - 575));
+			NoAmmoText.setPosition(sf::Vector2f(view.getCenter().x - 670, view.getCenter().y - 575));
 			zombiesKilledText.setPosition(sf::Vector2f(view.getCenter().x + 300, view.getCenter().y - 800));
 			pistolRectangle.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
 			shotgunHUD.setPosition(sf::Vector2f(view.getCenter().x - 530, view.getCenter().y - 720));
@@ -2180,6 +2204,8 @@ namespace newgame
 			_window.draw(crosshairTest);
 
 			_window.draw(bulletsText);
+			_window.draw(LowAmmoText);
+			_window.draw(NoAmmoText);
 
 			switch (currentWeapon)
 			{
